@@ -1,0 +1,693 @@
+/* Responsive general */
+
+html{
+    font-size: 16px;
+}
+
+img{
+    max-width: 100%;
+}
+
+@media (max-width: 1400px){
+
+    body{
+        overflow-x: hidden;
+    }
+
+    header img,
+    .perfil img,
+    .pantalla-administrador .perfil img{
+        width: 56px !important;
+        height: 56px !important;
+        min-width: 56px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .login-screen,
+    .login-screen.register-active{
+        top: 0;
+        min-height: 100vh;
+        padding: 24px 16px;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .login-screen header h1{
+        font-size: clamp(1.8rem, 5vw, 2.4rem) !important;
+    }
+
+    .login-screen header p{
+        font-size: clamp(0.95rem, 2.8vw, 1.1rem) !important;
+    }
+
+    .form-login,
+    .form-register{
+        width: min(100%, 560px);
+        min-height: auto;
+        padding: 24px;
+        gap: 16px;
+        border-radius: 14px;
+    }
+
+    .register-grid{
+        gap: 14px;
+    }
+
+    .input-login,
+    .login,
+    .password-field,
+    .form-register .login,
+    .form-register .full-field,
+    .register-grid .password-field,
+    .full-field .password-field,
+    .register-grid .input-login,
+    .full-field .input-login,
+    .btn-login,
+    .form-register .btn-login,
+    .btn-secondary-login,
+    .form-register .btn-secondary-login{
+        width: 100%;
+        min-height: 46px;
+        border-radius: 10px;
+    }
+
+    .btn-back-login{
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+    }
+
+    .layout,
+    .pantalla-tecnico,
+    .pantalla-administrador{
+        width: 100%;
+        min-height: 100vh;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+
+    .menu-principal{
+        width: 100%;
+    }
+
+    .menu{
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 20;
+        width: 100%;
+        min-height: auto;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #363636;
+        overflow: visible;
+    }
+
+    .perfil{
+        min-width: max-content;
+        padding: 0;
+        gap: 12px;
+    }
+
+    .notificaciones-usuario{
+        margin-left: 8px;
+    }
+
+    .perfil h3{
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+
+    .perfil p{
+        font-size: 0.85rem;
+    }
+
+    .nav-usuario{
+        flex: 1;
+        min-width: 0;
+        padding-left: 0;
+        overflow-x: auto;
+    }
+
+    .nav-usuario ul{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: max-content;
+    }
+
+    .usuario-tickes,
+    .usuario-tickes:hover,
+    .usuario-tickes.activo{
+        width: auto;
+        margin-bottom: 0;
+        padding: 10px 12px;
+        border-radius: 10px;
+        white-space: nowrap;
+    }
+
+    .usuario-tickes a{
+        padding: 0;
+        font-size: 0.95rem;
+    }
+
+    .logout,
+    .logout:last-child{
+        position: static;
+        display: flex;
+        align-items: center;
+        min-width: max-content;
+        padding-left: 0;
+        margin-top: 0;
+        white-space: nowrap;
+    }
+
+    .crar-tickets,
+    .estado-tickets,
+    .tickets_tecnico,
+    .gestion-activos,
+    .tickets-admin,
+    .registrados-admin,
+    #dashboard__ad{
+        width: 100%;
+        min-height: auto;
+        margin-left: 0 !important;
+        padding: 24px 16px;
+        box-sizing: border-box;
+    }
+
+    .crar-tickets{
+        align-items: stretch;
+        justify-content: flex-start;
+        height: auto;
+        gap: 18px;
+    }
+
+    .titulo-usuario,
+    .titulo-tec,
+    .titulo-dashboard,
+    .titulo-activos,
+    .titulo-tickets,
+    .titulo-registrados,
+    .estado-titulo{
+        width: 100%;
+        margin: 0 0 18px;
+        padding: 0;
+    }
+
+    .form-usuario,
+    .estado-ticket-card,
+    .lista-tickets-usuario{
+        width: 100%;
+        margin-left: 0;
+        border-radius: 14px;
+    }
+
+    .form-usuario{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        min-height: auto;
+        padding: 20px;
+        gap: 16px;
+    }
+
+    .ticket-form-header,
+    .campo-completo,
+    .acciones-form-ticket,
+    .usuario-categoria{
+        grid-column: span 2;
+    }
+
+    .usuario-categoria{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .input-usuario,
+    .usuario__select,
+    .input-ticket,
+    .btn-usuario,
+    .btn-cancelar-ticket{
+        min-height: 46px;
+        height: auto;
+        border-radius: 10px;
+        padding: 10px 12px;
+    }
+
+    .textarea-ticket,
+    .form-admin-ticket textarea,
+    .form-detalle-tecnico textarea{
+        min-height: 120px;
+    }
+
+    .ticket-form-header i,
+    .card-activo-resumen i,
+    .card-registrado i{
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+    }
+
+    .estado-ticket-info,
+    .estado-pago{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .estado-ticket-info div,
+    .estado-pago div,
+    .estado-mensaje,
+    .estado-vacio{
+        border-radius: 12px;
+        padding: 14px;
+    }
+
+    .contenido-dashboard,
+    .cards-activos,
+    .cards-tickets,
+    .cards-registrados{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: grid;
+        gap: 14px;
+        width: 100%;
+    }
+
+    .contenido-1,
+    .card-ticket,
+    .card-activo-resumen,
+    .card-registrado{
+        width: 100%;
+        min-height: 130px;
+        height: auto;
+        border-radius: 14px;
+        padding: 16px;
+    }
+
+    .contenido-1 i{
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 12px !important;
+        font-size: 1.4rem !important;
+    }
+
+    .contenedor{
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        width: 100%;
+        padding: 0 0 24px;
+    }
+
+    .card{
+        width: 100%;
+        border-radius: 14px;
+        padding: 18px;
+    }
+
+    .barra{
+        width: 100%;
+        height: 8px;
+        border-radius: 999px;
+    }
+
+    .filtros-activos,
+    .filtros-ticket{
+        width: 100%;
+        gap: 12px;
+    }
+
+    .filtros-activos input,
+    .filtros-activos select,
+    .filtros-ticket input,
+    .filtros-ticket select{
+        width: 100%;
+        min-height: 46px;
+        height: auto;
+        border-radius: 10px;
+        padding: 10px 12px;
+    }
+
+    .tabla-activos-admin,
+    .tabla-admin-ticket,
+    .tabla-registrados,
+    .tecnico-tabla{
+        width: 100%;
+        border-radius: 14px;
+        padding: 10px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tabla-ticket-admin,
+    .tabla-tecnico table{
+        width: max-content;
+        min-width: 980px;
+        table-layout: auto;
+    }
+
+    .tabla-ticket-admin th,
+    .tabla-ticket-admin td,
+    .tabla-tecnico th,
+    .tabla-tecnico td{
+        padding: 14px 12px;
+        font-size: 0.88rem;
+        white-space: normal;
+    }
+
+    .acciones-ticket{
+        gap: 8px;
+    }
+
+    .acciones-ticket a,
+    .btn-accion-admin,
+    .btn-editar-ticket-tecnico{
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+    }
+
+    .detalle-admin-card{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .form-admin-ticket,
+    .form-detalle-tecnico{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .campo-completo-admin,
+    .detalle-comentario,
+    .form-admin-ticket button,
+    .form-detalle-tecnico button{
+        grid-column: span 2;
+    }
+
+    .form-admin-ticket button,
+    .form-detalle-tecnico button{
+        min-height: 46px;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .content-tec{
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+        gap: 14px;
+        padding: 0 0 18px;
+    }
+
+    .bg-red,
+    .bg-green,
+    .bg-blue{
+        width: 100%;
+        border-radius: 14px;
+        padding: 16px;
+    }
+
+    .tabla-tecnico{
+        width: 100%;
+        padding: 0;
+    }
+
+    .correos-especiales{
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .footer-app{
+        width: 100%;
+        margin-left: 0;
+        padding: 28px 16px 18px;
+        border-left: none;
+    }
+
+    .footer-app__inner{
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .footer-app__content{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .footer-app__status{
+        grid-column: span 2;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .footer-app__bottom{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 700px){
+
+    html{
+        font-size: 15px;
+    }
+
+    .login-screen{
+        padding: 18px 12px;
+    }
+
+    .form-login,
+    .form-register{
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .register-grid,
+    .form-usuario,
+    .usuario-categoria,
+    .estado-ticket-info,
+    .estado-pago,
+    .cards-activos,
+    .cards-tickets,
+    .cards-registrados,
+    .contenido-dashboard,
+    .content-tec,
+    .detalle-admin-card,
+    .form-admin-ticket,
+    .form-detalle-tecnico{
+        grid-template-columns: 1fr;
+    }
+
+    .full-field,
+    .ticket-form-header,
+    .campo-completo,
+    .acciones-form-ticket,
+    .usuario-categoria,
+    .campo-completo-admin,
+    .detalle-comentario,
+    .form-admin-ticket button,
+    .form-detalle-tecnico button{
+        grid-column: span 1;
+    }
+
+    .menu{
+        flex-wrap: wrap;
+        align-items: flex-start;
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .perfil{
+        width: 100%;
+    }
+
+    .panel-notificaciones{
+        right: 0;
+        left: auto;
+        width: min(22rem, calc(100vw - 24px));
+    }
+
+    .nav-usuario{
+        order: 3;
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .nav-usuario ul{
+        width: 100%;
+        min-width: 0;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .usuario-tickes,
+    .usuario-tickes:hover,
+    .usuario-tickes.activo{
+        flex: 1 1 calc(50% - 8px);
+        display: flex;
+        justify-content: center;
+        min-width: 130px;
+        padding: 10px;
+    }
+
+    .logout{
+        position: absolute;
+        top: 18px;
+        right: 12px;
+        font-size: 0;
+    }
+
+    .logout i{
+        font-size: 1rem;
+        padding: 0 !important;
+    }
+
+    .crar-tickets,
+    .estado-tickets,
+    .tickets_tecnico,
+    .gestion-activos,
+    .tickets-admin,
+    .registrados-admin,
+    #dashboard__ad{
+        padding: 18px 12px;
+    }
+
+    .titulo-usuario h1,
+    .titulo-tec h1,
+    .titulo-dashboard h1,
+    .titulo-activos h1,
+    .titulo-tickets h1,
+    .titulo-registrados h1{
+        font-size: clamp(1.6rem, 8vw, 2.1rem) !important;
+        line-height: 1.1;
+    }
+
+    .titulo-usuario p,
+    .titulo-tec p,
+    .titulo-dashboard p,
+    .titulo-activos p,
+    .titulo-tickets p,
+    .titulo-registrados p{
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .form-usuario,
+    .estado-ticket-card,
+    .card,
+    .tabla-activos-admin,
+    .tabla-admin-ticket,
+    .tabla-registrados,
+    .tecnico-tabla,
+    .form-admin-ticket,
+    .form-detalle-tecnico{
+        border-radius: 12px;
+    }
+
+    .acciones-form-ticket,
+    .filtros-activos,
+    .filtros-ticket{
+        flex-direction: column;
+    }
+
+    .btn-cancelar-ticket{
+        width: 100%;
+    }
+
+    .estado-ticket-header{
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .estado-badge,
+    .estado,
+    .rol-usuario,
+    .rol-tecnico,
+    .rol-admin{
+        padding: 6px 10px;
+        border-radius: 999px;
+    }
+
+    .tabla-ticket-admin,
+    .tabla-tecnico table{
+        min-width: 820px;
+    }
+
+    .tabla-ticket-admin th,
+    .tabla-ticket-admin td,
+    .tabla-tecnico th,
+    .tabla-tecnico td{
+        padding: 12px 10px;
+        font-size: 0.82rem;
+    }
+
+    .form-admin-ticket button,
+    .form-detalle-tecnico button{
+        justify-self: stretch;
+        justify-content: center;
+        width: 100%;
+        padding: 12px;
+    }
+
+    .footer-app__brand{
+        align-items: flex-start;
+    }
+
+    .footer-app__brand img{
+        width: 52px;
+        height: 52px;
+    }
+
+    .footer-app__content{
+        grid-template-columns: 1fr;
+    }
+
+    .footer-app__status{
+        grid-column: span 1;
+        flex-direction: column;
+    }
+
+    .footer-app__status span{
+        width: 100%;
+    }
+}
+
+@media (max-width: 420px){
+
+    html{
+        font-size: 14px;
+    }
+
+    .perfil h3{
+        max-width: 190px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .usuario-tickes,
+    .usuario-tickes:hover,
+    .usuario-tickes.activo{
+        flex-basis: 100%;
+        min-width: 100%;
+    }
+
+    .contenido-1,
+    .card-ticket,
+    .card-activo-resumen,
+    .card-registrado{
+        min-height: 112px;
+    }
+
+    .tabla-ticket-admin,
+    .tabla-tecnico table{
+        min-width: 760px;
+    }
+}

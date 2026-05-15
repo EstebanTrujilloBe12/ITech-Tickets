@@ -1,0 +1,14 @@
+{
+  "name": "itech-service",
+  "version": "1.0.0",
+  "description": "Sistema de soporte tecnico Apple con Node.js y MySQL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0"
+  }
+}

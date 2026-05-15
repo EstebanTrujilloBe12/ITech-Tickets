@@ -1,0 +1,905 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="Sistema de inventario con tickets para articulos Apple">
+    <meta name="keywords" content="Sistema, inventario, tickets, telefonos, Apple">
+    <meta name="author" content="Esteban Felipe Trujillo Bernal">
+    <link rel=" shortcut icon" href="IMG/Logo/Logo.png" type="image/png" sizes="16x16">
+    <link rel="stylesheet" href="CSS/default.css">
+    <script src="https://kit.fontawesome.com/9d1a86738f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="CSS/usuario.css">
+    <link rel="stylesheet" href="CSS/tecnico.css">
+    <link rel="stylesheet" href="CSS/admin.css">
+    <link rel="stylesheet" href="CSS/mediaquery.css">
+    
+</head>
+<body>
+
+    <section id="form-login" class="login-screen">
+        
+        <header>
+            <img src="IMG/Logo/Logo.png" alt="">
+            <h1 style="font-size: 2vw; color: white;">iTech Service</h1>
+            <p style="font-size: 1.2vw; color: rgb(145, 145, 145);">Gestión de soporte técnico Apple</p>
+        </header>
+        
+        <form id="formLogin" class="form-login" action="">
+            <div class="login">
+                <h2 class="usuario-input">Usuario</h2>
+                <input id="inputUsuario" class="input-login" type="username" placeholder="Ingresa tu usuario" maxlength="50" minlength="4" title="introduce tu username" pattern="+@.+\..+" required>
+            </div>
+
+            <div class="login">
+                <h2 class="usuario-input">Contraseña</h2>
+                <div class="password-field">
+                    <input id="inputPassword" class="input-login" type="password" placeholder="Ingresa tu contraseña" maxlength="25" minlength="8" title="Introduce tu contraseña" pattern="{8,25}" required>
+                    <button id="btnTogglePassword" class="btn-ver-password" type="button" aria-label="Mostrar contraseña" data-toggle-password="inputPassword">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <input class="btn-login" type="submit" value="Iniciar sesión">
+            <button id="btnMostrarRegistro" class="btn-secondary-login" type="button">Registrarse</button>
+        </form>
+
+        <form id="formRegistro" class="form-login form-register" action="">
+            <div class="register-header">
+                <button id="btnVolverLogin" class="btn-back-login" type="button" aria-label="Volver al inicio de sesion">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h2>Crear cuenta</h2>
+            </div>
+
+            <div class="register-grid">
+                <div class="login">
+                    <h2 class="usuario-input">Nombre</h2>
+                    <input id="registroNombre" class="input-login" type="text" placeholder="Ingresa tu nombre" maxlength="50" minlength="2" required>
+                </div>
+
+                <div class="login">
+                    <h2 class="usuario-input">Apellidos</h2>
+                    <input id="registroApellidos" class="input-login" type="text" placeholder="Ingresa tus apellidos" maxlength="80" minlength="2" required>
+                </div>
+
+                <div class="login">
+                    <h2 class="usuario-input">Ciudad</h2>
+                    <input id="registroCiudad" class="input-login" type="text" placeholder="Ingresa tu ciudad" maxlength="60" minlength="2" required>
+                </div>
+
+                <div class="login">
+                    <h2 class="usuario-input">Pais</h2>
+                    <select id="registroPais" class="input-login" required>
+                        <option disabled selected value="">Selecciona tu pais</option>
+                        <option>Colombia</option>
+                        <option>Argentina</option>
+                        <option>Bolivia</option>
+                        <option>Brasil</option>
+                        <option>Chile</option>
+                        <option>Ecuador</option>
+                        <option>Estados Unidos</option>
+                        <option>Mexico</option>
+                        <option>Peru</option>
+                        <option>Venezuela</option>
+                    </select>
+                </div>
+
+                <div class="login full-field">
+                    <h2 class="usuario-input">Correo electronico</h2>
+                    <input id="registroCorreo" class="input-login" type="email" placeholder="Ingresa tu correo electronico" maxlength="80" required>
+                </div>
+
+                <div class="login full-field">
+                    <h2 class="usuario-input">Fecha de nacimiento</h2>
+                    <input id="registroNacimiento" class="input-login" type="date" required>
+                </div>
+
+                <div class="login">
+                    <h2 class="usuario-input">Contrasena</h2>
+                    <div class="password-field">
+                        <input id="registroPassword" class="input-login" type="password" placeholder="Crea una contrasena" maxlength="25" minlength="8" required>
+                        <button class="btn-ver-password" type="button" aria-label="Mostrar contraseña" data-toggle-password="registroPassword">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="login">
+                    <h2 class="usuario-input">Confirmar contrasena</h2>
+                    <div class="password-field">
+                        <input id="registroConfirmPassword" class="input-login" type="password" placeholder="Confirma tu contrasena" maxlength="25" minlength="8" required>
+                        <button class="btn-ver-password" type="button" aria-label="Mostrar contraseña" data-toggle-password="registroConfirmPassword">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-login" type="submit">Registrarse</button>
+            <button id="btnIrLogin" class="btn-secondary-login" type="button">Iniciar sesion</button>
+        </form>
+    </section>
+
+    <main>
+
+        <section id="usuario" class="pantalla-usuario">
+            <div class="layout">
+                <div class="menu-principal">
+                    <aside class="menu">
+                        <div class="perfil">
+                            <img style="width: 5vw;
+                            height: 10vh;" src="IMG/imagen-perfil.png" alt="">
+                            <div>
+                                <h3 style="color: white;">Esteban Trujillo</h3>
+                                <p style="color: rgb(153, 152, 152);">Usuario</p>
+                            </div>
+                            <div class="notificaciones-usuario">
+                                <button id="btnNotificacionesUsuario" class="btn-notificaciones" type="button" aria-label="Mostrar notificaciones">
+                                    <i class="fa-regular fa-bell"></i>
+                                    <span id="contadorNotificacionesUsuario" hidden>0</span>
+                                </button>
+                                <div id="panelNotificacionesUsuario" class="panel-notificaciones" hidden>
+                                    <h3>Notificaciones</h3>
+                                    <div id="listaNotificacionesUsuario"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="border: 1px solid #363636;
+                            width: 18vw;
+                            display: flex;
+                            align-self: center;" class="separador">
+
+                        <nav class="nav-usuario">
+                            <ul>   
+                                <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a id="btnCrearTicketUsuario" href="#">Crear Ticket</a></li>
+                                <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-list-check"></i><a id="btnEstadoTicketUsuario" href="#">Estado del Ticket</a></li>
+                                
+                                <a class="logout" href=""><i style="padding: 10px;" class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
+                            </ul>
+                        </nav>
+                    </aside> 
+                </div>
+
+                <div class="crar-tickets">
+                    <div class="titulo-usuario">
+                        <h1>Soporte Técnico</h1>
+                        <p>Envia una solicitud a soport tecnico</p>
+                    </div>
+                    
+                    <form id="formCrearTicketUsuario" class="form-usuario" action="">
+                        <div class="ticket-form-header">
+                            <i class="fa-solid fa-headset"></i>
+                            <div>
+                                <h3>Nuevo Ticket de Soporte</h3>
+                                <p>Completa los datos y asignaremos un tecnico automaticamente segun tu ciudad.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="campo-ticket campo-completo">
+                            <h2 class="usuario-input">Titulo del problema *</h2>
+                            <input id="ticketTituloUsuario" class="input-ticket" type="text" placeholder="Ej: Problema con la pantalla del MacBook" maxlength="50" minlength="4" title="introduce tu username" required>
+                        </div>
+                        <div class="campo-ticket campo-completo">
+                            <h2 class="usuario-input">Descripcion *</h2>
+                            <textarea id="ticketDescripcionUsuario" class="input-ticket textarea-ticket" placeholder="Describe detalladamente el problema..." maxlength="200" minlength="4" title="Describe detalladamente el problema..." required></textarea>
+                        </div>
+                        <div class="usuario-categoria">
+                            <div class="campo-ticket">
+                                <h2 class="usuario-input">Categoria *</h2>
+                                 <input id="ticketCategoriaUsuario" class="input-usuario" type="text" placeholder="Ingresa tu Dispositivo" maxlength="200" minlength="4" title="Dispositivo.." required>
+                            </div>
+                            <div class="campo-ticket">
+                                <h2 class="usuario-input">Ciudad * </h2>
+                                <select id="ticketCiudadUsuario" class="usuario__select" required>
+                                    <option class="despliegue_opciones" disabled selected value="">Selecciona la ciudad</option>
+                                    <option class="despliegue_usuario">Bogota</option>
+                                    <option class="despliegue_usuario">Medellin</option>
+                                    <option class="despliegue_usuario">Cali</option>
+                                    <option class="despliegue_usuario">Barranquilla</option>
+                                </select>   
+                            </div>
+                            <div class="campo-ticket">
+                                <h2 class="usuario-input">Prioridad * </h2>
+                                <select id="ticketPrioridadUsuario" class="usuario__select" required>
+                                    <option class="despliegue_opciones" disabled selected value="">Selecciona la prioridad</option>
+                                    <option class="despliegue_usuario">Baja</option>
+                                    <option class="despliegue_usuario">Media</option>
+                                    <option class="despliegue_usuario">Alta</option>
+                                </select>   
+                            </div>   
+                        </div>
+                        <div class="acciones-form-ticket">
+                            <button class="btn-usuario" type="submit"><i class="fa-regular fa-floppy-disk"></i>Crear Ticket</button>
+
+                            <button class="btn-cancelar-ticket" type="button">Cancelar</button>
+  
+                        </div>   
+                    </form>
+                </div>
+
+                <div id="estadoTicketUsuario" class="estado-tickets">
+                    <div class="titulo-usuario estado-titulo">
+                        <h1>Estado de Tickets</h1>
+                        <p>Consulta el seguimiento de tus solicitudes de soporte</p>
+                    </div>
+
+                    <div id="listaTicketsUsuario" class="lista-tickets-usuario"></div>
+
+                    <section id="estadoTicketCardPrincipal" class="estado-ticket-card">
+                        <div class="estado-ticket-header">
+                            <div>
+                                <span id="estadoTicketId" class="ticket-id">TKT-001</span>
+                                <h2 id="estadoTicketTitulo">Problema con la pantalla del iPhone</h2>
+                                <p id="estadoTicketDescripcion">El usuario reporta fallas en el tactil y solicita revision del equipo.</p>
+                            </div>
+                            <span id="estadoTicketBadge" class="estado-badge reparado">Reparado</span>
+                        </div>
+
+                        <div class="estado-ticket-info">
+                            <div>
+                                <p>Dispositivo</p>
+                                <strong id="estadoTicketDispositivo">iPhone 16</strong>
+                            </div>
+                            <div>
+                                <p>Prioridad</p>
+                                <strong id="estadoTicketPrioridad">Media</strong>
+                            </div>
+                            <div>
+                                <p>Tecnico asignado</p>
+                                <strong id="estadoTicketTecnico">Carlos Rojas</strong>
+                            </div>
+                            <div>
+                                <p>Fecha</p>
+                                <strong id="estadoTicketFecha">15/05/2026</strong>
+                            </div>
+                        </div>
+
+                        <div class="estado-mensaje">
+                            <i class="fa-regular fa-circle-check"></i>
+                            <div>
+                                <h3 id="estadoTicketEstado">Tu telefono ya ha sido reparado</h3>
+                                <p id="estadoTicketMensaje">Puedes pasar por el equipo en el horario de atencion. Recuerda traer tu documento y el numero del ticket.</p>
+                            </div>
+                        </div>
+
+                        <div id="estadoTicketPago" class="estado-pago">
+                            <div>
+                                <p>Valor a pagar</p>
+                                <strong id="estadoTicketValor">$0</strong>
+                            </div>
+                            <div>
+                                <p>Comentario del tecnico</p>
+                                <strong id="estadoTicketComentario">Sin comentario tecnico.</strong>
+                            </div>
+                        </div>
+
+                        <div class="estado-linea">
+                            <article class="paso completado">
+                                <span></span>
+                                <div>
+                                    <h3>Ticket recibido</h3>
+                                    <p>Tu solicitud fue registrada correctamente.</p>
+                                </div>
+                            </article>
+                            <article class="paso completado">
+                                <span></span>
+                                <div>
+                                    <h3>Revision tecnica</h3>
+                                    <p>El tecnico reviso el dispositivo y confirmo la reparacion.</p>
+                                </div>
+                            </article>
+                            <article class="paso completado">
+                                <span></span>
+                                <div>
+                                    <h3>Listo para entrega</h3>
+                                    <p>El dispositivo esta listo. Puedes pasar por el.</p>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </section>  
+
+        <section id="pantalla__tec" class="pantalla-tecnico">
+            <div class="menu-principal">
+                <aside class="menu">
+                    <div class="perfil">
+                        <img style="width: 5vw;
+                        height: 10vh;" src="IMG/imagen-perfil.png" alt="">
+                        <div>
+                            <h3 id="nombrePerfilTecnico" style="color: white;">Laura Mendez</h3>
+                            <p style="color: rgb(153, 152, 152);">Tecnico</p>
+                        </div>
+                        <div class="notificaciones-usuario">
+                            <button id="btnNotificacionesTecnico" class="btn-notificaciones" type="button" aria-label="Mostrar notificaciones">
+                                <i class="fa-regular fa-bell"></i>
+                                <span id="contadorNotificacionesTecnico" hidden>0</span>
+                            </button>
+                            <div id="panelNotificacionesTecnico" class="panel-notificaciones" hidden>
+                                <h3>Notificaciones</h3>
+                                <div id="listaNotificacionesTecnico"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border: 1px solid #363636;
+                        width: 18vw;
+                        display: flex;
+                        align-self: center;" class="separador">
+                    <nav class="nav-usuario">
+                        <ul>   
+                            <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a href="#">Tickets</a></li>
+
+                            
+                            <a class="logout" href=""><i style="padding: 10px;" class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
+                            
+                            
+                        </ul>
+                    </nav>  
+                </aside>
+                
+            </div>
+                
+            <div class="tickets_tecnico">
+                <div class="titulo-tec">
+                    <h1 style="color: white;">Gestion de Tickets</h1>
+                    <p style="color: rgb(125, 123, 123);">Administra y da seguimiento a los tickets de soporte</p>
+                </div>
+                <div class="content-tec">
+                    <div class="bg-red">
+                        <p style="color: rgb(246, 121, 121);">Tickets abiertos</p>
+                        <p id="tecTicketsAbiertos" style="font-size: 3rem;">0</p>
+                    </div>
+                    <div class="bg-green">
+                        <p style="color: rgb(95, 207, 95);">Tickets Terminados</p>
+                        <p id="tecTicketsTerminados" style="font-size: 3rem;">0</p>
+                    </div>
+                    <div class="bg-blue">
+                        <p style="color: rgb(84, 84, 221);">Tickets En Proceso</p>
+                        <p id="tecTicketsProceso" style="font-size: 3rem;">0</p>
+                    </div>
+                </div>
+                <div class="tabla-tecnico">
+                    <div class="tecnico-tabla">
+                        <table class="tec-table">
+                            <thead>
+                                <tr class="tecnico-fila">
+                                    <th>ID Ticket</th>
+                                    <th>Usuario</th>
+                                    <th>Ciudad</th>
+                                    <th>Dispositivo</th>
+                                    <th>Problema</th>
+                                    <th>Estado</th>
+                                    <th>Prioridad</th>
+                                    <th>Tecnico</th>
+                                    <th>Valor</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaTicketsTecnicoBody" hidden>
+                                <tr>
+                                    <td style="color: rgb(105, 105, 247);font-weight: bold;">TKT-001</td>
+                                    <td>Ana García</td>
+                                    <td>MacBook Pro</td>
+                                    <td><p style="color: white;font-weight: bold;">Problema con la bateria</p>
+                                    <p>20/04/2026</p></td>
+                                    <td><span class="badge bg-red">Abierto</span></td>
+                                    <td><span style="color: rgb(255, 115, 0);">🟠 Alta</span></td>
+                                    <td><a href="#"><i class="fa-solid fa-pen"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: rgb(105, 105, 247);font-weight: bold;">TKT-002</td>
+                                    <td>Carlos López</td>
+                                    <td>iPhone 12</td>
+                                    <td><p style="color: white;font-weight: bold;">Problema con la pantalla</p>
+                                    <p>20/04/2026</p></td>
+                                    <td><span class="badge bg-blue">En proceso</span></td>
+                                    <td><span style="color: rgb(255, 208, 0);">🟡 Media</span></td>
+                                    <td><a href="#"><i class="fa-solid fa-pen"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: rgb(105, 105, 247);font-weight: bold;">TKT-003</td>
+                                    <td>María Rodríguez</td>
+                                    <td>iPad Air</td>
+                                    <td><p style="color: white;font-weight: bold;">Problema con el sistema</p>
+                                    <p>20/04/2026</p></td>
+                                    <td><span class="badge bg-green">Cerrado</span></td>
+                                    <td><span style="color: rgb(102, 177, 85);">🟢 Baja</span></td>
+                                    <td><a href="#"><i class="fa-solid fa-pen"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: rgb(105, 105, 247); font-weight: bold;">TKT-004</td>
+                                    <td>Juan Pérez</td>
+                                    <td>Iphone 17 Pro Max </td>
+                                    <td><p style="color: white;font-weight: bold;">Problema con la pantalla</p>
+                                    <p>20/04/2026</p></td>
+                                    <td><span class="badge bg-blue">En proceso</span></td>
+                                    <td><span style="color: rgb(255, 208, 0);">🟡 Media</span></td>
+                                    <td><a href="#"><i class="fa-solid fa-pen"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>  
+
+        <section id="pantalla__admi"                class="pantalla-administrador">
+            <aside class="menu">
+                <div class="perfil">
+                    <img style="width: 9vw;
+                    height: 5vw; border-radius: 50%; object-fit: cover;" src="IMG/imagen-perfil.png" alt="">
+                    <div>
+                        <h3 id="nombrePerfilAdmin" style="color: white;">Administrador ITech</h3>
+                        <p style="color: rgb(153, 152, 152);">Administrador</p>
+                    </div>
+                </div>
+                <hr style="border: 1px solid #363636;
+                width: 18vw;
+                display: none;
+                align-self: center;" class="separador">
+
+                <nav class="nav-usuario">
+                    <ul>  
+                        <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a id="btnDashboard" href="#">Dashboard</a></li>  
+                        <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a id="btnActivos" href="#">Activos</a></li> 
+                        <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a id="btnTickets" href="#">Tickets</a></li> 
+                        <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-users"></i><a id="btnRegistrados" href="#">Registrados</a></li> 
+                        
+                    </ul>
+                </nav>
+                    
+                <a class="logout" href=""><i style="padding: 10px;" class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
+            </aside>
+            
+
+            <div id="dashboard__ad" class="dashboard-admin">
+                <div class="titulo-dashboard">
+                    <h1 style="color: white;">Dashboard</h1>
+                    <p style="color: rgb(114, 114, 114);">Resumen general del sistema de gestión</p>
+                </div>
+
+                <div class="contenido-dashboard">
+                    <div class="contenido-1">
+                        <i style="display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 2rem;
+                        color: white;
+                        background-color: rgb(68, 68, 228);
+                        width: 4vw;
+                        height: 8vh;
+                        border-radius: 1vw;" class="fa-solid fa-box"></i>
+                        <h2 id="dashboardTotalDispositivos" style="color: white;">0</h2>
+                        <p>Total de Dispositivos</p>
+                    </div>
+                    <div class="contenido-1">
+                        <i style="display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 2rem;
+                        color: white;
+                        background-color: rgb(170, 49, 222);
+                        width: 4vw;
+                        height: 8vh;
+                        border-radius: 1vw;" class="fa-solid fa-ticket"></i>
+                        <h2 id="dashboardTicketsAbiertos" style="color: white;">0</h2>
+                        <p>Tickets Abiertos</p>
+                    </div>
+                    <div class="contenido-1">
+                        <i style="display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 2rem;
+                        color: white;
+                        background-color: rgb(232, 150, 50);
+                        width: 4vw;
+                        height: 8vh;
+                        border-radius: 1vw;" class="fa-regular fa-clock"></i>
+                        <h2 id="dashboardTicketsProceso" style="color: white;">0</h2>
+                        <p>Tickets En Proceso</p>
+                    </div>
+                    <div class="contenido-1">
+                        <i style="display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 2rem;
+                        color: white;
+                        background-color: rgb(56, 212, 74);
+                        width: 4vw;
+                        height: 8vh;
+                        border-radius: 1vw;" class="fa-regular fa-circle-check"></i>
+                        <h2 id="dashboardTicketsCerrados" style="color: white;">0</h2>
+                        <p>Tickets Cerrados</p>
+                    </div>
+                    
+                </div>
+
+                <div class="contenedor">
+                    <section id="dashboardActividadReciente" class="card">
+                        <h2>Actividad Reciente</h2>
+                    </section>
+
+                    <section id="dashboardDispositivosPopulares" class="card">
+                        <h2>Dispositivos por Tecnicos</h2>
+                    </section>
+                </div>
+
+                </div>
+
+                <div id="gestionActivos" class="gestion-activos">
+                    <div class="titulo-activos">
+                        <h1 style="color: white;">Gestión de Activos</h1>
+                        <p style="color: grey;">Consulta los dispositivos que estan atendiendo los tecnicos por ticket</p>
+                    </div>
+
+                    <div class="cards-activos">
+                        <div class="card-activo-resumen">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                            <div>
+                                <h2 id="totalActivosAdmin">0</h2>
+                                <p>Equipos en soporte</p>
+                            </div>
+                        </div>
+                        <div class="card-activo-resumen">
+                            <i class="fa-solid fa-user-check"></i>
+                            <div>
+                                <h2 id="activosAsignadosAdmin">0</h2>
+                                <p>Con tecnico</p>
+                            </div>
+                        </div>
+                        <div class="card-activo-resumen">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <div>
+                                <h2 id="activosMantenimientoAdmin">0</h2>
+                                <p>En proceso</p>
+                            </div>
+                        </div>
+                        <div class="card-activo-resumen">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div>
+                                <h2 id="sedesActivosAdmin">0</h2>
+                                <p>Ciudades</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filtros-activos">
+                        <input id="buscarActivoAdmin" type="text" placeholder="Buscar por dispositivo, usuario, tecnico o ticket...">
+                        <select id="filtroEstadoActivoAdmin">
+                            <option value="Todos">Todos</option>
+                            <option value="Abierto">Abierto</option>
+                            <option value="Aceptado">Aceptado</option>
+                            <option value="En proceso">En proceso</option>
+                            <option value="Reparado">Reparado</option>
+                            <option value="Listo para entrega">Listo para entrega</option>
+                            <option value="Cerrado">Cerrado</option>
+                        </select>
+                    </div>
+
+                    <div class="tabla-activos-admin">
+                        <table class="tabla-ticket-admin">
+                            <thead>
+                                <tr>
+                                    <th>Activo</th>
+                                    <th>Ticket</th>
+                                    <th>Categoria</th>
+                                    <th>Ciudad</th>
+                                    <th>Tecnico</th>
+                                    <th>Estado</th>
+                                    <th>Valor</th>
+                                    <th>Trabajo actual</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaActivosAdminBody">
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div id="ticketsAdmin" class="tickets-admin">
+
+                    <div class="titulo-tickets">
+                        <h1>Gestión de Tickets</h1>
+                        <p>Administra todos los tickets del sistema</p>
+                    </div>
+
+                    <!-- CARDS -->
+                    <div class="cards-tickets">
+
+                        <div class="card-ticket">
+                            <h2 id="adminTicketsTotal">0</h2>
+                            <p>Tickets Totales</p>
+                        </div>
+
+                        <div class="card-ticket">
+                            <h2 id="adminTicketsAbiertos">0</h2>
+                            <p>Abiertos</p>
+                        </div>
+
+                        <div class="card-ticket">
+                            <h2 id="adminTicketsProceso">0</h2>
+                            <p>En Proceso</p>
+                        </div>
+
+                        <div class="card-ticket">
+                            <h2 id="adminTicketsCerrados">0</h2>
+                            <p>Cerrados</p>
+                        </div>
+
+                    </div>
+
+                    <!-- FILTROS -->
+                    <div class="filtros-ticket">
+
+                        <input type="text" placeholder="Buscar ticket...">
+
+                        <select>
+                            <option>Todos</option>
+                            <option>Abiertos</option>
+                            <option>En Proceso</option>
+                            <option>Cerrados</option>
+                        </select>
+
+                    </div>
+
+                    <!-- TABLA -->
+                    <div class="tabla-admin-ticket">
+
+                        <table class="tabla-ticket-admin">
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Ciudad</th>
+                                    <th>Dispositivo</th>
+                                    <th>Estado</th>
+                                    <th>Prioridad</th>
+                                    <th>Técnico</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tablaTicketsAdminBody" hidden>
+
+                                <tr>
+                                    <td>TKT-001</td>
+                                    <td>Ana García</td>
+                                    <td>MacBook Pro</td>
+
+                                    <td>
+                                        <span class="estado abierto">
+                                            Abierto
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="prioridad alta">
+                                            Alta
+                                        </span>
+                                    </td>
+
+                                    <td>Carlos</td>
+
+                                    <td class="acciones-ticket">
+                                        <a href="#"><i class="fa-regular fa-eye"></i></a>
+                                        <a href="#"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="#"><i class="fa-solid fa-trash"></i></a>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>TKT-002</td>
+                                    <td>Juan Pérez</td>
+                                    <td>iPhone 16</td>
+
+                                    <td>
+                                        <span class="estado proceso">
+                                            En Proceso
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="prioridad media">
+                                            Media
+                                        </span>
+                                    </td>
+
+                                    <td>Andrea</td>
+
+                                    <td class="acciones-ticket">
+                                        <a href="#"><i class="fa-regular fa-eye"></i></a>
+                                        <a href="#"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="#"><i class="fa-solid fa-trash"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div id="registradosAdmin" class="registrados-admin">
+                    <div class="titulo-registrados">
+                        <h1>Registrados</h1>
+                        <p>Personas registradas en la pagina y cuentas especiales del sistema</p>
+                    </div>
+
+                    <div class="cards-registrados">
+                        <div class="card-registrado">
+                            <i class="fa-solid fa-users"></i>
+                            <h2 id="totalRegistradosAdmin">0</h2>
+                            <p>Total registrados</p>
+                        </div>
+                        <div class="card-registrado">
+                            <i class="fa-solid fa-user"></i>
+                            <h2 id="totalUsuariosRegistrados">0</h2>
+                            <p>Usuarios</p>
+                        </div>
+                        <div class="card-registrado">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <h2 id="totalTecnicosRegistrados">0</h2>
+                            <p>Tecnicos</p>
+                        </div>
+                        <div class="card-registrado">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <h2 id="totalAdminsRegistrados">0</h2>
+                            <p>Admins</p>
+                        </div>
+                    </div>
+
+                    <h2 class="subtitulo-tabla-registrados">Crear cuenta</h2>
+                    <form id="formCrearCuentaAdmin" class="form-admin-ticket form-crear-cuenta-admin" action="">
+                        <div>
+                            <label>Tipo de cuenta</label>
+                            <select id="adminCrearRol" required>
+                                <option value="usuario">Usuario</option>
+                                <option value="admin">Admin</option>
+                                <option value="tecnico">Tecnico</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Nombre</label>
+                            <input id="adminCrearNombre" type="text" maxlength="80" required>
+                        </div>
+                        <div>
+                            <label>Apellidos</label>
+                            <input id="adminCrearApellidos" type="text" maxlength="100" required>
+                        </div>
+                        <div>
+                            <label>Correo</label>
+                            <input id="adminCrearCorreo" type="email" maxlength="120" required>
+                        </div>
+                        <div>
+                            <label>Contrasena</label>
+                            <div class="password-field">
+                                <input id="adminCrearPassword" type="password" minlength="8" maxlength="25" required>
+                                <button class="btn-ver-password" type="button" aria-label="Mostrar contraseña" data-toggle-password="adminCrearPassword">
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Ciudad</label>
+                            <input id="adminCrearCiudad" type="text" maxlength="80" required>
+                        </div>
+                        <div>
+                            <label>Pais</label>
+                            <input id="adminCrearPais" type="text" maxlength="80" value="Colombia" required>
+                        </div>
+                        <div>
+                            <label>Fecha nacimiento</label>
+                            <input id="adminCrearNacimiento" type="date">
+                        </div>
+                        <button type="submit"><i class="fa-solid fa-user-plus"></i>Crear cuenta</button>
+                    </form>
+
+                    <div class="correos-especiales">
+                        <div>
+                            <h3>Correo especial para tecnicos</h3>
+                            <p>laura.mendez@itech.com</p>
+                        </div>
+                        <div>
+                            <h3>Correo especial para administradores</h3>
+                            <p>admin.itech@empresa.com</p>
+                        </div>
+                    </div>
+
+                    <h2 class="subtitulo-tabla-registrados">Todas las cuentas registradas</h2>
+                    <div class="tabla-registrados">
+                        <table class="tabla-ticket-admin">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Rol</th>
+                                    <th>Correo</th>
+                                    <th>Contraseña</th>
+                                    <th>Ciudad</th>
+                                    <th>Pais</th>
+                                    <th>Fecha nacimiento</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaRegistradosBody">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="subtitulo-tabla-registrados" style="display: none;">Usuarios normales</h2>
+                    <div class="tabla-registrados" style="display: none;">
+                        <table class="tabla-ticket-admin">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Rol</th>
+                                    <th>Correo</th>
+                                    <th>Contraseña</th>
+                                    <th>Ciudad</th>
+                                    <th>Pais</th>
+                                    <th>Fecha nacimiento</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaUsuariosNormalesBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>  
+    </main>
+
+    <footer id="footerApp" class="footer-app" hidden>
+        <div class="footer-app__inner">
+            <div class="footer-app__brand">
+                <img src="IMG/Logo/Logo.png" alt="Logo iTech Service">
+                <div>
+                    <h2>iTech Service</h2>
+                    <p>Gestion de soporte tecnico Apple para usuarios, tecnicos y administradores.</p>
+                </div>
+            </div>
+
+            <div class="footer-app__content">
+                <div class="footer-app__group">
+                    <h3>Sistema</h3>
+                    <a href="#usuario">Crear tickets</a>
+                    <a href="#estadoTicketUsuario">Seguimiento</a>
+                    <a href="#dashboard__ad">Dashboard</a>
+                </div>
+
+                <div class="footer-app__group">
+                    <h3>Soporte</h3>
+                    <p><i class="fa-solid fa-location-dot"></i>Bogota, Colombia</p>
+                    <p><i class="fa-solid fa-envelope"></i>soporte@itech.com</p>
+                    <p><i class="fa-solid fa-clock"></i>Lun - Vie, 8:00 a.m. - 6:00 p.m.</p>
+                </div>
+
+                <div class="footer-app__status">
+                    <span><i class="fa-solid fa-shield-halved"></i>Plataforma segura</span>
+                    <span><i class="fa-solid fa-circle-check"></i>Tickets sincronizados</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-app__bottom">
+            <p>© 2026 iTech Service. Sistema de gestion de soporte tecnico.</p>
+            <p>Inventario, tickets y seguimiento en un solo lugar.</p>
+        </div>
+    </footer>
+
+
+<script src="JS/script.js?v=20260515-2"></script>
+</body>
+
+</html>

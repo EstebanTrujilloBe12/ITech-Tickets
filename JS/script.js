@@ -1,0 +1,2424 @@
+﻿document.addEventListener("DOMContentLoaded", () => {
+
+    const usuarioInput = document.getElementById("inputUsuario");
+    const passwordInput = document.getElementById("inputPassword");
+    const btnTogglePassword = document.getElementById("btnTogglePassword");
+    const form = document.getElementById("formLogin");
+    const formRegistro = document.getElementById("formRegistro");
+    const btnMostrarRegistro = document.getElementById("btnMostrarRegistro");
+    const btnVolverLogin = document.getElementById("btnVolverLogin");
+    const btnIrLogin = document.getElementById("btnIrLogin");
+    const registroNombre = document.getElementById("registroNombre");
+    const registroApellidos = document.getElementById("registroApellidos");
+    const registroCiudad = document.getElementById("registroCiudad");
+    const registroPais = document.getElementById("registroPais");
+    const registroCorreo = document.getElementById("registroCorreo");
+    const registroNacimiento = document.getElementById("registroNacimiento");
+    const registroPassword = document.getElementById("registroPassword");
+    const registroConfirmPassword = document.getElementById("registroConfirmPassword");
+
+    const login = document.getElementById("form-login");
+    const footerApp = document.getElementById("footerApp");
+
+    const pantallaUsuario = document.getElementById("usuario");
+    const pantallaAdmin = document.getElementById("pantalla__admi");
+    const pantallaTecnico = document.getElementById("pantalla__tec");
+    const nombrePerfilUsuario = document.querySelector("#usuario .perfil h3");
+    const nombrePerfilAdmin = document.getElementById("nombrePerfilAdmin");
+    const nombrePerfilTecnico = document.getElementById("nombrePerfilTecnico");
+    const tablaTicketsTecnicoBody = document.getElementById("tablaTicketsTecnicoBody");
+    const tecTicketsAbiertos = document.getElementById("tecTicketsAbiertos");
+    const tecTicketsTerminados = document.getElementById("tecTicketsTerminados");
+    const tecTicketsProceso = document.getElementById("tecTicketsProceso");
+
+    // SECCIONES USUARIO
+    const crearTicketUsuario = document.querySelector(".crar-tickets");
+    const estadoTicketUsuario = document.getElementById("estadoTicketUsuario");
+    const btnCrearTicketUsuario = document.getElementById("btnCrearTicketUsuario");
+    const btnEstadoTicketUsuario = document.getElementById("btnEstadoTicketUsuario");
+    const formCrearTicketUsuario = document.getElementById("formCrearTicketUsuario");
+    const ticketTituloUsuario = document.getElementById("ticketTituloUsuario");
+    const ticketDescripcionUsuario = document.getElementById("ticketDescripcionUsuario");
+    const ticketCategoriaUsuario = document.getElementById("ticketCategoriaUsuario");
+    const ticketCiudadUsuario = document.getElementById("ticketCiudadUsuario");
+    const ticketPrioridadUsuario = document.getElementById("ticketPrioridadUsuario");
+    const listaTicketsUsuario = document.getElementById("listaTicketsUsuario");
+    const estadoTicketId = document.getElementById("estadoTicketId");
+    const estadoTicketTitulo = document.getElementById("estadoTicketTitulo");
+    const estadoTicketDescripcion = document.getElementById("estadoTicketDescripcion");
+    const estadoTicketDispositivo = document.getElementById("estadoTicketDispositivo");
+    const estadoTicketPrioridad = document.getElementById("estadoTicketPrioridad");
+    const estadoTicketTecnico = document.getElementById("estadoTicketTecnico");
+    const estadoTicketFecha = document.getElementById("estadoTicketFecha");
+    const estadoTicketBadge = document.getElementById("estadoTicketBadge");
+    const estadoTicketEstado = document.getElementById("estadoTicketEstado");
+    const estadoTicketMensaje = document.getElementById("estadoTicketMensaje");
+    const estadoTicketPago = document.getElementById("estadoTicketPago");
+    const estadoTicketValor = document.getElementById("estadoTicketValor");
+    const estadoTicketComentario = document.getElementById("estadoTicketComentario");
+    const btnNotificacionesUsuario = document.getElementById("btnNotificacionesUsuario");
+    const contadorNotificacionesUsuario = document.getElementById("contadorNotificacionesUsuario");
+    const panelNotificacionesUsuario = document.getElementById("panelNotificacionesUsuario");
+    const listaNotificacionesUsuario = document.getElementById("listaNotificacionesUsuario");
+    const btnNotificacionesTecnico = document.getElementById("btnNotificacionesTecnico");
+    const contadorNotificacionesTecnico = document.getElementById("contadorNotificacionesTecnico");
+    const panelNotificacionesTecnico = document.getElementById("panelNotificacionesTecnico");
+    const listaNotificacionesTecnico = document.getElementById("listaNotificacionesTecnico");
+
+    // SECCIONES ADMIN
+    const dashboard = document.getElementById("dashboard__ad");
+    const activos = document.getElementById("gestionActivos");
+    const tickets = document.getElementById("ticketsAdmin");
+    const registradosAdmin = document.getElementById("registradosAdmin");
+    const dashboardTotalDispositivos = document.getElementById("dashboardTotalDispositivos");
+    const dashboardTicketsAbiertos = document.getElementById("dashboardTicketsAbiertos");
+    const dashboardTicketsProceso = document.getElementById("dashboardTicketsProceso");
+    const dashboardTicketsCerrados = document.getElementById("dashboardTicketsCerrados");
+    const dashboardActividadReciente = document.getElementById("dashboardActividadReciente");
+    const dashboardDispositivosPopulares = document.getElementById("dashboardDispositivosPopulares");
+    const tablaTicketsAdminBody = document.getElementById("tablaTicketsAdminBody");
+    const adminTicketsTotal = document.getElementById("adminTicketsTotal");
+    const adminTicketsAbiertos = document.getElementById("adminTicketsAbiertos");
+    const adminTicketsProceso = document.getElementById("adminTicketsProceso");
+    const adminTicketsCerrados = document.getElementById("adminTicketsCerrados");
+    const totalActivosAdmin = document.getElementById("totalActivosAdmin");
+    const activosAsignadosAdmin = document.getElementById("activosAsignadosAdmin");
+    const activosMantenimientoAdmin = document.getElementById("activosMantenimientoAdmin");
+    const sedesActivosAdmin = document.getElementById("sedesActivosAdmin");
+    const buscarActivoAdmin = document.getElementById("buscarActivoAdmin");
+    const filtroEstadoActivoAdmin = document.getElementById("filtroEstadoActivoAdmin");
+    const tablaActivosAdminBody = document.getElementById("tablaActivosAdminBody");
+    const tablaRegistradosBody = document.getElementById("tablaRegistradosBody");
+    const tablaUsuariosNormalesBody = document.getElementById("tablaUsuariosNormalesBody");
+    const totalRegistradosAdmin = document.getElementById("totalRegistradosAdmin");
+    const totalUsuariosRegistrados = document.getElementById("totalUsuariosRegistrados");
+    const totalTecnicosRegistrados = document.getElementById("totalTecnicosRegistrados");
+    const totalAdminsRegistrados = document.getElementById("totalAdminsRegistrados");
+    const formCrearCuentaAdmin = document.getElementById("formCrearCuentaAdmin");
+    const adminCrearRol = document.getElementById("adminCrearRol");
+    const adminCrearNombre = document.getElementById("adminCrearNombre");
+    const adminCrearApellidos = document.getElementById("adminCrearApellidos");
+    const adminCrearCorreo = document.getElementById("adminCrearCorreo");
+    const adminCrearPassword = document.getElementById("adminCrearPassword");
+    const adminCrearCiudad = document.getElementById("adminCrearCiudad");
+    const adminCrearPais = document.getElementById("adminCrearPais");
+    const adminCrearNacimiento = document.getElementById("adminCrearNacimiento");
+
+    // BOTONES MENU ADMIN
+    const btnDashboard = document.getElementById("btnDashboard");
+    const btnActivos = document.getElementById("btnActivos");
+    const btnTickets = document.getElementById("btnTickets");
+    const btnRegistrados = document.getElementById("btnRegistrados");
+    const botonesLogout = document.querySelectorAll(".logout");
+
+    // CREDENCIALES
+    const credenciales = {
+
+        usuario: {
+            user: "esteban.trujillo@gmail.com",
+            pass: "12345678"
+        },
+
+        admin: {
+            user: "admin.itech@empresa.com",
+            pass: "Admin12345"
+        },
+
+        tecnico: {
+            user: "laura.mendez@itech.com",
+            pass: "Tecnico12345"
+        }
+
+    };
+
+    let usuarioActual = "Esteban Trujillo";
+    let correoUsuarioActual = credenciales.usuario.user;
+    let usuarioActualId = null;
+    let apiDisponible = false;
+    const apiBase = window.location.protocol === "file:" ? "http://localhost:3000/api" : "/api";
+    const ticketsDbKey = "ticketsSoporte";
+    const ticketActualUsuarioKey = "ticketActualUsuarioId";
+    const ticketsEliminadosKey = "ticketsEliminados";
+    const usuariosDbKey = "usuariosRegistrados";
+    const sesionActualKey = "sesionActual";
+    const sincronizacionKey = "sincronizacionSistema";
+    const notificacionesKey = "notificacionesTickets";
+    const detallesTecnicoAbiertos = new Set();
+    const borradoresDetalleTecnico = new Map();
+
+    const cuentasEspeciales = [
+
+        {
+            password: "Tecnico12345",
+            nombre: "Laura Mendez",
+            rol: "Tecnico",
+            correo: "laura.mendez@itech.com",
+            ciudad: "Bogota",
+            pais: "Colombia",
+            nacimiento: "Cuenta interna",
+            estado: "Correo especial"
+        },
+
+        {
+            password: "Admin12345",
+            nombre: "Administrador ITech",
+            rol: "Admin",
+            correo: "admin.itech@empresa.com",
+            ciudad: "Bogota",
+            pais: "Colombia",
+            nacimiento: "Cuenta interna",
+            estado: "Correo especial"
+        },
+
+        {
+            password: "Carlos12345",
+            nombre: "Carlos Rojas",
+            rol: "Tecnico",
+            correo: "carlos.rojas@itech.com",
+            ciudad: "Bogota",
+            pais: "Colombia",
+            nacimiento: "Cuenta interna",
+            estado: "Correo especial"
+        },
+
+        {
+            password: "Andrea12345",
+            nombre: "Andrea Lopez",
+            rol: "Tecnico",
+            correo: "andrea.lopez@itech.com",
+            ciudad: "Medellin",
+            pais: "Colombia",
+            nacimiento: "Cuenta interna",
+            estado: "Correo especial"
+        },
+
+        {
+            password: "Luis12345",
+            nombre: "Luis Martinez",
+            rol: "Tecnico",
+            correo: "luis.martinez@itech.com",
+            ciudad: "Cali",
+            pais: "Colombia",
+            nacimiento: "Cuenta interna",
+            estado: "Correo especial"
+        },
+
+        {
+            password: "Sofia12345",
+            nombre: "Sofia Torres",
+            rol: "Tecnico",
+            correo: "sofia.torres@itech.com",
+            ciudad: "Barranquilla",
+            pais: "Colombia",
+            nacimiento: "Cuenta interna",
+            estado: "Correo especial"
+        }
+
+    ];
+
+    const usuariosNormalesBase = [];
+
+    const tecnicos = [
+
+        {
+            nombre: "Carlos Rojas",
+            ciudad: "Bogota"
+        },
+
+        {
+            nombre: "Laura Mendez",
+            ciudad: "Bogota"
+        },
+
+        {
+            nombre: "Andrea Lopez",
+            ciudad: "Medellin"
+        },
+
+        {
+            nombre: "Luis Martinez",
+            ciudad: "Cali"
+        },
+
+        {
+            nombre: "Sofia Torres",
+            ciudad: "Barranquilla"
+        }
+
+    ];
+
+    const ticketsBase = [];
+
+    function obtenerRegistrados() {
+
+        const datos = localStorage.getItem(usuariosDbKey);
+
+        if (!datos) {
+            return [];
+        }
+
+        try {
+            return JSON.parse(datos);
+        } catch (error) {
+            return [];
+        }
+
+    }
+
+    async function apiRequest(ruta, opciones = {}) {
+
+        const respuesta = await fetch(`${apiBase}${ruta}`, {
+            headers: {
+                "Content-Type": "application/json",
+                ...(opciones.headers || {})
+            },
+            ...opciones
+        });
+
+        if (!respuesta.ok) {
+            const error = await respuesta.json().catch(() => ({ error: "Error de conexion" }));
+            throw new Error(error.error || "Error de conexion");
+        }
+
+        if (respuesta.status === 204) {
+            return null;
+        }
+
+        return respuesta.json();
+
+    }
+
+    function registrarNotificacionesPorTicketsActualizados(ticketsActualizados) {
+
+        const ticketsAnteriores = obtenerTodosLosTickets();
+
+        ticketsActualizados.forEach((ticketActualizado) => {
+            const ticketAnterior = ticketsAnteriores.find((ticket) => ticket.id === ticketActualizado.id);
+            registrarNotificacionCambioEstado(ticketActualizado, ticketAnterior);
+            registrarNotificacionAsignacionTecnico(ticketActualizado, ticketAnterior);
+        });
+
+    }
+
+    async function cargarDatosDesdeApi() {
+
+        try {
+            const [ticketsApi, usuariosApi] = await Promise.all([
+                apiRequest("/tickets"),
+                apiRequest("/users")
+            ]);
+
+            apiDisponible = true;
+            registrarNotificacionesPorTicketsActualizados(ticketsApi);
+            guardarTickets(ticketsApi);
+            localStorage.setItem(usuariosDbKey, JSON.stringify(
+                usuariosApi
+                    .map((usuario) => ({
+                        nombre: usuario.nombre,
+                        rol: formatearRol(usuario.rol),
+                        correo: usuario.correo,
+                        password: usuario.passwordDemo || "",
+                        ciudad: usuario.ciudad,
+                        pais: usuario.pais,
+                        nacimiento: usuario.nacimiento || "",
+                        estado: usuario.estado
+                    }))
+            ));
+        } catch (error) {
+            apiDisponible = false;
+            console.warn("API no disponible, usando datos locales");
+        }
+
+    }
+
+    function obtenerUsuariosLogin() {
+
+        return [
+            {
+                nombre: "Esteban Trujillo",
+                rol: "Usuario",
+                correo: credenciales.usuario.user,
+                password: credenciales.usuario.pass,
+                ciudad: "Bogota",
+                pais: "Colombia",
+                nacimiento: "Cuenta base",
+                estado: "Usuario base"
+            },
+            ...usuariosNormalesBase,
+            ...obtenerRegistrados()
+        ];
+
+    }
+
+    function buscarUsuarioLogin(correo, password) {
+
+        return obtenerUsuariosLogin().find((usuario) => (
+            normalizarTexto(usuario.correo) === normalizarTexto(correo) &&
+            usuario.password === password
+        ));
+
+    }
+
+    function formatearRol(rolUsuario) {
+
+        const rolNormalizado = normalizarTexto(rolUsuario || "");
+
+        if (rolNormalizado === "admin") return "Admin";
+        if (rolNormalizado === "tecnico") return "Tecnico";
+        return "Usuario";
+
+    }
+
+    function buscarCuentaEspecialLogin(correo, password) {
+
+        return cuentasEspeciales.find((cuenta) => (
+            normalizarTexto(cuenta.correo) === normalizarTexto(correo) &&
+            cuenta.password === password
+        ));
+
+    }
+
+    function obtenerTickets() {
+
+        const datos = localStorage.getItem(ticketsDbKey);
+
+        if (!datos) {
+            return [];
+        }
+
+        try {
+            return JSON.parse(datos);
+        } catch (error) {
+            return [];
+        }
+
+    }
+
+    function obtenerTicketsEliminados() {
+
+        const datos = localStorage.getItem(ticketsEliminadosKey);
+
+        if (!datos) {
+            return [];
+        }
+
+        try {
+            return JSON.parse(datos);
+        } catch (error) {
+            return [];
+        }
+
+    }
+
+    function obtenerNotificaciones() {
+
+        const datos = localStorage.getItem(notificacionesKey);
+
+        if (!datos) {
+            return [];
+        }
+
+        try {
+            return JSON.parse(datos);
+        } catch (error) {
+            return [];
+        }
+
+    }
+
+    function guardarNotificaciones(notificaciones) {
+
+        localStorage.setItem(notificacionesKey, JSON.stringify(notificaciones));
+        emitirSincronizacion();
+
+    }
+
+    function guardarTicketsEliminados(idsEliminados) {
+
+        localStorage.setItem(ticketsEliminadosKey, JSON.stringify(idsEliminados));
+        emitirSincronizacion();
+
+    }
+
+    function guardarTickets(ticketsGuardados) {
+
+        localStorage.setItem(ticketsDbKey, JSON.stringify(ticketsGuardados));
+        emitirSincronizacion();
+
+    }
+
+    function obtenerTodosLosTickets() {
+
+        const ticketsPorId = new Map();
+        const idsEliminados = obtenerTicketsEliminados();
+
+        if (apiDisponible) {
+            return obtenerTickets();
+        }
+
+        ticketsBase.forEach((ticket) => {
+            ticketsPorId.set(ticket.id, ticket);
+        });
+
+        obtenerTickets().forEach((ticket) => {
+            ticketsPorId.set(ticket.id, ticket);
+        });
+
+        return Array.from(ticketsPorId.values()).filter((ticket) => !idsEliminados.includes(ticket.id));
+
+    }
+
+    function normalizarTexto(texto) {
+
+        return String(texto || "").toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    }
+
+    function ticketPerteneceAUsuarioActual(ticket) {
+
+        const mismoId = usuarioActualId && ticket.usuarioId && String(ticket.usuarioId) === String(usuarioActualId);
+        const mismoCorreo = correoUsuarioActual && ticket.correoUsuario && normalizarTexto(ticket.correoUsuario) === normalizarTexto(correoUsuarioActual);
+        const mismoNombre = ticket.usuario && normalizarTexto(ticket.usuario) === normalizarTexto(usuarioActual);
+
+        return Boolean(mismoId || mismoCorreo || mismoNombre);
+
+    }
+
+    function notificacionPerteneceAUsuarioActual(notificacion) {
+
+        const mismoId = usuarioActualId && notificacion.usuarioId && String(notificacion.usuarioId) === String(usuarioActualId);
+        const mismoCorreo = correoUsuarioActual && notificacion.correoUsuario && normalizarTexto(notificacion.correoUsuario) === normalizarTexto(correoUsuarioActual);
+        const mismoNombre = notificacion.usuario && normalizarTexto(notificacion.usuario) === normalizarTexto(usuarioActual);
+
+        return Boolean(mismoId || mismoCorreo || mismoNombre);
+
+    }
+
+    function notificacionPerteneceATecnicoActual(notificacion) {
+
+        return Boolean(notificacion.tecnico && normalizarTexto(notificacion.tecnico) === normalizarTexto(usuarioActual));
+
+    }
+
+    function crearTextoNotificacionEstado(ticket) {
+
+        if (ticket.estado === "En proceso") {
+            return {
+                titulo: "Tu dispositivo esta en proceso",
+                mensaje: `${ticket.tecnico} ya esta trabajando en ${ticket.dispositivo}.`
+            };
+        }
+
+        if (["Reparado", "Listo para entrega", "Cerrado"].includes(ticket.estado)) {
+            return {
+                titulo: "Tu dispositivo esta listo",
+                mensaje: `Puedes recoger ${ticket.dispositivo} en ${ticket.ciudad}. Valor a pagar: ${formatearValor(ticket.valorArreglo)}.`
+            };
+        }
+
+        return {
+            titulo: `Ticket ${ticket.estado}`,
+            mensaje: `${ticket.dispositivo} cambio a estado ${ticket.estado}.`
+        };
+
+    }
+
+    function registrarNotificacionCambioEstado(ticketActualizado, ticketAnterior) {
+
+        if (!ticketAnterior || ticketAnterior.estado === ticketActualizado.estado) {
+            return;
+        }
+
+        const contenido = crearTextoNotificacionEstado(ticketActualizado);
+        const notificaciones = obtenerNotificaciones();
+
+        notificaciones.unshift({
+            id: `${ticketActualizado.id}-${Date.now()}`,
+            tipo: "estado-usuario",
+            ticketId: ticketActualizado.id,
+            usuarioId: ticketActualizado.usuarioId || null,
+            usuario: ticketActualizado.usuario || "",
+            correoUsuario: ticketActualizado.correoUsuario || "",
+            estado: ticketActualizado.estado,
+            titulo: contenido.titulo,
+            mensaje: contenido.mensaje,
+            fecha: new Date().toLocaleString("es-CO"),
+            leida: false
+        });
+
+        guardarNotificaciones(notificaciones.slice(0, 80));
+        renderNotificacionesUsuario();
+
+    }
+
+    function registrarNotificacionAsignacionTecnico(ticketActualizado, ticketAnterior) {
+
+        if (!ticketActualizado.tecnico || ticketActualizado.tecnico === "Sin asignar") {
+            return;
+        }
+
+        if (ticketAnterior && ticketAnterior.tecnico === ticketActualizado.tecnico) {
+            return;
+        }
+
+        const notificaciones = obtenerNotificaciones();
+        const yaExiste = notificaciones.some((notificacion) => (
+            notificacion.tipo === "asignacion-tecnico"
+            && notificacion.ticketId === ticketActualizado.id
+            && normalizarTexto(notificacion.tecnico) === normalizarTexto(ticketActualizado.tecnico)
+        ));
+
+        if (yaExiste) {
+            return;
+        }
+
+        notificaciones.unshift({
+            id: `${ticketActualizado.id}-${normalizarTexto(ticketActualizado.tecnico)}-${Date.now()}`,
+            tipo: "asignacion-tecnico",
+            ticketId: ticketActualizado.id,
+            tecnico: ticketActualizado.tecnico,
+            ciudad: ticketActualizado.ciudad,
+            titulo: "Nuevo trabajo asignado",
+            mensaje: `${ticketActualizado.usuario || "Un usuario"} necesita soporte para ${ticketActualizado.dispositivo} en ${ticketActualizado.ciudad}.`,
+            fecha: new Date().toLocaleString("es-CO"),
+            leida: false
+        });
+
+        guardarNotificaciones(notificaciones.slice(0, 100));
+        renderNotificacionesTecnico();
+
+    }
+
+    function marcarNotificacionesUsuarioLeidas() {
+
+        const notificaciones = obtenerNotificaciones();
+        let huboCambios = false;
+
+        const actualizadas = notificaciones.map((notificacion) => {
+            if (!notificacion.leida && notificacionPerteneceAUsuarioActual(notificacion)) {
+                huboCambios = true;
+                return {
+                    ...notificacion,
+                    leida: true
+                };
+            }
+
+            return notificacion;
+        });
+
+        if (huboCambios) {
+            guardarNotificaciones(actualizadas);
+        }
+
+    }
+
+    function renderNotificacionesUsuario() {
+
+        if (!listaNotificacionesUsuario || !contadorNotificacionesUsuario) {
+            return;
+        }
+
+        const notificacionesUsuario = obtenerNotificaciones().filter(notificacionPerteneceAUsuarioActual);
+        const sinLeer = notificacionesUsuario.filter((notificacion) => !notificacion.leida).length;
+
+        contadorNotificacionesUsuario.textContent = sinLeer;
+        contadorNotificacionesUsuario.hidden = sinLeer === 0;
+        listaNotificacionesUsuario.innerHTML = "";
+
+        if (notificacionesUsuario.length === 0) {
+            const vacio = document.createElement("p");
+            vacio.className = "notificaciones-vacias";
+            vacio.textContent = "No tienes notificaciones nuevas.";
+            listaNotificacionesUsuario.appendChild(vacio);
+            return;
+        }
+
+        notificacionesUsuario.slice(0, 8).forEach((notificacion) => {
+            const item = document.createElement("article");
+            item.className = `notificacion-item ${notificacion.leida ? "" : "no-leida"}`;
+            item.innerHTML = `
+                <strong>${notificacion.titulo}</strong>
+                <p>${notificacion.mensaje}</p>
+                <span>${notificacion.fecha}</span>
+            `;
+            item.addEventListener("click", () => {
+                localStorage.setItem(ticketActualUsuarioKey, notificacion.ticketId);
+                mostrarEstadoTicketUsuario();
+                if (panelNotificacionesUsuario) {
+                    panelNotificacionesUsuario.hidden = true;
+                }
+            });
+            listaNotificacionesUsuario.appendChild(item);
+        });
+
+    }
+
+    function marcarNotificacionesTecnicoLeidas() {
+
+        const notificaciones = obtenerNotificaciones();
+        let huboCambios = false;
+
+        const actualizadas = notificaciones.map((notificacion) => {
+            if (!notificacion.leida && notificacionPerteneceATecnicoActual(notificacion)) {
+                huboCambios = true;
+                return {
+                    ...notificacion,
+                    leida: true
+                };
+            }
+
+            return notificacion;
+        });
+
+        if (huboCambios) {
+            guardarNotificaciones(actualizadas);
+        }
+
+    }
+
+    function renderNotificacionesTecnico() {
+
+        if (!listaNotificacionesTecnico || !contadorNotificacionesTecnico) {
+            return;
+        }
+
+        const notificacionesTecnico = obtenerNotificaciones().filter(notificacionPerteneceATecnicoActual);
+        const sinLeer = notificacionesTecnico.filter((notificacion) => !notificacion.leida).length;
+
+        contadorNotificacionesTecnico.textContent = sinLeer;
+        contadorNotificacionesTecnico.hidden = sinLeer === 0;
+        listaNotificacionesTecnico.innerHTML = "";
+
+        if (notificacionesTecnico.length === 0) {
+            const vacio = document.createElement("p");
+            vacio.className = "notificaciones-vacias";
+            vacio.textContent = "No tienes trabajos nuevos.";
+            listaNotificacionesTecnico.appendChild(vacio);
+            return;
+        }
+
+        notificacionesTecnico.slice(0, 8).forEach((notificacion) => {
+            const item = document.createElement("article");
+            item.className = `notificacion-item ${notificacion.leida ? "" : "no-leida"}`;
+            item.innerHTML = `
+                <strong>${notificacion.titulo}</strong>
+                <p>${notificacion.mensaje}</p>
+                <span>${notificacion.fecha}</span>
+            `;
+            item.addEventListener("click", () => {
+                detallesTecnicoAbiertos.add(notificacion.ticketId);
+                renderTicketsTecnico();
+                if (panelNotificacionesTecnico) {
+                    panelNotificacionesTecnico.hidden = true;
+                }
+            });
+            listaNotificacionesTecnico.appendChild(item);
+        });
+
+    }
+
+    function obtenerTecnicosDisponibles() {
+
+        const tecnicosPorNombre = new Map();
+
+        tecnicos.forEach((tecnico) => {
+            tecnicosPorNombre.set(normalizarTexto(tecnico.nombre), tecnico);
+        });
+
+        obtenerRegistrados()
+            .filter((usuarioRegistrado) => formatearRol(usuarioRegistrado.rol) === "Tecnico")
+            .forEach((usuarioRegistrado) => {
+                const nombre = usuarioRegistrado.nombre;
+
+                if (nombre) {
+                    tecnicosPorNombre.set(normalizarTexto(nombre), {
+                        nombre,
+                        ciudad: usuarioRegistrado.ciudad || "Bogota"
+                    });
+                }
+            });
+
+        return Array.from(tecnicosPorNombre.values());
+
+    }
+
+    function asignarTecnicoAutomatico(ciudad) {
+
+        const ticketsActuales = obtenerTodosLosTickets();
+        const tecnicosDisponibles = obtenerTecnicosDisponibles();
+        const tecnicosMismaCiudad = tecnicosDisponibles.filter((tecnico) => normalizarTexto(tecnico.ciudad) === normalizarTexto(ciudad));
+        const candidatos = tecnicosMismaCiudad.length > 0 ? tecnicosMismaCiudad : tecnicosDisponibles;
+
+        if (candidatos.length === 0) {
+            return {
+                nombre: "Sin asignar",
+                ciudad
+            };
+        }
+
+        return candidatos
+            .map((tecnico) => ({
+                ...tecnico,
+                ticketsAsignados: ticketsActuales.filter((ticket) => ticket.tecnico === tecnico.nombre).length
+            }))
+            .sort((a, b) => a.ticketsAsignados - b.ticketsAsignados)[0];
+
+    }
+
+    function guardarTicket(ticket) {
+
+        const ticketsGuardados = obtenerTickets();
+        ticketsGuardados.push(ticket);
+        guardarTickets(ticketsGuardados);
+        registrarNotificacionAsignacionTecnico(ticket, null);
+
+        if (ticketPerteneceAUsuarioActual(ticket)) {
+            localStorage.setItem(ticketActualUsuarioKey, ticket.id);
+        }
+
+    }
+
+    function generarTicketId() {
+
+        const idsExistentes = [
+            ...ticketsBase.map((ticket) => ticket.id),
+            ...obtenerTickets().map((ticket) => ticket.id),
+            ...obtenerTicketsEliminados()
+        ];
+        const ultimoNumero = idsExistentes.reduce((mayor, id) => {
+            const numero = Number(String(id).replace("TKT-", ""));
+            return Number.isNaN(numero) ? mayor : Math.max(mayor, numero);
+        }, 0);
+
+        return `TKT-${String(ultimoNumero + 1).padStart(3, "0")}`;
+
+    }
+
+    function actualizarTicket(ticketActualizado) {
+
+        const ticketsGuardados = obtenerTickets();
+        const indice = ticketsGuardados.findIndex((ticket) => ticket.id === ticketActualizado.id);
+        const ticketAnterior = indice >= 0
+            ? ticketsGuardados[indice]
+            : obtenerTodosLosTickets().find((ticket) => ticket.id === ticketActualizado.id);
+
+        if (indice >= 0) {
+
+            ticketsGuardados[indice] = ticketActualizado;
+
+        } else {
+
+            ticketsGuardados.push(ticketActualizado);
+
+        }
+
+        guardarTickets(ticketsGuardados);
+        registrarNotificacionCambioEstado(ticketActualizado, ticketAnterior);
+        registrarNotificacionAsignacionTecnico(ticketActualizado, ticketAnterior);
+
+        if (ticketPerteneceAUsuarioActual(ticketActualizado)) {
+            localStorage.setItem(ticketActualUsuarioKey, ticketActualizado.id);
+        }
+
+        apiRequest(`/tickets/${ticketActualizado.id}`, {
+            method: "PATCH",
+            body: JSON.stringify(ticketActualizado)
+        }).catch(() => {});
+
+    }
+
+    function eliminarTicket(ticketId) {
+
+        const ticketsGuardados = obtenerTickets().filter((ticket) => ticket.id !== ticketId);
+        const idsEliminados = obtenerTicketsEliminados();
+
+        if (!idsEliminados.includes(ticketId)) {
+            idsEliminados.push(ticketId);
+        }
+
+        guardarTickets(ticketsGuardados);
+        guardarTicketsEliminados(idsEliminados);
+
+        if (localStorage.getItem(ticketActualUsuarioKey) === ticketId) {
+            localStorage.removeItem(ticketActualUsuarioKey);
+        }
+
+        apiRequest(`/tickets/${ticketId}`, {
+            method: "DELETE"
+        }).catch(() => {});
+
+    }
+
+    function guardarRegistrado(usuario) {
+
+        const registrados = obtenerRegistrados();
+        const indice = registrados.findIndex((registrado) => registrado.correo === usuario.correo);
+
+        if (indice >= 0) {
+
+            registrados[indice] = usuario;
+
+        } else {
+
+            registrados.push(usuario);
+
+        }
+
+        localStorage.setItem(usuariosDbKey, JSON.stringify(registrados));
+        emitirSincronizacion();
+
+    }
+
+    function crearCelda(texto) {
+
+        const celda = document.createElement("td");
+        celda.textContent = texto;
+        return celda;
+
+    }
+
+    function crearBadgeActivo(estadoActivo) {
+
+        const celda = document.createElement("td");
+        const badge = document.createElement("span");
+
+        badge.className = `estado ${claseEstadoTicket(estadoActivo)}`;
+        badge.textContent = estadoActivo;
+        celda.appendChild(badge);
+
+        return celda;
+
+    }
+
+    function obtenerCategoriaDispositivo(dispositivo) {
+
+        const dispositivoNormalizado = normalizarTexto(dispositivo);
+
+        if (dispositivoNormalizado.includes("iphone") || dispositivoNormalizado.includes("telefono") || dispositivoNormalizado.includes("celular")) {
+            return "Telefono";
+        }
+
+        if (dispositivoNormalizado.includes("macbook") || dispositivoNormalizado.includes("portatil") || dispositivoNormalizado.includes("laptop")) {
+            return "Portatil";
+        }
+
+        if (dispositivoNormalizado.includes("ipad") || dispositivoNormalizado.includes("tablet")) {
+            return "Tablet";
+        }
+
+        if (dispositivoNormalizado.includes("watch") || dispositivoNormalizado.includes("apple watch")) {
+            return "Accesorio";
+        }
+
+        return "Equipo";
+
+    }
+
+    function obtenerActivosDesdeTickets() {
+
+        return obtenerTodosLosTickets().map((ticket) => ({
+            id: ticket.id,
+            nombre: ticket.dispositivo || "Dispositivo sin nombre",
+            modelo: ticket.problema || "Soporte tecnico",
+            serial: ticket.id,
+            categoria: obtenerCategoriaDispositivo(ticket.dispositivo),
+            ubicacion: ticket.ciudad || "Sin ciudad",
+            asignadoA: ticket.tecnico || "Sin tecnico",
+            estado: ticket.estado,
+            valor: ticket.valorArreglo || 0,
+            ultimoMovimiento: ticket.fecha || "Sin fecha",
+            observacion: `${ticket.usuario || "Usuario"} - ${ticket.comentarioTecnico || ticket.descripcion || ticket.problema || "Sin detalle"}`
+        }));
+
+    }
+
+    function renderActivosAdmin() {
+
+        if (!tablaActivosAdminBody) {
+            return;
+        }
+
+        const activosOperativos = obtenerActivosDesdeTickets();
+        const busqueda = buscarActivoAdmin ? normalizarTexto(buscarActivoAdmin.value.trim()) : "";
+        const estadoSeleccionado = filtroEstadoActivoAdmin ? filtroEstadoActivoAdmin.value : "Todos";
+        const activosFiltrados = activosOperativos.filter((activo) => {
+            const coincideBusqueda = !busqueda || normalizarTexto(`${activo.nombre} ${activo.modelo} ${activo.serial} ${activo.ubicacion} ${activo.asignadoA} ${activo.observacion}`).includes(busqueda);
+            const coincideEstado = estadoSeleccionado === "Todos" || activo.estado === estadoSeleccionado;
+            return coincideBusqueda && coincideEstado;
+        });
+
+        tablaActivosAdminBody.innerHTML = "";
+
+        if (totalActivosAdmin) {
+            totalActivosAdmin.textContent = activosOperativos.length;
+            activosAsignadosAdmin.textContent = activosOperativos.filter((activo) => activo.asignadoA !== "Sin tecnico" && !ticketEstaTerminado(activo)).length;
+            activosMantenimientoAdmin.textContent = activosOperativos.filter((activo) => activo.estado === "En proceso").length;
+            sedesActivosAdmin.textContent = new Set(activosOperativos.map((activo) => activo.ubicacion)).size;
+        }
+
+        if (activosFiltrados.length === 0) {
+            const filaVacia = document.createElement("tr");
+            const celdaVacia = document.createElement("td");
+
+            celdaVacia.colSpan = 8;
+            celdaVacia.className = "tabla-vacia";
+            celdaVacia.textContent = "No hay tickets que coincidan con la busqueda.";
+            filaVacia.appendChild(celdaVacia);
+            tablaActivosAdminBody.appendChild(filaVacia);
+            return;
+        }
+
+        activosFiltrados.forEach((activo) => {
+
+            const fila = document.createElement("tr");
+            const activoCelda = document.createElement("td");
+            const nombre = document.createElement("span");
+            const modelo = document.createElement("span");
+
+            nombre.className = "activo-nombre";
+            modelo.className = "activo-modelo";
+            nombre.textContent = activo.nombre;
+            modelo.textContent = activo.modelo;
+            activoCelda.appendChild(nombre);
+            activoCelda.appendChild(modelo);
+
+            fila.appendChild(activoCelda);
+            fila.appendChild(crearCelda(activo.serial));
+            fila.appendChild(crearCelda(activo.categoria));
+            fila.appendChild(crearCelda(activo.ubicacion));
+            fila.appendChild(crearCelda(activo.asignadoA));
+            fila.appendChild(crearBadgeActivo(activo.estado));
+            fila.appendChild(crearCelda(formatearValor(activo.valor)));
+            fila.appendChild(crearCelda(`${activo.ultimoMovimiento} - ${activo.observacion}`));
+
+            tablaActivosAdminBody.appendChild(fila);
+
+        });
+
+    }
+
+    function renderDashboardAdmin() {
+
+        if (!dashboardTotalDispositivos) {
+            return;
+        }
+
+        const ticketsActuales = obtenerTodosLosTickets();
+        const activosOperativos = obtenerActivosDesdeTickets();
+        const ticketsAbiertos = ticketsActuales.filter((ticket) => ticket.estado === "Abierto" || ticket.estado === "Aceptado");
+        const ticketsProceso = ticketsActuales.filter((ticket) => ticket.estado === "En proceso");
+        const ticketsCerrados = ticketsActuales.filter((ticket) => ticketEstaTerminado(ticket));
+
+        dashboardTotalDispositivos.textContent = activosOperativos.length;
+        dashboardTicketsAbiertos.textContent = ticketsAbiertos.length;
+        dashboardTicketsProceso.textContent = ticketsProceso.length;
+        dashboardTicketsCerrados.textContent = ticketsCerrados.length;
+
+        renderActividadDashboard(ticketsActuales);
+        renderDispositivosDashboard();
+
+    }
+
+    function renderActividadDashboard(ticketsActuales) {
+
+        if (!dashboardActividadReciente) {
+            return;
+        }
+
+        dashboardActividadReciente.innerHTML = "<h2>Actividad Reciente</h2>";
+
+        ticketsActuales.slice(-4).reverse().forEach((ticket) => {
+
+            const actividad = document.createElement("article");
+            actividad.className = "actividad";
+            actividad.innerHTML = `
+                <div>
+                    <h3>${ticket.estado === "Abierto" ? "Nuevo Ticket Creado" : `Ticket ${ticket.estado}`}</h3>
+                    <p>${ticket.dispositivo} - ${ticket.usuario}</p>
+                </div>
+                <span>${ticket.fecha}</span>
+            `;
+            dashboardActividadReciente.appendChild(actividad);
+
+        });
+
+    }
+
+    function renderDispositivosDashboard() {
+
+        if (!dashboardDispositivosPopulares) {
+            return;
+        }
+
+        const conteoDispositivos = obtenerActivosDesdeTickets().reduce((conteo, activo) => {
+            const responsable = activo.asignadoA || "Sin tecnico";
+            conteo[responsable] = (conteo[responsable] || 0) + 1;
+            return conteo;
+        }, {});
+        const dispositivos = Object.entries(conteoDispositivos)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 4);
+        const mayorCantidad = Math.max(...dispositivos.map(([, cantidad]) => cantidad), 1);
+
+        dashboardDispositivosPopulares.innerHTML = "<h2>Dispositivos por Tecnicos</h2>";
+
+        dispositivos.forEach(([responsable, cantidad]) => {
+
+            const porcentaje = Math.max((cantidad / mayorCantidad) * 100, 12);
+            const dispositivo = document.createElement("article");
+            dispositivo.className = "dispositivo";
+            dispositivo.innerHTML = `
+                <header>
+                    <p>${responsable}</p>
+                    <span>${cantidad}</span>
+                </header>
+                <div class="barra">
+                    <span style="width: ${porcentaje}%;"></span>
+                </div>
+            `;
+            dashboardDispositivosPopulares.appendChild(dispositivo);
+
+        });
+
+    }
+
+    function crearBadgeRol(rolUsuario) {
+
+        const celda = document.createElement("td");
+        const badge = document.createElement("span");
+        const claseRol = rolUsuario.toLowerCase();
+
+        badge.className = `rol-${claseRol}`;
+        badge.textContent = rolUsuario;
+        celda.appendChild(badge);
+
+        return celda;
+
+    }
+
+    function claseEstadoTicket(estadoTicket) {
+
+        const estadoNormalizado = normalizarTexto(estadoTicket);
+
+        if (estadoNormalizado === "abierto") {
+            return "abierto";
+        }
+
+        if (estadoNormalizado === "cerrado" || estadoNormalizado === "reparado" || estadoNormalizado === "listo para entrega") {
+            return "cerrado";
+        }
+
+        return "proceso";
+
+    }
+
+    function ticketEstaTerminado(ticket) {
+
+        return ["Reparado", "Listo para entrega", "Cerrado"].includes(ticket.estado);
+
+    }
+
+    function obtenerTicketUsuarioActual() {
+
+        const ticketsUsuario = obtenerTodosLosTickets().filter(ticketPerteneceAUsuarioActual);
+        const ticketGuardadoId = localStorage.getItem(ticketActualUsuarioKey);
+        const ticketGuardado = ticketsUsuario.find((ticket) => ticket.id === ticketGuardadoId);
+
+        if (ticketGuardado) {
+            return ticketGuardado;
+        }
+
+        return ticketsUsuario[ticketsUsuario.length - 1] || null;
+
+    }
+
+    function obtenerTicketsUsuarioActual() {
+
+        return obtenerTodosLosTickets().filter(ticketPerteneceAUsuarioActual);
+
+    }
+
+    function crearCardEstadoUsuario(ticket) {
+
+        const card = document.createElement("section");
+        const terminado = ticketEstaTerminado(ticket);
+
+        card.className = "estado-ticket-card";
+        card.innerHTML = `
+            <div class="estado-ticket-header">
+                <div>
+                    <span class="ticket-id">${ticket.id}</span>
+                    <h2>${ticket.problema}</h2>
+                    <p>${ticket.descripcion}</p>
+                </div>
+                <span class="estado-badge ${claseEstadoTicket(ticket.estado) === "cerrado" ? "reparado" : "proceso"}">${ticket.estado}</span>
+            </div>
+
+            <div class="estado-ticket-info">
+                <div>
+                    <p>Dispositivo</p>
+                    <strong>${ticket.dispositivo}</strong>
+                </div>
+                <div>
+                    <p>Prioridad</p>
+                    <strong>${ticket.prioridad}</strong>
+                </div>
+                <div>
+                    <p>Tecnico asignado</p>
+                    <strong>${ticket.tecnico}</strong>
+                </div>
+                <div>
+                    <p>Fecha</p>
+                    <strong>${ticket.fecha}</strong>
+                </div>
+            </div>
+
+            <div class="estado-mensaje">
+                <i class="fa-regular fa-circle-check"></i>
+                <div>
+                    <h3>${terminado ? "Tu dispositivo ya fue reparado" : "Tu ticket esta en seguimiento"}</h3>
+                    <p>${terminado ? `Puedes pasar por el equipo en ${ticket.ciudad}. Recuerda traer tu documento y el numero del ticket.` : `${ticket.tecnico} fue asignado por cercania en ${ticket.ciudad}. Estado actual: ${ticket.estado}.`}</p>
+                </div>
+            </div>
+
+            <div class="estado-pago ${terminado ? "mostrar" : ""}">
+                <div>
+                    <p>Valor a pagar</p>
+                    <strong>${formatearValor(ticket.valorArreglo)}</strong>
+                </div>
+                <div>
+                    <p>Comentario del tecnico</p>
+                    <strong>${ticket.comentarioTecnico || "Sin comentario tecnico."}</strong>
+                </div>
+            </div>
+        `;
+
+        return card;
+
+    }
+
+    function renderEstadoUsuario() {
+
+        if (!listaTicketsUsuario) {
+            return;
+        }
+
+        const ticketsUsuario = obtenerTicketsUsuarioActual();
+        listaTicketsUsuario.innerHTML = "";
+
+        if (ticketsUsuario.length === 0) {
+
+            const vacio = document.createElement("div");
+            vacio.className = "estado-vacio";
+            vacio.innerHTML = `
+                <h3>No tienes tickets creados</h3>
+                <p>Crea un ticket para consultar aqui el comentario del tecnico, el precio y el estado del arreglo.</p>
+            `;
+            listaTicketsUsuario.appendChild(vacio);
+            return;
+
+        }
+
+        ticketsUsuario.slice().reverse().forEach((ticket) => {
+            listaTicketsUsuario.appendChild(crearCardEstadoUsuario(ticket));
+        });
+
+    }
+
+    function actualizarEstadoUsuarioActual() {
+
+        renderEstadoUsuario();
+        renderNotificacionesUsuario();
+        renderNotificacionesTecnico();
+
+    }
+
+    function crearSelectEstado(ticket) {
+
+        const celda = document.createElement("td");
+        const select = document.createElement("select");
+        const estados = ["Abierto", "Aceptado", "En proceso", "Reparado", "Listo para entrega", "Cerrado"];
+
+        select.className = `estado ${claseEstadoTicket(ticket.estado)}`;
+
+        estados.forEach((estado) => {
+
+            const option = document.createElement("option");
+            option.value = estado;
+            option.textContent = estado;
+
+            if (estado === ticket.estado) {
+                option.selected = true;
+            }
+
+            select.appendChild(option);
+
+        });
+
+        select.addEventListener("change", () => {
+
+            const ticketActualizado = {
+                ...ticket,
+                estado: select.value
+            };
+
+            actualizarTicket(ticketActualizado);
+            actualizarEstadoUsuarioActual();
+            renderTicketsAdmin();
+            renderTicketsTecnico();
+
+        });
+
+        celda.appendChild(select);
+        return celda;
+
+    }
+
+    function renderTicketsAdmin() {
+
+        if (!tablaTicketsAdminBody) {
+
+            return;
+
+        }
+
+        tablaTicketsAdminBody.hidden = false;
+        const ticketsAdmin = obtenerTodosLosTickets();
+
+        tablaTicketsAdminBody.innerHTML = "";
+
+        if (adminTicketsTotal) {
+            adminTicketsTotal.textContent = ticketsAdmin.length;
+            adminTicketsAbiertos.textContent = ticketsAdmin.filter((ticket) => ticket.estado === "Abierto" || ticket.estado === "Aceptado").length;
+            adminTicketsProceso.textContent = ticketsAdmin.filter((ticket) => ticket.estado === "En proceso").length;
+            adminTicketsCerrados.textContent = ticketsAdmin.filter((ticket) => ticketEstaTerminado(ticket)).length;
+        }
+
+        ticketsAdmin.forEach((ticket) => {
+
+            const fila = document.createElement("tr");
+            const detalle = crearDetalleAdmin(ticket);
+
+            fila.appendChild(crearCelda(ticket.id));
+            fila.appendChild(crearCelda(ticket.usuario));
+            fila.appendChild(crearCelda(ticket.ciudad));
+            fila.appendChild(crearCelda(ticket.dispositivo));
+            fila.appendChild(crearSelectEstado(ticket));
+
+            const prioridad = document.createElement("td");
+            const prioridadTexto = document.createElement("span");
+            prioridadTexto.className = `prioridad ${normalizarTexto(ticket.prioridad)}`;
+            prioridadTexto.textContent = ticket.prioridad;
+            prioridad.appendChild(prioridadTexto);
+            fila.appendChild(prioridad);
+
+            fila.appendChild(crearCelda(ticket.tecnico));
+
+            const acciones = document.createElement("td");
+            acciones.className = "acciones-ticket";
+            acciones.appendChild(crearAccionAdmin("ver", "Ver ticket", "fa-regular fa-eye", () => {
+                mostrarDetalleAdmin(detalle, ticket, "ver");
+            }));
+            acciones.appendChild(crearAccionAdmin("editar", "Editar ticket", "fa-solid fa-pen", () => {
+                mostrarDetalleAdmin(detalle, ticket, "editar");
+            }));
+            acciones.appendChild(crearAccionAdmin("eliminar", "Eliminar ticket", "fa-solid fa-trash", () => {
+
+                if (!confirm(`Quieres eliminar el ticket ${ticket.id}?`)) {
+                    return;
+                }
+
+                eliminarTicket(ticket.id);
+                actualizarEstadoUsuarioActual();
+                renderTicketsAdmin();
+                renderTicketsTecnico();
+
+            }));
+            fila.appendChild(acciones);
+
+            tablaTicketsAdminBody.appendChild(fila);
+            tablaTicketsAdminBody.appendChild(detalle);
+
+        });
+
+        renderDashboardAdmin();
+
+    }
+
+    function crearAccionAdmin(tipo, titulo, icono, accion) {
+
+        const boton = document.createElement("button");
+
+        boton.className = `btn-accion-admin ${tipo}`;
+        boton.type = "button";
+        boton.title = titulo;
+        boton.innerHTML = `<i class="${icono}"></i>`;
+        boton.addEventListener("click", accion);
+
+        return boton;
+
+    }
+
+    function crearDetalleAdmin(ticket) {
+
+        const fila = document.createElement("tr");
+        const celda = document.createElement("td");
+
+        fila.className = "fila-detalle-admin";
+        fila.id = `admin-detalle-${ticket.id}`;
+        celda.colSpan = 8;
+        fila.appendChild(celda);
+
+        return fila;
+
+    }
+
+    function mostrarDetalleAdmin(filaDetalle, ticket, modo) {
+
+        const celda = filaDetalle.querySelector("td");
+        const estaAbierto = filaDetalle.classList.contains("mostrar");
+        const mismoModo = filaDetalle.dataset.modo === modo;
+
+        document.querySelectorAll(".fila-detalle-admin").forEach((fila) => {
+            fila.classList.remove("mostrar");
+            fila.dataset.modo = "";
+        });
+
+        if (estaAbierto && mismoModo) {
+            return;
+        }
+
+        celda.innerHTML = "";
+        filaDetalle.dataset.modo = modo;
+
+        if (modo === "ver") {
+            celda.appendChild(crearVistaTicketAdmin(ticket));
+        } else {
+            celda.appendChild(crearFormularioTicketAdmin(ticket));
+        }
+
+        filaDetalle.classList.add("mostrar");
+
+    }
+
+    function crearVistaTicketAdmin(ticket) {
+
+        const contenedor = document.createElement("div");
+        const campos = [
+            ["ID", ticket.id],
+            ["Usuario", ticket.usuario],
+            ["Ciudad", ticket.ciudad],
+            ["Dispositivo", ticket.dispositivo],
+            ["Problema", ticket.problema],
+            ["Descripcion", ticket.descripcion],
+            ["Estado", ticket.estado],
+            ["Prioridad", ticket.prioridad],
+            ["Tecnico", ticket.tecnico],
+            ["Valor", formatearValor(ticket.valorArreglo)],
+            ["Comentario tecnico", ticket.comentarioTecnico || "Sin comentario tecnico."]
+        ];
+
+        contenedor.className = "detalle-admin-card";
+
+        campos.forEach(([etiqueta, valor]) => {
+
+            const item = document.createElement("div");
+            const label = document.createElement("p");
+            const texto = document.createElement("strong");
+
+            label.textContent = etiqueta;
+            texto.textContent = valor;
+            item.appendChild(label);
+            item.appendChild(texto);
+            contenedor.appendChild(item);
+
+        });
+
+        return contenedor;
+
+    }
+
+    function crearFormularioTicketAdmin(ticket) {
+
+        const formulario = document.createElement("form");
+        const estados = ["Abierto", "Aceptado", "En proceso", "Reparado", "Listo para entrega", "Cerrado"];
+        const prioridades = ["Baja", "Media", "Alta"];
+
+        formulario.className = "form-admin-ticket";
+        formulario.innerHTML = `
+            <div>
+                <label>Problema</label>
+                <input name="problema" type="text" maxlength="80" required>
+            </div>
+            <div>
+                <label>Dispositivo</label>
+                <input name="dispositivo" type="text" maxlength="80" required>
+            </div>
+            <div>
+                <label>Ciudad</label>
+                <input name="ciudad" type="text" maxlength="60" required>
+            </div>
+            <div>
+                <label>Tecnico</label>
+                <input name="tecnico" type="text" maxlength="80" required>
+            </div>
+            <div>
+                <label>Estado</label>
+                <select name="estado">${estados.map((estado) => `<option value="${estado}">${estado}</option>`).join("")}</select>
+            </div>
+            <div>
+                <label>Prioridad</label>
+                <select name="prioridad">${prioridades.map((prioridad) => `<option value="${prioridad}">${prioridad}</option>`).join("")}</select>
+            </div>
+            <div>
+                <label>Valor a pagar</label>
+                <input name="valorArreglo" type="number" min="0" step="1000">
+            </div>
+            <div class="campo-completo-admin">
+                <label>Descripcion</label>
+                <textarea name="descripcion" maxlength="220" required></textarea>
+            </div>
+            <div class="campo-completo-admin">
+                <label>Comentario tecnico</label>
+                <textarea name="comentarioTecnico" maxlength="220"></textarea>
+            </div>
+            <button type="submit"><i class="fa-regular fa-floppy-disk"></i>Guardar cambios</button>
+        `;
+
+        const campos = formulario.elements;
+
+        campos.problema.value = ticket.problema;
+        campos.dispositivo.value = ticket.dispositivo;
+        campos.ciudad.value = ticket.ciudad;
+        campos.tecnico.value = ticket.tecnico;
+        campos.estado.value = ticket.estado;
+        campos.prioridad.value = ticket.prioridad;
+        campos.valorArreglo.value = ticket.valorArreglo || "0";
+        campos.descripcion.value = ticket.descripcion;
+        campos.comentarioTecnico.value = ticket.comentarioTecnico || "";
+
+        formulario.addEventListener("submit", (e) => {
+
+            e.preventDefault();
+
+            actualizarTicket({
+                ...ticket,
+                problema: campos.problema.value,
+                dispositivo: campos.dispositivo.value,
+                ciudad: campos.ciudad.value,
+                tecnico: campos.tecnico.value,
+                estado: campos.estado.value,
+                prioridad: campos.prioridad.value,
+                valorArreglo: campos.valorArreglo.value || "0",
+                descripcion: campos.descripcion.value,
+                comentarioTecnico: campos.comentarioTecnico.value || "Sin comentario tecnico."
+            });
+
+            actualizarEstadoUsuarioActual();
+            renderTicketsAdmin();
+            renderTicketsTecnico();
+            alert("Ticket actualizado correctamente");
+
+        });
+
+        return formulario;
+
+    }
+
+    function formatearValor(valor) {
+
+        const numero = Number(valor);
+
+        if (!numero) {
+            return "$0";
+        }
+
+        return `$${numero.toLocaleString("es-CO")}`;
+
+    }
+
+    function crearBadgeEstado(estadoTicket) {
+
+        const celda = document.createElement("td");
+        const badge = document.createElement("span");
+
+        badge.className = `estado ${claseEstadoTicket(estadoTicket)}`;
+        badge.textContent = estadoTicket;
+        celda.appendChild(badge);
+
+        return celda;
+
+    }
+
+    function obtenerBorradorDetalleTecnico(ticketId, formulario) {
+
+        return {
+            estado: formulario.querySelector(".input-detalle-estado").value,
+            valorArreglo: formulario.querySelector(".input-detalle-valor").value || "0",
+            comentarioTecnico: formulario.querySelector(".input-detalle-comentario").value
+        };
+
+    }
+
+    function guardarDetallesTecnicoActivos() {
+
+        if (!tablaTicketsTecnicoBody) {
+            return;
+        }
+
+        tablaTicketsTecnicoBody.querySelectorAll(".fila-detalle-tecnico").forEach((filaDetalle) => {
+
+            const ticketId = filaDetalle.id.replace("detalle-", "");
+            const formulario = filaDetalle.querySelector(".form-detalle-tecnico");
+
+            if (filaDetalle.classList.contains("mostrar")) {
+                detallesTecnicoAbiertos.add(ticketId);
+
+                if (formulario) {
+                    borradoresDetalleTecnico.set(ticketId, obtenerBorradorDetalleTecnico(ticketId, formulario));
+                }
+
+            } else {
+                detallesTecnicoAbiertos.delete(ticketId);
+                borradoresDetalleTecnico.delete(ticketId);
+            }
+
+        });
+
+    }
+
+    function crearAccionTecnico(ticket) {
+
+        const celda = document.createElement("td");
+        const boton = document.createElement("button");
+
+        boton.className = "btn-editar-ticket-tecnico";
+        boton.type = "button";
+        boton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+        boton.title = "Actualizar ticket";
+
+        boton.addEventListener("click", () => {
+
+            const detalle = document.getElementById(`detalle-${ticket.id}`);
+
+            if (detalle) {
+
+                const mostrarDetalle = detalle.classList.toggle("mostrar");
+
+                if (mostrarDetalle) {
+                    detallesTecnicoAbiertos.add(ticket.id);
+                } else {
+                    detallesTecnicoAbiertos.delete(ticket.id);
+                }
+
+            }
+
+        });
+
+        celda.appendChild(boton);
+        return celda;
+
+    }
+
+    function crearDetalleTecnico(ticket) {
+
+        const fila = document.createElement("tr");
+        const celda = document.createElement("td");
+        const estados = ["En proceso", "Reparado", "Listo para entrega", "Cerrado"];
+        const borrador = borradoresDetalleTecnico.get(ticket.id);
+        const estadoSeleccionado = borrador?.estado || ticket.estado;
+        const valorArreglo = borrador?.valorArreglo ?? ticket.valorArreglo ?? 0;
+        const comentarioTecnico = borrador?.comentarioTecnico ?? ticket.comentarioTecnico ?? "";
+
+        fila.id = `detalle-${ticket.id}`;
+        fila.className = "fila-detalle-tecnico";
+
+        if (detallesTecnicoAbiertos.has(ticket.id)) {
+            fila.classList.add("mostrar");
+        }
+
+        celda.colSpan = 10;
+
+        const formulario = document.createElement("form");
+        formulario.className = "form-detalle-tecnico";
+        formulario.innerHTML = `
+            <div>
+                <label>Estado del arreglo</label>
+                <select class="input-detalle-estado">
+                    ${estados.map((estado) => `<option value="${estado}" ${estado === estadoSeleccionado ? "selected" : ""}>${estado}</option>`).join("")}
+                </select>
+            </div>
+            <div>
+                <label>Valor a pagar</label>
+                <input class="input-detalle-valor" type="number" min="0" step="1000" value="${valorArreglo}">
+            </div>
+            <div class="detalle-comentario">
+                <label>Comentario tecnico</label>
+                <textarea class="input-detalle-comentario" maxlength="220">${comentarioTecnico}</textarea>
+            </div>
+            <button type="submit"><i class="fa-regular fa-floppy-disk"></i>Guardar actualizacion</button>
+        `;
+
+        formulario.addEventListener("input", () => {
+            borradoresDetalleTecnico.set(ticket.id, obtenerBorradorDetalleTecnico(ticket.id, formulario));
+        });
+
+        formulario.addEventListener("submit", (e) => {
+
+            e.preventDefault();
+
+            const ticketActualizado = {
+                ...ticket,
+                estado: formulario.querySelector(".input-detalle-estado").value,
+                valorArreglo: formulario.querySelector(".input-detalle-valor").value || "0",
+                comentarioTecnico: formulario.querySelector(".input-detalle-comentario").value || "Sin comentario tecnico."
+            };
+
+            actualizarTicket(ticketActualizado);
+            actualizarEstadoUsuarioActual();
+            borradoresDetalleTecnico.delete(ticket.id);
+            detallesTecnicoAbiertos.delete(ticket.id);
+            formulario.closest(".fila-detalle-tecnico")?.classList.remove("mostrar");
+            renderTicketsAdmin();
+            renderTicketsTecnico();
+
+            alert("Ticket actualizado correctamente");
+
+        });
+
+        celda.appendChild(formulario);
+        fila.appendChild(celda);
+
+        return fila;
+
+    }
+
+    function renderTicketsTecnico() {
+
+        if (!tablaTicketsTecnicoBody) {
+
+            return;
+
+        }
+
+        tablaTicketsTecnicoBody.hidden = false;
+        renderNotificacionesTecnico();
+        const tecnicoActual = normalizarTexto(usuarioActual);
+        const ticketsAsignados = obtenerTodosLosTickets().filter((ticket) => (
+            normalizarTexto(ticket.tecnico || "") === tecnicoActual
+        ));
+        guardarDetallesTecnicoActivos();
+        tablaTicketsTecnicoBody.innerHTML = "";
+
+        if (tecTicketsAbiertos) {
+            tecTicketsAbiertos.textContent = ticketsAsignados.filter((ticket) => ticket.estado === "Abierto" || ticket.estado === "Aceptado").length;
+            tecTicketsProceso.textContent = ticketsAsignados.filter((ticket) => ticket.estado === "En proceso").length;
+            tecTicketsTerminados.textContent = ticketsAsignados.filter((ticket) => ["Reparado", "Listo para entrega", "Cerrado"].includes(ticket.estado)).length;
+        }
+
+        ticketsAsignados.forEach((ticket) => {
+
+            const fila = document.createElement("tr");
+            const problema = document.createElement("td");
+
+            problema.innerHTML = `<p class="problema-ticket-tecnico">${ticket.problema}</p><p>${ticket.fecha}</p>`;
+
+            fila.appendChild(crearCelda(ticket.id));
+            fila.appendChild(crearCelda(ticket.usuario));
+            fila.appendChild(crearCelda(ticket.ciudad));
+            fila.appendChild(crearCelda(ticket.dispositivo));
+            fila.appendChild(problema);
+            fila.appendChild(crearBadgeEstado(ticket.estado));
+
+            const prioridad = document.createElement("td");
+            const prioridadTexto = document.createElement("span");
+            prioridadTexto.className = `prioridad ${normalizarTexto(ticket.prioridad)}`;
+            prioridadTexto.textContent = ticket.prioridad;
+            prioridad.appendChild(prioridadTexto);
+            fila.appendChild(prioridad);
+
+            fila.appendChild(crearCelda(ticket.tecnico));
+            fila.appendChild(crearCelda(formatearValor(ticket.valorArreglo)));
+            fila.appendChild(crearAccionTecnico(ticket));
+
+            tablaTicketsTecnicoBody.appendChild(fila);
+            tablaTicketsTecnicoBody.appendChild(crearDetalleTecnico(ticket));
+
+        });
+
+    }
+
+    function renderRegistradosAdmin() {
+
+        if (!tablaRegistradosBody) {
+
+            return;
+
+        }
+
+        const usuariosPorCorreo = new Map();
+
+        const usuariosFuente = apiDisponible
+            ? obtenerRegistrados()
+            : [...cuentasEspeciales, ...usuariosNormalesBase, ...obtenerRegistrados()];
+
+        usuariosFuente.forEach((usuarioRegistrado) => {
+            usuariosPorCorreo.set(normalizarTexto(usuarioRegistrado.correo), {
+                ...usuarioRegistrado,
+                rol: formatearRol(usuarioRegistrado.rol)
+            });
+        });
+
+        const registrados = Array.from(usuariosPorCorreo.values()).sort((a, b) => {
+            const ordenRoles = { Admin: 1, Tecnico: 2, Usuario: 3 };
+            return (ordenRoles[a.rol] || 4) - (ordenRoles[b.rol] || 4) || a.nombre.localeCompare(b.nombre);
+        });
+        const usuariosNormales = registrados.filter((usuarioRegistrado) => usuarioRegistrado.rol === "Usuario");
+        const tecnicosRegistrados = registrados.filter((usuarioRegistrado) => usuarioRegistrado.rol === "Tecnico");
+        const adminsRegistrados = registrados.filter((usuarioRegistrado) => usuarioRegistrado.rol === "Admin");
+        tablaRegistradosBody.innerHTML = "";
+
+        registrados.forEach((usuarioRegistrado) => {
+
+            const fila = document.createElement("tr");
+
+            fila.appendChild(crearCelda(usuarioRegistrado.nombre));
+            fila.appendChild(crearBadgeRol(usuarioRegistrado.rol));
+            fila.appendChild(crearCelda(usuarioRegistrado.correo));
+            fila.appendChild(crearCelda(usuarioRegistrado.password || usuarioRegistrado.passwordDemo || ""));
+            fila.appendChild(crearCelda(usuarioRegistrado.ciudad));
+            fila.appendChild(crearCelda(usuarioRegistrado.pais));
+            fila.appendChild(crearCelda(usuarioRegistrado.nacimiento));
+            fila.appendChild(crearCelda(usuarioRegistrado.estado));
+
+            tablaRegistradosBody.appendChild(fila);
+
+        });
+
+        totalRegistradosAdmin.textContent = registrados.length;
+        totalUsuariosRegistrados.textContent = usuariosNormales.length;
+        totalTecnicosRegistrados.textContent = tecnicosRegistrados.length;
+        totalAdminsRegistrados.textContent = adminsRegistrados.length;
+
+    }
+
+    function mostrarLogin() {
+
+        form.style.display = "flex";
+        formRegistro.style.display = "none";
+        login.classList.remove("register-active");
+
+    }
+
+    function mostrarRegistro() {
+
+        form.style.display = "none";
+        formRegistro.style.display = "flex";
+        login.classList.add("register-active");
+
+    }
+
+    function guardarSesion(datosSesion) {
+
+        localStorage.setItem(sesionActualKey, JSON.stringify({
+            id: datosSesion.id || null,
+            nombre: datosSesion.nombre,
+            correo: datosSesion.correo,
+            rol: formatearRol(datosSesion.rol)
+        }));
+
+    }
+
+    function obtenerSesionGuardada() {
+
+        const datos = localStorage.getItem(sesionActualKey);
+
+        if (!datos) return null;
+
+        try {
+            return JSON.parse(datos);
+        } catch (error) {
+            return null;
+        }
+
+    }
+
+    function actualizarFooterSesion(visible) {
+
+        if (footerApp) {
+            footerApp.hidden = !visible;
+        }
+
+    }
+
+    function mostrarPantallaSesion(datosSesion, debeGuardarSesion = true) {
+
+        const valor = normalizarTexto(datosSesion.rol);
+
+        usuarioActual = datosSesion.nombre;
+        correoUsuarioActual = datosSesion.correo;
+        usuarioActualId = datosSesion.id || usuarioActualId;
+
+        if (debeGuardarSesion) {
+            guardarSesion(datosSesion);
+        }
+
+        login.style.display = "none";
+        pantallaUsuario.style.display = "none";
+        pantallaAdmin.style.display = "none";
+        pantallaTecnico.style.display = "none";
+        actualizarFooterSesion(true);
+
+        if (valor === "usuario") {
+            nombrePerfilUsuario.textContent = usuarioActual;
+            pantallaUsuario.style.display = "block";
+            actualizarEstadoUsuarioActual();
+            mostrarCrearTicketUsuario();
+            return;
+        }
+
+        if (valor === "admin") {
+            if (nombrePerfilAdmin) {
+                nombrePerfilAdmin.textContent = datosSesion.nombre;
+            }
+
+            pantallaAdmin.style.display = "flex";
+            dashboard.style.display = "block";
+            activos.style.display = "none";
+            registradosAdmin.style.display = "none";
+            renderRegistradosAdmin();
+            renderTicketsAdmin();
+            renderActivosAdmin();
+            renderDashboardAdmin();
+
+            if (tickets) {
+                tickets.style.display = "none";
+            }
+
+            return;
+        }
+
+        if (valor === "tecnico") {
+            if (nombrePerfilTecnico) {
+                nombrePerfilTecnico.textContent = datosSesion.nombre;
+            }
+
+            pantallaTecnico.style.display = "flex";
+            renderTicketsTecnico();
+        }
+
+    }
+
+    function emitirSincronizacion() {
+
+        localStorage.setItem(sincronizacionKey, String(Date.now()));
+
+    }
+
+    function refrescarPantallasAbiertas() {
+
+        renderRegistradosAdmin();
+        renderTicketsAdmin();
+        renderTicketsTecnico();
+        renderActivosAdmin();
+        renderDashboardAdmin();
+        actualizarEstadoUsuarioActual();
+
+    }
+
+    async function sincronizarDatos() {
+
+        await cargarDatosDesdeApi();
+        refrescarPantallasAbiertas();
+
+    }
+
+    btnMostrarRegistro.addEventListener("click", mostrarRegistro);
+    btnVolverLogin.addEventListener("click", mostrarLogin);
+    btnIrLogin.addEventListener("click", mostrarLogin);
+
+    document.querySelectorAll("[data-toggle-password]").forEach((botonPassword) => {
+
+        botonPassword.addEventListener("click", () => {
+
+            const inputPassword = document.getElementById(botonPassword.dataset.togglePassword);
+
+            if (!inputPassword) {
+                return;
+            }
+
+            const mostrando = inputPassword.type === "text";
+            inputPassword.type = mostrando ? "password" : "text";
+            botonPassword.setAttribute("aria-label", mostrando ? "Mostrar contrasena" : "Ocultar contrasena");
+            botonPassword.innerHTML = mostrando ? '<i class="fa-regular fa-eye"></i>' : '<i class="fa-regular fa-eye-slash"></i>';
+
+        });
+
+    });
+
+    if (btnNotificacionesUsuario && panelNotificacionesUsuario) {
+
+        btnNotificacionesUsuario.addEventListener("click", (e) => {
+
+            e.stopPropagation();
+            panelNotificacionesUsuario.hidden = !panelNotificacionesUsuario.hidden;
+
+            if (!panelNotificacionesUsuario.hidden) {
+                marcarNotificacionesUsuarioLeidas();
+                renderNotificacionesUsuario();
+            }
+
+        });
+
+        document.addEventListener("click", (e) => {
+
+            if (!panelNotificacionesUsuario.hidden && !panelNotificacionesUsuario.contains(e.target) && !btnNotificacionesUsuario.contains(e.target)) {
+                panelNotificacionesUsuario.hidden = true;
+            }
+
+        });
+
+    }
+
+    if (btnNotificacionesTecnico && panelNotificacionesTecnico) {
+
+        btnNotificacionesTecnico.addEventListener("click", (e) => {
+
+            e.stopPropagation();
+            panelNotificacionesTecnico.hidden = !panelNotificacionesTecnico.hidden;
+
+            if (!panelNotificacionesTecnico.hidden) {
+                marcarNotificacionesTecnicoLeidas();
+                renderNotificacionesTecnico();
+            }
+
+        });
+
+        document.addEventListener("click", (e) => {
+
+            if (!panelNotificacionesTecnico.hidden && !panelNotificacionesTecnico.contains(e.target) && !btnNotificacionesTecnico.contains(e.target)) {
+                panelNotificacionesTecnico.hidden = true;
+            }
+
+        });
+
+    }
+
+    botonesLogout.forEach((botonLogout) => {
+
+        botonLogout.addEventListener("click", (e) => {
+
+            e.preventDefault();
+            pantallaUsuario.style.display = "none";
+            pantallaAdmin.style.display = "none";
+            pantallaTecnico.style.display = "none";
+            login.style.display = "flex";
+            actualizarFooterSesion(false);
+            mostrarLogin();
+            form.reset();
+            localStorage.removeItem(sesionActualKey);
+
+        });
+
+    });
+
+    formRegistro.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        if (registroPassword.value !== registroConfirmPassword.value) {
+
+            alert("Las contrasenas no coinciden");
+            return;
+
+        }
+
+        const correoRegistro = registroCorreo.value.trim();
+        const correoExiste = obtenerUsuariosLogin().some((usuario) => normalizarTexto(usuario.correo) === normalizarTexto(correoRegistro));
+
+        if (correoExiste) {
+
+            alert("Ese correo ya esta registrado");
+            return;
+
+        }
+
+        let nuevoUsuario = {
+            nombre: `${registroNombre.value} ${registroApellidos.value}`,
+            rol: "Usuario",
+            correo: correoRegistro,
+            password: registroPassword.value,
+            ciudad: registroCiudad.value,
+            pais: registroPais.value,
+            nacimiento: registroNacimiento.value,
+            estado: "Registrado"
+        };
+
+        try {
+            nuevoUsuario = await apiRequest("/register", {
+                method: "POST",
+                body: JSON.stringify({
+                    nombre: registroNombre.value,
+                    apellidos: registroApellidos.value,
+                    correo: correoRegistro,
+                    password: registroPassword.value,
+                    ciudad: registroCiudad.value,
+                    pais: registroPais.value,
+                    nacimiento: registroNacimiento.value
+                })
+            });
+            nuevoUsuario.password = registroPassword.value;
+            usuarioActualId = nuevoUsuario.id;
+        } catch (error) {
+            if (error.message.includes("registrado")) {
+                alert(error.message);
+                return;
+            }
+            alert("No se pudo guardar en MySQL. Revisa que el servidor tenga configurada la contrasena de la BD.");
+            return;
+        }
+
+        guardarRegistrado(nuevoUsuario);
+        renderRegistradosAdmin();
+
+        usuarioActual = nuevoUsuario.nombre;
+        correoUsuarioActual = nuevoUsuario.correo;
+        guardarSesion(nuevoUsuario);
+        nombrePerfilUsuario.textContent = usuarioActual;
+        login.style.display = "none";
+        pantallaUsuario.style.display = "block";
+        pantallaAdmin.style.display = "none";
+        pantallaTecnico.style.display = "none";
+        actualizarFooterSesion(true);
+
+        alert("Registro completado correctamente. Ya puedes crear tickets.");
+        formRegistro.reset();
+        actualizarEstadoUsuarioActual();
+        mostrarCrearTicketUsuario();
+
+    });
+
+    if (formCrearCuentaAdmin) {
+
+        formCrearCuentaAdmin.addEventListener("submit", async (e) => {
+
+            e.preventDefault();
+
+            let nuevaCuenta = {
+                nombre: `${adminCrearNombre.value} ${adminCrearApellidos.value}`.trim(),
+                rol: formatearRol(adminCrearRol.value),
+                correo: adminCrearCorreo.value.trim(),
+                password: adminCrearPassword.value,
+                ciudad: adminCrearCiudad.value.trim(),
+                pais: adminCrearPais.value.trim(),
+                nacimiento: adminCrearNacimiento.value || "",
+                estado: "Activo"
+            };
+
+            const correoExiste = [...cuentasEspeciales, ...usuariosNormalesBase, ...obtenerRegistrados()].some((usuarioRegistrado) => (
+                normalizarTexto(usuarioRegistrado.correo) === normalizarTexto(nuevaCuenta.correo)
+            ));
+
+            if (correoExiste) {
+                alert("Ese correo ya esta registrado");
+                return;
+            }
+
+            try {
+                nuevaCuenta = await apiRequest("/users", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        nombre: adminCrearNombre.value.trim(),
+                        apellidos: adminCrearApellidos.value.trim(),
+                        correo: nuevaCuenta.correo,
+                        password: adminCrearPassword.value,
+                        rol: adminCrearRol.value,
+                        ciudad: nuevaCuenta.ciudad,
+                        pais: nuevaCuenta.pais,
+                        nacimiento: adminCrearNacimiento.value || null
+                    })
+                });
+                nuevaCuenta.rol = formatearRol(nuevaCuenta.rol);
+                nuevaCuenta.password = adminCrearPassword.value;
+            } catch (error) {
+                if (error.message.includes("registrado")) {
+                    alert(error.message);
+                    return;
+                }
+                alert("No se pudo guardar en MySQL. Revisa que el servidor tenga configurada la contrasena de la BD.");
+                return;
+            }
+
+            guardarRegistrado(nuevaCuenta);
+            renderRegistradosAdmin();
+            formCrearCuentaAdmin.reset();
+            adminCrearPais.value = "Colombia";
+            alert("Cuenta creada correctamente");
+
+        });
+
+    }
+
+    function activarMenuUsuario(botonActivo) {
+
+        btnCrearTicketUsuario.parentElement.classList.remove("activo");
+        btnEstadoTicketUsuario.parentElement.classList.remove("activo");
+        botonActivo.parentElement.classList.add("activo");
+
+    }
+
+    function mostrarCrearTicketUsuario() {
+
+        crearTicketUsuario.style.display = "flex";
+        estadoTicketUsuario.style.display = "none";
+        activarMenuUsuario(btnCrearTicketUsuario);
+
+    }
+
+    function mostrarEstadoTicketUsuario() {
+
+        actualizarEstadoUsuarioActual();
+        crearTicketUsuario.style.display = "none";
+        estadoTicketUsuario.style.display = "flex";
+        activarMenuUsuario(btnEstadoTicketUsuario);
+
+    }
+
+    btnCrearTicketUsuario.addEventListener("click", (e) => {
+
+        e.preventDefault();
+        mostrarCrearTicketUsuario();
+
+    });
+
+    btnEstadoTicketUsuario.addEventListener("click", (e) => {
+
+        e.preventDefault();
+        mostrarEstadoTicketUsuario();
+
+    });
+
+    formCrearTicketUsuario.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const tecnicoAsignado = asignarTecnicoAutomatico(ticketCiudadUsuario.value);
+        let ticket = {
+            id: generarTicketId(),
+            usuarioId: usuarioActualId,
+            usuario: usuarioActual,
+            correoUsuario: correoUsuarioActual,
+            ciudad: ticketCiudadUsuario.value,
+            dispositivo: ticketCategoriaUsuario.value,
+            problema: ticketTituloUsuario.value,
+            descripcion: ticketDescripcionUsuario.value,
+            estado: "En proceso",
+            prioridad: ticketPrioridadUsuario.value,
+            tecnico: tecnicoAsignado.nombre,
+            fecha: new Date().toLocaleDateString("es-CO"),
+            comentarioTecnico: "El tecnico aun no ha agregado comentarios.",
+            valorArreglo: "0"
+        };
+
+        if (usuarioActualId) {
+            try {
+                ticket = await apiRequest("/tickets", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        usuarioId: usuarioActualId,
+                        ciudad: ticketCiudadUsuario.value,
+                        dispositivo: ticketCategoriaUsuario.value,
+                        problema: ticketTituloUsuario.value,
+                        descripcion: ticketDescripcionUsuario.value,
+                        prioridad: ticketPrioridadUsuario.value
+                    })
+                });
+            } catch (error) {
+                console.warn(error.message);
+            }
+        }
+
+        guardarTicket(ticket);
+        actualizarEstadoUsuarioActual();
+        renderTicketsAdmin();
+        renderTicketsTecnico();
+
+        alert(`Ticket creado correctamente. Tecnico asignado: ${ticket.tecnico || tecnicoAsignado.nombre}`);
+        formCrearTicketUsuario.reset();
+        mostrarEstadoTicketUsuario();
+
+    });
+
+    // LOGIN
+    form.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const user = usuarioInput.value.trim();
+        const pass = passwordInput.value.trim();
+        let usuarioRegistrado = buscarUsuarioLogin(user, pass);
+        const cuentaEspecial = buscarCuentaEspecialLogin(user, pass);
+        let usuarioApi = null;
+
+        try {
+            usuarioApi = await apiRequest("/login", {
+                method: "POST",
+                body: JSON.stringify({
+                    correo: user,
+                    password: pass
+                })
+            });
+            usuarioActualId = usuarioApi.id;
+            await cargarDatosDesdeApi();
+        } catch (error) {
+            usuarioActualId = null;
+        }
+
+        const datosSesion = usuarioApi || cuentaEspecial || usuarioRegistrado;
+        const valor = datosSesion ? normalizarTexto(datosSesion.rol) : "";
+
+        if (datosSesion) {
+
+            mostrarPantallaSesion(datosSesion);
+
+        } else {
+
+            alert("Credenciales incorrectas");
+
+        }
+
+    });
+
+    // FUNCION PARA OCULTAR TODO
+    function ocultarSeccionesAdmin() {
+
+        dashboard.style.display = "none";
+        activos.style.display = "none";
+        registradosAdmin.style.display = "none";
+
+        if (tickets) {
+            tickets.style.display = "none";
+        }
+
+    }
+
+    // DASHBOARD
+    if (btnDashboard) {
+
+        btnDashboard.addEventListener("click", (e) => {
+
+            e.preventDefault();
+
+            ocultarSeccionesAdmin();
+            renderDashboardAdmin();
+
+            dashboard.style.display = "block";
+
+        });
+
+    }
+
+    // ACTIVOS
+    if (btnActivos) {
+
+        btnActivos.addEventListener("click", (e) => {
+
+            e.preventDefault();
+
+            ocultarSeccionesAdmin();
+            renderActivosAdmin();
+
+            activos.style.display = "flex";
+
+        });
+
+    }
+
+    if (buscarActivoAdmin) {
+
+        buscarActivoAdmin.addEventListener("input", renderActivosAdmin);
+
+    }
+
+    if (filtroEstadoActivoAdmin) {
+
+        filtroEstadoActivoAdmin.addEventListener("change", renderActivosAdmin);
+
+    }
+
+    cargarDatosDesdeApi().then(() => {
+        renderDashboardAdmin();
+        renderActivosAdmin();
+        renderTicketsAdmin();
+        renderRegistradosAdmin();
+    });
+
+    // TICKETS
+    if (btnTickets && tickets) {
+
+        btnTickets.addEventListener("click", (e) => {
+
+            e.preventDefault();
+
+            ocultarSeccionesAdmin();
+            renderTicketsAdmin();
+
+            tickets.style.display = "flex";
+
+        });
+
+    }
+
+    // REGISTRADOS
+    if (btnRegistrados && registradosAdmin) {
+
+        btnRegistrados.addEventListener("click", (e) => {
+
+            e.preventDefault();
+
+            ocultarSeccionesAdmin();
+            renderRegistradosAdmin();
+
+            registradosAdmin.style.display = "flex";
+
+        });
+
+    }
+
+    window.addEventListener("storage", (event) => {
+
+        if ([ticketsDbKey, ticketsEliminadosKey, usuariosDbKey, notificacionesKey, sincronizacionKey].includes(event.key)) {
+            refrescarPantallasAbiertas();
+        }
+
+        if (event.key === sesionActualKey && !event.newValue) {
+            pantallaUsuario.style.display = "none";
+            pantallaAdmin.style.display = "none";
+            pantallaTecnico.style.display = "none";
+            login.style.display = "flex";
+            actualizarFooterSesion(false);
+            mostrarLogin();
+        }
+
+    });
+
+    setInterval(() => {
+
+        if (obtenerSesionGuardada()) {
+            sincronizarDatos();
+        }
+
+    }, 5000);
+
+    (async () => {
+
+        await sincronizarDatos();
+        const sesionGuardada = obtenerSesionGuardada();
+
+        if (sesionGuardada) {
+            mostrarPantallaSesion(sesionGuardada, false);
+        }
+
+    })();
+
+});

@@ -1,0 +1,198 @@
+#pantalla__tec{
+    display: none ;
+}
+
+
+
+.titulo-tec{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2vw 2vw 1vw;
+    
+}
+
+.tickets_tecnico{
+    margin-left: 20vw ;
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    min-height: 100vh;
+    padding: 1vw 2vw 3vw;
+    box-sizing: border-box;
+}
+
+.content-tec{
+    display: flex;
+    gap: 1vw;
+    padding: 1vw 2vw 2vw;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: center;
+}
+
+.bg-red{
+    background-color: rgba(255, 77, 77, 0.12);
+    color: #ffffff;
+    padding: 1.2vw;
+    border-radius: 1vw;
+    width: 24vw;
+    border: 1px solid rgba(255, 77, 77, 0.45);
+}
+
+.bg-green{
+    background-color: rgba(0, 255, 153, 0.10);
+    color: #ffffff;
+    padding: 1.2vw;
+    border-radius: 1vw;
+    width: 24vw;
+    border: 1px solid rgba(0, 255, 153, 0.45);
+}
+
+.bg-blue{
+    background-color: rgba(51, 153, 255, 0.12);
+    color: #ffffff;
+    padding: 1.2vw;
+    border-radius: 1vw;
+    width: 24vw;
+    border: 1px solid rgba(51, 153, 255, 0.45);
+}
+
+.tabla-tecnico{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1vw;
+    padding: 0 2vw;
+}
+
+.tabla-tecnico table{
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 1150px;
+    height: auto;
+    background-color: #1b1b1b;
+    border-radius: 1.5vw;
+    margin-bottom: 1.5vw;
+    overflow: hidden;
+}
+
+.tecnico-tabla{
+    width: 100%;
+    overflow-x: auto;
+    background-color: #1b1b1b;
+    border: 1px solid #2f2f2f;
+    border-radius: 1.5vw;
+}
+
+.tecnico-fila{
+    color: rgb(112, 110, 110);
+    font-weight: bold;
+    border-bottom: 1px solid #363636;
+    height: 8vh;
+}
+
+.tabla-tecnico tbody tr{
+    color: rgb(255, 255, 255);
+    border-bottom: 1px solid #363636;
+    min-height: 9vh;
+}
+
+
+.tabla-tecnico th,
+.tabla-tecnico td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 1vw 0.7vw;
+}
+
+
+.tabla-tecnico td{
+    color: rgb(210, 210, 210);
+}
+
+.problema-ticket-tecnico{
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0.3vw;
+}
+
+.btn-editar-ticket-tecnico{
+    width: 2.5vw;
+    height: 4.5vh;
+    border: none;
+    border-radius: 0.6vw;
+    background-color: #314cc5;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-editar-ticket-tecnico:hover{
+    filter: brightness(1.15);
+    transition: 0.2s;
+}
+
+.fila-detalle-tecnico{
+    display: none;
+    background-color: #111111;
+}
+
+.fila-detalle-tecnico.mostrar{
+    display: table-row;
+}
+
+.form-detalle-tecnico{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1vw;
+    padding: 1vw;
+    background-color: #101010;
+    border: 1px solid #2f2f2f;
+    border-radius: 1vw;
+}
+
+.form-detalle-tecnico label{
+    display: block;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0.5vw;
+    text-align: left;
+}
+
+.form-detalle-tecnico select,
+.form-detalle-tecnico input,
+.form-detalle-tecnico textarea{
+    width: 100%;
+    border-radius: 0.6vw;
+    border: 1px solid #474747;
+    background-color: #2c2c2c;
+    color: white;
+    padding: 0.8vw;
+    outline: none;
+}
+
+.form-detalle-tecnico textarea{
+    min-height: 12vh;
+    resize: none;
+    font-family: inherit;
+}
+
+.detalle-comentario{
+    grid-column: span 2;
+}
+
+.form-detalle-tecnico button{
+    grid-column: span 2;
+    justify-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    height: 5vh;
+    border: none;
+    border-radius: 0.6vw;
+    background-color: #314cc5;
+    color: white;
+    font-weight: bold;
+    padding: 0 1.5vw;
+    cursor: pointer;
+}
