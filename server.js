@@ -48,11 +48,50 @@ const pool = mysql.createPool(dbConfig);
 app.use(express.json());
 app.use(express.static(__dirname));
 
+async function ensureDatabaseShape() {
+  const ticketColumns = [
+    ["recogida_domicilio", "TINYINT(1) NOT NULL DEFAULT 0 AFTER valor_arreglo"],
+    ["direccion_recogida", "VARCHAR(220) NULL AFTER recogida_domicilio"],
+    ["sede_cercana", "VARCHAR(180) NULL AFTER direccion_recogida"],
+    ["estado_pago", "VARCHAR(40) NOT NULL DEFAULT 'Sin solicitar' AFTER sede_cercana"],
+    ["metodo_pago", "VARCHAR(80) NULL AFTER estado_pago"],
+    ["fecha_pago", "VARCHAR(60) NULL AFTER metodo_pago"],
+    ["fecha_pago_aprobado", "VARCHAR(60) NULL AFTER fecha_pago"]
+  ];
+
+  for (const [column, definition] of ticketColumns) {
+    const [rows] = await pool.query(
+      `SELECT COUNT(*) AS total
+       FROM INFORMATION_SCHEMA.COLUMNS
+       WHERE TABLE_SCHEMA = DATABASE()
+         AND TABLE_NAME = 'tickets'
+         AND COLUMN_NAME = ?`,
+      [column]
+    );
+
+    if (rows[0].total === 0) {
+      await pool.query(`ALTER TABLE tickets ADD COLUMN ${column} ${definition}`);
+    }
+  }
+}
+
 function sendDatabaseError(res, message) {
   return res.status(503).json({
     error: message,
     detail: "MySQL no esta conectado. Enciende MySQL y revisa que database.sql este importado."
   });
+}
+
+function isPersonNameValid(value) {
+  return /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü]+(?: [A-Za-zÁÉÍÓÚáéíóúÑñÜü]+)*$/.test(String(value || "").trim());
+}
+
+function cleanPersonName(value) {
+  return String(value || "").trim().replace(/\s+/g, " ");
+}
+
+function isEmailValid(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
 }
 
 app.get("/api/health", async (_req, res) => {
@@ -79,6 +118,8 @@ function userRowToClient(row) {
   return {
     id: row.id,
     nombre: `${row.nombre} ${row.apellidos || ""}`.trim(),
+    nombreBase: row.nombre,
+    apellidos: row.apellidos || "",
     correo: row.correo,
     passwordDemo: row.password_demo || "",
     rol: row.rol,
@@ -104,7 +145,14 @@ function ticketRowToClient(row) {
     tecnico: row.tecnico || "Sin asignar",
     fecha: new Date(row.creado_en).toLocaleDateString("es-CO"),
     comentarioTecnico: row.comentario_tecnico || "Sin comentario tecnico.",
-    valorArreglo: String(row.valor_arreglo || 0)
+    valorArreglo: String(row.valor_arreglo || 0),
+    recogidaDomicilio: Boolean(row.recogida_domicilio),
+    direccionRecogida: row.direccion_recogida || "",
+    sedeCercana: row.sede_cercana || "",
+    pagoEstado: row.estado_pago || "Sin solicitar",
+    metodoPago: row.metodo_pago || "",
+    fechaPago: row.fecha_pago || "",
+    fechaPagoAprobado: row.fecha_pago_aprobado || ""
   };
 }
 
@@ -150,21 +198,29 @@ async function getTickets(where = "", params = []) {
 
 app.post("/api/register", async (req, res) => {
   try {
-    const { nombre, apellidos, correo, password, ciudad, pais, nacimiento } = req.body;
+    const { correo, password, ciudad, pais, nacimiento } = req.body;
+    const nombre = cleanPersonName(req.body.nombre);
+    const apellidos = cleanPersonName(req.body.apellidos);
 
     if (!nombre || !correo || !password || !ciudad || !pais) {
       return res.status(400).json({ error: "Faltan datos obligatorios" });
     }
 
+    if (!isPersonNameValid(nombre) || !isPersonNameValid(apellidos)) {
+      return res.status(400).json({ error: "Nombre y apellidos solo pueden tener letras y espacios" });
+    }
+
     const [result] = await pool.query(
       `INSERT INTO usuarios (nombre, apellidos, correo, password_hash, password_demo, rol, ciudad, pais, fecha_nacimiento)
        VALUES (?, ?, ?, ?, ?, 'usuario', ?, ?, ?)`,
-      [nombre, apellidos || "", correo, hashPassword(password), password, ciudad, pais, nacimiento || null]
+      [nombre, apellidos, correo, hashPassword(password), password, ciudad, pais, nacimiento || null]
     );
 
     res.status(201).json({
       id: result.insertId,
       nombre: `${nombre} ${apellidos || ""}`.trim(),
+      nombreBase: nombre,
+      apellidos,
       correo,
       passwordDemo: password,
       rol: "usuario",
@@ -211,11 +267,17 @@ app.post("/api/users", async (req, res) => {
 
   try {
     connection = await pool.getConnection();
-    const { nombre, apellidos, correo, password, rol, ciudad, pais, nacimiento } = req.body;
+    const { correo, password, rol, ciudad, pais, nacimiento } = req.body;
+    const nombre = cleanPersonName(req.body.nombre);
+    const apellidos = cleanPersonName(req.body.apellidos);
     const rolesPermitidos = ["usuario", "admin", "tecnico"];
 
     if (!nombre || !correo || !password || !rol || !ciudad || !pais) {
       return res.status(400).json({ error: "Faltan datos obligatorios" });
+    }
+
+    if (!isPersonNameValid(nombre) || !isPersonNameValid(apellidos)) {
+      return res.status(400).json({ error: "Nombre y apellidos solo pueden tener letras y espacios" });
     }
 
     if (!rolesPermitidos.includes(rol)) {
@@ -227,7 +289,7 @@ app.post("/api/users", async (req, res) => {
     const [result] = await connection.query(
       `INSERT INTO usuarios (nombre, apellidos, correo, password_hash, password_demo, rol, ciudad, pais, fecha_nacimiento)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [nombre, apellidos || "", correo, hashPassword(password), password, rol, ciudad, pais, nacimiento || null]
+      [nombre, apellidos, correo, hashPassword(password), password, rol, ciudad, pais, nacimiento || null]
     );
 
     if (rol === "tecnico") {
@@ -244,6 +306,8 @@ app.post("/api/users", async (req, res) => {
     res.status(201).json({
       id: result.insertId,
       nombre: `${nombre} ${apellidos || ""}`.trim(),
+      nombreBase: nombre,
+      apellidos,
       correo,
       passwordDemo: password,
       rol,
@@ -269,6 +333,162 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
+app.patch("/api/users/:id", async (req, res) => {
+  let connection;
+
+  try {
+    connection = await pool.getConnection();
+    const id = Number(req.params.id);
+    const nombre = cleanPersonName(req.body.nombre);
+    const apellidos = cleanPersonName(req.body.apellidos);
+    const correo = String(req.body.correo || "").trim();
+    const password = String(req.body.password || "");
+    const rolSolicitado = req.body.rol === undefined ? "" : String(req.body.rol || "").trim().toLowerCase();
+    const rolesPermitidos = ["usuario", "admin", "tecnico"];
+
+    if (!id || !nombre || !apellidos || !correo) {
+      return res.status(400).json({ error: "Faltan datos obligatorios" });
+    }
+
+    if (!isPersonNameValid(nombre) || !isPersonNameValid(apellidos)) {
+      return res.status(400).json({ error: "Nombre y apellidos solo pueden tener letras y espacios" });
+    }
+
+    if (!isEmailValid(correo)) {
+      return res.status(400).json({ error: "Correo invalido" });
+    }
+
+    if (password && password.length < 8) {
+      return res.status(400).json({ error: "La contrasena debe tener al menos 8 caracteres" });
+    }
+
+    if (rolSolicitado && !rolesPermitidos.includes(rolSolicitado)) {
+      return res.status(400).json({ error: "Rol invalido" });
+    }
+
+    const [duplicados] = await connection.query(
+      "SELECT id FROM usuarios WHERE correo = ? AND id <> ? LIMIT 1",
+      [correo, id]
+    );
+
+    if (duplicados.length) {
+      return res.status(409).json({ error: "Ese correo ya esta registrado" });
+    }
+
+    const [usuarios] = await connection.query("SELECT * FROM usuarios WHERE id = ? LIMIT 1", [id]);
+    const usuario = usuarios[0];
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const nuevoRol = rolSolicitado || usuario.rol;
+    const nombreCompleto = `${nombre} ${apellidos}`.trim();
+
+    await connection.beginTransaction();
+
+    if (password) {
+      await connection.query(
+        `UPDATE usuarios
+         SET nombre = ?, apellidos = ?, correo = ?, password_hash = ?, password_demo = ?, rol = ?
+         WHERE id = ?`,
+        [nombre, apellidos, correo, hashPassword(password), password, nuevoRol, id]
+      );
+    } else {
+      await connection.query(
+        `UPDATE usuarios
+         SET nombre = ?, apellidos = ?, correo = ?, rol = ?
+         WHERE id = ?`,
+        [nombre, apellidos, correo, nuevoRol, id]
+      );
+    }
+
+    if (nuevoRol === "tecnico") {
+      const [tecnicoExistente] = await connection.query(
+        "SELECT id FROM tecnicos WHERE usuario_id = ? LIMIT 1",
+        [id]
+      );
+
+      if (tecnicoExistente.length) {
+        await connection.query(
+          `UPDATE tecnicos
+           SET nombre = ?, ciudad = ?, estado = 'Activo'
+           WHERE usuario_id = ?`,
+          [nombreCompleto, usuario.ciudad, id]
+        );
+      } else {
+        await connection.query(
+          `INSERT INTO tecnicos (usuario_id, nombre, ciudad)
+           VALUES (?, ?, ?)
+           ON DUPLICATE KEY UPDATE usuario_id = VALUES(usuario_id), ciudad = VALUES(ciudad), estado = 'Activo'`,
+          [id, nombreCompleto, usuario.ciudad]
+        );
+      }
+    } else if (usuario.rol === "tecnico") {
+      await connection.query("DELETE FROM tecnicos WHERE usuario_id = ?", [id]);
+    }
+
+    await connection.commit();
+
+    const [actualizados] = await pool.query("SELECT * FROM usuarios WHERE id = ? LIMIT 1", [id]);
+    res.json(userRowToClient(actualizados[0]));
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+    }
+
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(409).json({ error: "Ese correo ya esta registrado" });
+    }
+
+    res.status(500).json({ error: "No se pudo actualizar la cuenta" });
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+});
+
+app.delete("/api/users/:id", async (req, res) => {
+  let connection;
+
+  try {
+    connection = await pool.getConnection();
+    const id = Number(req.params.id);
+
+    if (!id) {
+      return res.status(400).json({ error: "Usuario invalido" });
+    }
+
+    const [usuarios] = await connection.query("SELECT * FROM usuarios WHERE id = ? LIMIT 1", [id]);
+    const usuario = usuarios[0];
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    await connection.beginTransaction();
+
+    if (usuario.rol === "tecnico") {
+      await connection.query("DELETE FROM tecnicos WHERE usuario_id = ?", [id]);
+    }
+
+    await connection.query("DELETE FROM usuarios WHERE id = ?", [id]);
+    await connection.commit();
+    res.status(204).end();
+  } catch (error) {
+    if (connection) {
+      await connection.rollback();
+    }
+
+    res.status(500).json({ error: "No se pudo eliminar la cuenta" });
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+});
+
 app.get("/api/tickets", async (req, res) => {
   try {
     const { usuarioId } = req.query;
@@ -281,15 +501,15 @@ app.get("/api/tickets", async (req, res) => {
 
 app.post("/api/tickets", async (req, res) => {
   try {
-    const { usuarioId, ciudad, dispositivo, problema, descripcion, prioridad } = req.body;
+    const { usuarioId, ciudad, dispositivo, problema, descripcion, prioridad, recogidaDomicilio, direccionRecogida, sedeCercana } = req.body;
     const tecnico = await getLeastBusyTechnician(ciudad);
     const [countRows] = await pool.query("SELECT COUNT(*) AS total FROM tickets");
     const codigo = `TKT-${String(countRows[0].total + 1).padStart(3, "0")}`;
 
     await pool.query(
-      `INSERT INTO tickets (codigo, usuario_id, tecnico_id, ciudad, dispositivo, problema, descripcion, estado, prioridad, comentario_tecnico)
-       VALUES (?, ?, ?, ?, ?, ?, ?, 'En proceso', ?, 'El tecnico aun no ha agregado comentarios.')`,
-      [codigo, usuarioId, tecnico ? tecnico.id : null, ciudad, dispositivo, problema, descripcion, prioridad]
+      `INSERT INTO tickets (codigo, usuario_id, tecnico_id, ciudad, dispositivo, problema, descripcion, estado, prioridad, comentario_tecnico, recogida_domicilio, direccion_recogida, sede_cercana)
+       VALUES (?, ?, ?, ?, ?, ?, ?, 'En proceso', ?, 'El tecnico aun no ha agregado comentarios.', ?, ?, ?)`,
+      [codigo, usuarioId, tecnico ? tecnico.id : null, ciudad, dispositivo, problema, descripcion, prioridad, recogidaDomicilio ? 1 : 0, direccionRecogida || null, sedeCercana || null]
     );
 
     const [ticket] = await getTickets("WHERE t.codigo = ?", [codigo]);
@@ -301,7 +521,7 @@ app.post("/api/tickets", async (req, res) => {
 
 app.patch("/api/tickets/:codigo", async (req, res) => {
   try {
-    const { estado, prioridad, tecnico, valorArreglo, comentarioTecnico, problema, dispositivo, ciudad, descripcion } = req.body;
+    const { estado, prioridad, tecnico, valorArreglo, comentarioTecnico, problema, dispositivo, ciudad, descripcion, recogidaDomicilio, direccionRecogida, sedeCercana, pagoEstado, metodoPago, fechaPago, fechaPagoAprobado } = req.body;
     let tecnicoId = null;
 
     if (tecnico) {
@@ -319,9 +539,16 @@ app.patch("/api/tickets/:codigo", async (req, res) => {
            problema = COALESCE(?, problema),
            dispositivo = COALESCE(?, dispositivo),
            ciudad = COALESCE(?, ciudad),
-           descripcion = COALESCE(?, descripcion)
+           descripcion = COALESCE(?, descripcion),
+           recogida_domicilio = COALESCE(?, recogida_domicilio),
+           direccion_recogida = COALESCE(?, direccion_recogida),
+           sede_cercana = COALESCE(?, sede_cercana),
+           estado_pago = COALESCE(?, estado_pago),
+           metodo_pago = COALESCE(?, metodo_pago),
+           fecha_pago = COALESCE(?, fecha_pago),
+           fecha_pago_aprobado = COALESCE(?, fecha_pago_aprobado)
        WHERE codigo = ?`,
-      [estado || null, prioridad || null, tecnicoId, valorArreglo ?? null, comentarioTecnico || null, problema || null, dispositivo || null, ciudad || null, descripcion || null, req.params.codigo]
+      [estado || null, prioridad || null, tecnicoId, valorArreglo ?? null, comentarioTecnico || null, problema || null, dispositivo || null, ciudad || null, descripcion || null, recogidaDomicilio === undefined ? null : (recogidaDomicilio ? 1 : 0), direccionRecogida ?? null, sedeCercana ?? null, pagoEstado || null, metodoPago || null, fechaPago || null, fechaPagoAprobado || null, req.params.codigo]
     );
 
     const [ticket] = await getTickets("WHERE t.codigo = ?", [req.params.codigo]);
@@ -365,6 +592,22 @@ app.get("*", (_req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.listen(port, () => {
-  console.log(`Servidor listo en http://localhost:${port}`);
-});
+ensureDatabaseShape()
+  .catch((error) => {
+    console.warn(`No se pudo revisar la estructura de MySQL: ${error.message}`);
+  })
+  .finally(() => {
+    const server = app.listen(port, () => {
+      console.log(`Servidor listo en http://localhost:${port}`);
+    });
+
+    server.on("error", (error) => {
+      if (error.code === "EADDRINUSE") {
+        console.error(`El puerto ${port} ya esta en uso.`);
+        console.error("Cierra el otro servidor o inicia este con otro puerto, por ejemplo: $env:PORT=3001; npm start");
+        process.exit(1);
+      }
+
+      throw error;
+    });
+  });

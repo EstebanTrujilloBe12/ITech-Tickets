@@ -57,11 +57,130 @@ CREATE TABLE IF NOT EXISTS tickets (
   prioridad ENUM('Baja', 'Media', 'Alta') NOT NULL DEFAULT 'Media',
   comentario_tecnico TEXT NULL,
   valor_arreglo DECIMAL(12,2) NOT NULL DEFAULT 0,
+  recogida_domicilio TINYINT(1) NOT NULL DEFAULT 0,
+  direccion_recogida VARCHAR(220) NULL,
+  sede_cercana VARCHAR(180) NULL,
+  estado_pago VARCHAR(40) NOT NULL DEFAULT 'Sin solicitar',
+  metodo_pago VARCHAR(80) NULL,
+  fecha_pago VARCHAR(60) NULL,
+  fecha_pago_aprobado VARCHAR(60) NULL,
   creado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   actualizado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
   FOREIGN KEY (tecnico_id) REFERENCES tecnicos(id) ON DELETE SET NULL
 );
+
+SET @recogida_domicilio_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'tickets'
+    AND COLUMN_NAME = 'recogida_domicilio'
+);
+SET @add_recogida_domicilio = IF(
+  @recogida_domicilio_exists = 0,
+  'ALTER TABLE tickets ADD COLUMN recogida_domicilio TINYINT(1) NOT NULL DEFAULT 0 AFTER valor_arreglo',
+  'SELECT 1'
+);
+PREPARE add_recogida_domicilio_stmt FROM @add_recogida_domicilio;
+EXECUTE add_recogida_domicilio_stmt;
+DEALLOCATE PREPARE add_recogida_domicilio_stmt;
+
+SET @direccion_recogida_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'tickets'
+    AND COLUMN_NAME = 'direccion_recogida'
+);
+SET @add_direccion_recogida = IF(
+  @direccion_recogida_exists = 0,
+  'ALTER TABLE tickets ADD COLUMN direccion_recogida VARCHAR(220) NULL AFTER recogida_domicilio',
+  'SELECT 1'
+);
+PREPARE add_direccion_recogida_stmt FROM @add_direccion_recogida;
+EXECUTE add_direccion_recogida_stmt;
+DEALLOCATE PREPARE add_direccion_recogida_stmt;
+
+SET @sede_cercana_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'tickets'
+    AND COLUMN_NAME = 'sede_cercana'
+);
+SET @add_sede_cercana = IF(
+  @sede_cercana_exists = 0,
+  'ALTER TABLE tickets ADD COLUMN sede_cercana VARCHAR(180) NULL AFTER direccion_recogida',
+  'SELECT 1'
+);
+PREPARE add_sede_cercana_stmt FROM @add_sede_cercana;
+EXECUTE add_sede_cercana_stmt;
+DEALLOCATE PREPARE add_sede_cercana_stmt;
+
+SET @estado_pago_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'tickets'
+    AND COLUMN_NAME = 'estado_pago'
+);
+SET @add_estado_pago = IF(
+  @estado_pago_exists = 0,
+  'ALTER TABLE tickets ADD COLUMN estado_pago VARCHAR(40) NOT NULL DEFAULT ''Sin solicitar'' AFTER sede_cercana',
+  'SELECT 1'
+);
+PREPARE add_estado_pago_stmt FROM @add_estado_pago;
+EXECUTE add_estado_pago_stmt;
+DEALLOCATE PREPARE add_estado_pago_stmt;
+
+SET @metodo_pago_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'tickets'
+    AND COLUMN_NAME = 'metodo_pago'
+);
+SET @add_metodo_pago = IF(
+  @metodo_pago_exists = 0,
+  'ALTER TABLE tickets ADD COLUMN metodo_pago VARCHAR(80) NULL AFTER estado_pago',
+  'SELECT 1'
+);
+PREPARE add_metodo_pago_stmt FROM @add_metodo_pago;
+EXECUTE add_metodo_pago_stmt;
+DEALLOCATE PREPARE add_metodo_pago_stmt;
+
+SET @fecha_pago_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'tickets'
+    AND COLUMN_NAME = 'fecha_pago'
+);
+SET @add_fecha_pago = IF(
+  @fecha_pago_exists = 0,
+  'ALTER TABLE tickets ADD COLUMN fecha_pago VARCHAR(60) NULL AFTER metodo_pago',
+  'SELECT 1'
+);
+PREPARE add_fecha_pago_stmt FROM @add_fecha_pago;
+EXECUTE add_fecha_pago_stmt;
+DEALLOCATE PREPARE add_fecha_pago_stmt;
+
+SET @fecha_pago_aprobado_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'tickets'
+    AND COLUMN_NAME = 'fecha_pago_aprobado'
+);
+SET @add_fecha_pago_aprobado = IF(
+  @fecha_pago_aprobado_exists = 0,
+  'ALTER TABLE tickets ADD COLUMN fecha_pago_aprobado VARCHAR(60) NULL AFTER fecha_pago',
+  'SELECT 1'
+);
+PREPARE add_fecha_pago_aprobado_stmt FROM @add_fecha_pago_aprobado;
+EXECUTE add_fecha_pago_aprobado_stmt;
+DEALLOCATE PREPARE add_fecha_pago_aprobado_stmt;
 
 CREATE TABLE IF NOT EXISTS activos (
   id INT AUTO_INCREMENT PRIMARY KEY,

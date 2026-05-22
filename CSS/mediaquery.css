@@ -1,14 +1,14 @@
 /* Responsive general */
 
 html{
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 img{
     max-width: 100%;
 }
 
-@media (max-width: 1400px){
+@media (max-width: 87.5rem){
 
     body{
         overflow-x: hidden;
@@ -17,9 +17,9 @@ img{
     header img,
     .perfil img,
     .pantalla-administrador .perfil img{
-        width: 56px !important;
-        height: 56px !important;
-        min-width: 56px;
+        width: 2.9167vw !important;
+        height: 5.1852vh !important;
+        min-width: 2.9167vw;
         border-radius: 50%;
         object-fit: cover;
     }
@@ -28,30 +28,30 @@ img{
     .login-screen.register-active{
         top: 0;
         min-height: 100vh;
-        padding: 24px 16px;
-        gap: 20px;
+        padding: 2.2222vh 0.8333vw;
+        gap: 1.8519vh;
         justify-content: center;
     }
 
     .login-screen header h1{
-        font-size: clamp(1.8rem, 5vw, 2.4rem) !important;
+        font-size: 2.1rem !important;
     }
 
     .login-screen header p{
-        font-size: clamp(0.95rem, 2.8vw, 1.1rem) !important;
+        font-size: 1rem !important;
     }
 
     .form-login,
     .form-register{
-        width: min(100%, 560px);
+        width: min(100%, 29.1667vw);
         min-height: auto;
-        padding: 24px;
-        gap: 16px;
-        border-radius: 14px;
+        padding: 2.2222vh;
+        gap: 1.4815vh;
+        border-radius: 0.7292vw;
     }
 
     .register-grid{
-        gap: 14px;
+        gap: 1.2963vh;
     }
 
     .input-login,
@@ -68,14 +68,23 @@ img{
     .btn-secondary-login,
     .form-register .btn-secondary-login{
         width: 100%;
-        min-height: 46px;
-        border-radius: 10px;
+        min-height: 4.2593vh;
+        border-radius: 0.5208vw;
     }
 
     .btn-back-login{
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
+        width: 2.2917vw;
+        height: 4.0741vh;
+        border-radius: 0.5208vw;
+    }
+
+    .modal-alerta__card{
+        padding: 2.2222vh;
+        border-radius: 0.7292vw;
+    }
+
+    .modal-alerta__acciones{
+        grid-template-columns: 1fr;
     }
 
     .layout,
@@ -103,20 +112,20 @@ img{
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        gap: 14px;
-        padding: 12px 16px;
-        border-bottom: 1px solid #363636;
+        gap: 1.2963vh;
+        padding: 1.1111vh 0.8333vw;
+        border-bottom: 0.0521vw solid #363636;
         overflow: visible;
     }
 
     .perfil{
         min-width: max-content;
         padding: 0;
-        gap: 12px;
+        gap: 1.1111vh;
     }
 
     .notificaciones-usuario{
-        margin-left: 8px;
+        margin-left: 0.4167vw;
     }
 
     .perfil h3{
@@ -138,7 +147,7 @@ img{
     .nav-usuario ul{
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 0.7407vh;
         min-width: max-content;
     }
 
@@ -147,8 +156,8 @@ img{
     .usuario-tickes.activo{
         width: auto;
         margin-bottom: 0;
-        padding: 10px 12px;
-        border-radius: 10px;
+        padding: 0.9259vh 0.625vw;
+        border-radius: 0.5208vw;
         white-space: nowrap;
     }
 
@@ -178,7 +187,7 @@ img{
         width: 100%;
         min-height: auto;
         margin-left: 0 !important;
-        padding: 24px 16px;
+        padding: 2.2222vh 0.8333vw;
         box-sizing: border-box;
     }
 
@@ -186,7 +195,7 @@ img{
         align-items: stretch;
         justify-content: flex-start;
         height: auto;
-        gap: 18px;
+        gap: 1.6667vh;
     }
 
     .titulo-usuario,
@@ -197,7 +206,7 @@ img{
     .titulo-registrados,
     .estado-titulo{
         width: 100%;
-        margin: 0 0 18px;
+        margin: 0 0 1.6667vh;
         padding: 0;
     }
 
@@ -206,14 +215,14 @@ img{
     .lista-tickets-usuario{
         width: 100%;
         margin-left: 0;
-        border-radius: 14px;
+        border-radius: 0.7292vw;
     }
 
     .form-usuario{
         grid-template-columns: repeat(2, minmax(0, 1fr));
         min-height: auto;
-        padding: 20px;
-        gap: 16px;
+        padding: 1.8519vh;
+        gap: 1.4815vh;
     }
 
     .ticket-form-header,
@@ -225,7 +234,7 @@ img{
 
     .usuario-categoria{
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
+        gap: 1.2963vh;
     }
 
     .input-usuario,
@@ -233,24 +242,24 @@ img{
     .input-ticket,
     .btn-usuario,
     .btn-cancelar-ticket{
-        min-height: 46px;
+        min-height: 4.2593vh;
         height: auto;
-        border-radius: 10px;
-        padding: 10px 12px;
+        border-radius: 0.5208vw;
+        padding: 0.9259vh 0.625vw;
     }
 
     .textarea-ticket,
     .form-admin-ticket textarea,
     .form-detalle-tecnico textarea{
-        min-height: 120px;
+        min-height: 11.1111vh;
     }
 
     .ticket-form-header i,
     .card-activo-resumen i,
     .card-registrado i{
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
+        width: 2.5vw;
+        height: 4.4444vh;
+        border-radius: 0.625vw;
     }
 
     .estado-ticket-info,
@@ -262,8 +271,8 @@ img{
     .estado-pago div,
     .estado-mensaje,
     .estado-vacio{
-        border-radius: 12px;
-        padding: 14px;
+        border-radius: 0.625vw;
+        padding: 1.2963vh;
     }
 
     .contenido-dashboard,
@@ -272,7 +281,7 @@ img{
     .cards-registrados{
         grid-template-columns: repeat(2, minmax(0, 1fr));
         display: grid;
-        gap: 14px;
+        gap: 1.2963vh;
         width: 100%;
     }
 
@@ -281,43 +290,43 @@ img{
     .card-activo-resumen,
     .card-registrado{
         width: 100%;
-        min-height: 130px;
+        min-height: 12.037vh;
         height: auto;
-        border-radius: 14px;
-        padding: 16px;
+        border-radius: 0.7292vw;
+        padding: 1.4815vh;
     }
 
     .contenido-1 i{
-        width: 48px !important;
-        height: 48px !important;
-        border-radius: 12px !important;
+        width: 2.5vw !important;
+        height: 4.4444vh !important;
+        border-radius: 0.625vw !important;
         font-size: 1.4rem !important;
     }
 
     .contenedor{
         flex-direction: column;
         align-items: stretch;
-        gap: 16px;
+        gap: 1.4815vh;
         width: 100%;
-        padding: 0 0 24px;
+        padding: 0 0 2.2222vh;
     }
 
     .card{
         width: 100%;
-        border-radius: 14px;
-        padding: 18px;
+        border-radius: 0.7292vw;
+        padding: 1.6667vh;
     }
 
     .barra{
         width: 100%;
-        height: 8px;
-        border-radius: 999px;
+        height: 0.7407vh;
+        border-radius: 52.0312vw;
     }
 
     .filtros-activos,
     .filtros-ticket{
         width: 100%;
-        gap: 12px;
+        gap: 1.1111vh;
     }
 
     .filtros-activos input,
@@ -325,10 +334,10 @@ img{
     .filtros-ticket input,
     .filtros-ticket select{
         width: 100%;
-        min-height: 46px;
+        min-height: 4.2593vh;
         height: auto;
-        border-radius: 10px;
-        padding: 10px 12px;
+        border-radius: 0.5208vw;
+        padding: 0.9259vh 0.625vw;
     }
 
     .tabla-activos-admin,
@@ -336,8 +345,8 @@ img{
     .tabla-registrados,
     .tecnico-tabla{
         width: 100%;
-        border-radius: 14px;
-        padding: 10px;
+        border-radius: 0.7292vw;
+        padding: 0.9259vh;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
@@ -345,7 +354,7 @@ img{
     .tabla-ticket-admin,
     .tabla-tecnico table{
         width: max-content;
-        min-width: 980px;
+        min-width: 51.0417vw;
         table-layout: auto;
     }
 
@@ -353,35 +362,35 @@ img{
     .tabla-ticket-admin td,
     .tabla-tecnico th,
     .tabla-tecnico td{
-        padding: 14px 12px;
+        padding: 1.2963vh 0.625vw;
         font-size: 0.88rem;
         white-space: normal;
     }
 
     .acciones-ticket{
-        gap: 8px;
+        gap: 0.7407vh;
     }
 
     .acciones-ticket a,
     .btn-accion-admin,
     .btn-editar-ticket-tecnico{
-        width: 42px;
-        height: 42px;
-        border-radius: 10px;
+        width: 2.1875vw;
+        height: 3.8889vh;
+        border-radius: 0.5208vw;
     }
 
     .detalle-admin-card{
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        padding: 14px;
+        gap: 1.1111vh;
+        padding: 1.2963vh;
     }
 
     .form-admin-ticket,
     .form-detalle-tecnico{
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-        padding: 16px;
-        border-radius: 14px;
+        gap: 1.2963vh;
+        padding: 1.4815vh;
+        border-radius: 0.7292vw;
     }
 
     .campo-completo-admin,
@@ -393,25 +402,25 @@ img{
 
     .form-admin-ticket button,
     .form-detalle-tecnico button{
-        min-height: 46px;
+        min-height: 4.2593vh;
         height: auto;
-        border-radius: 10px;
+        border-radius: 0.5208vw;
     }
 
     .content-tec{
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         width: 100%;
-        gap: 14px;
-        padding: 0 0 18px;
+        gap: 1.2963vh;
+        padding: 0 0 1.6667vh;
     }
 
     .bg-red,
     .bg-green,
     .bg-blue{
         width: 100%;
-        border-radius: 14px;
-        padding: 16px;
+        border-radius: 0.7292vw;
+        padding: 1.4815vh;
     }
 
     .tabla-tecnico{
@@ -421,24 +430,24 @@ img{
 
     .correos-especiales{
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 1.1111vh;
     }
 
     .footer-app{
         width: 100%;
         margin-left: 0;
-        padding: 28px 16px 18px;
+        padding: 2.5926vh 0.8333vw 1.6667vh;
         border-left: none;
     }
 
     .footer-app__inner{
         grid-template-columns: 1fr;
-        gap: 22px;
+        gap: 2.037vh;
     }
 
     .footer-app__content{
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px;
+        gap: 1.4815vh;
     }
 
     .footer-app__status{
@@ -453,20 +462,20 @@ img{
     }
 }
 
-@media (max-width: 700px){
+@media (max-width: 43.75rem){
 
     html{
-        font-size: 15px;
+        font-size: 0.9375rem;
     }
 
     .login-screen{
-        padding: 18px 12px;
+        padding: 1.6667vh 0.625vw;
     }
 
     .form-login,
     .form-register{
-        padding: 18px;
-        border-radius: 12px;
+        padding: 1.6667vh;
+        border-radius: 0.625vw;
     }
 
     .register-grid,
@@ -474,6 +483,9 @@ img{
     .usuario-categoria,
     .estado-ticket-info,
     .estado-pago,
+    .admin-finanzas-grid,
+    .tecnico-resumen-grid,
+    .tecnico-dashboard-grid,
     .cards-activos,
     .cards-tickets,
     .cards-registrados,
@@ -499,64 +511,83 @@ img{
 
     .menu{
         flex-wrap: wrap;
-        align-items: flex-start;
-        padding: 12px;
-        gap: 10px;
+        align-items: center;
+        padding: 1.1111vh;
+        gap: 0.9259vh;
+    }
+
+    .btn-menu-toggle{
+        display: inline-flex;
+        margin-left: auto;
     }
 
     .perfil{
-        width: 100%;
+        width: auto;
+        min-width: 0;
+        flex: 1;
     }
 
     .panel-notificaciones{
         right: 0;
         left: auto;
-        width: min(22rem, calc(100vw - 24px));
+        width: min(18.3333vw, calc(100vw - 1.25vw));
     }
 
     .nav-usuario{
         order: 3;
         width: 100%;
         flex-basis: 100%;
+        display: none;
+        padding-left: 0;
+        overflow: visible;
+    }
+
+    .nav-usuario.menu-abierto{
+        display: flex;
     }
 
     .nav-usuario ul{
         width: 100%;
         min-width: 0;
-        flex-wrap: wrap;
-        gap: 8px;
+        flex-direction: column;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        gap: 0.7407vh;
     }
 
     .usuario-tickes,
     .usuario-tickes:hover,
     .usuario-tickes.activo{
-        flex: 1 1 calc(50% - 8px);
+        flex: 1 1 auto;
         display: flex;
-        justify-content: center;
-        min-width: 130px;
-        padding: 10px;
+        justify-content: flex-start;
+        min-width: 100%;
+        width: 100%;
+        padding: 0.9259vh;
     }
 
     .logout{
-        position: absolute;
-        top: 18px;
-        right: 12px;
-        font-size: 0;
+        position: static;
+        width: 100%;
+        padding: 0.9259vh;
+        font-size: 1rem;
+        border-radius: 0.5208vw;
     }
 
     .logout i{
         font-size: 1rem;
-        padding: 0 !important;
+        padding: 0 0.9259vh 0 0 !important;
     }
 
     .crar-tickets,
     .estado-tickets,
     .tickets_tecnico,
+    .dashboard-tecnico,
     .gestion-activos,
     .tickets-admin,
     .registrados-admin,
     #dashboard__ad{
-        padding: 18px 12px;
+        padding: 1.6667vh 0.625vw;
     }
 
     .titulo-usuario h1,
@@ -565,7 +596,7 @@ img{
     .titulo-activos h1,
     .titulo-tickets h1,
     .titulo-registrados h1{
-        font-size: clamp(1.6rem, 8vw, 2.1rem) !important;
+        font-size: 1.85rem !important;
         line-height: 1.1;
     }
 
@@ -587,8 +618,10 @@ img{
     .tabla-registrados,
     .tecnico-tabla,
     .form-admin-ticket,
-    .form-detalle-tecnico{
-        border-radius: 12px;
+    .form-detalle-tecnico,
+    .tecnico-panel,
+    .tecnico-resumen-card{
+        border-radius: 0.625vw;
     }
 
     .acciones-form-ticket,
@@ -601,9 +634,19 @@ img{
         width: 100%;
     }
 
+    .acciones-pago-usuario,
+    .acciones-aprobacion-pago{
+        justify-content: stretch;
+    }
+
+    .btn-pagar-ticket,
+    .btn-aprobar-pago{
+        width: 100%;
+    }
+
     .estado-ticket-header{
         flex-direction: column;
-        gap: 12px;
+        gap: 1.1111vh;
     }
 
     .estado-badge,
@@ -611,20 +654,20 @@ img{
     .rol-usuario,
     .rol-tecnico,
     .rol-admin{
-        padding: 6px 10px;
-        border-radius: 999px;
+        padding: 0.5556vh 0.5208vw;
+        border-radius: 52.0312vw;
     }
 
     .tabla-ticket-admin,
     .tabla-tecnico table{
-        min-width: 820px;
+        min-width: 42.7083vw;
     }
 
     .tabla-ticket-admin th,
     .tabla-ticket-admin td,
     .tabla-tecnico th,
     .tabla-tecnico td{
-        padding: 12px 10px;
+        padding: 1.1111vh 0.5208vw;
         font-size: 0.82rem;
     }
 
@@ -633,7 +676,7 @@ img{
         justify-self: stretch;
         justify-content: center;
         width: 100%;
-        padding: 12px;
+        padding: 1.1111vh;
     }
 
     .footer-app__brand{
@@ -641,8 +684,8 @@ img{
     }
 
     .footer-app__brand img{
-        width: 52px;
-        height: 52px;
+        width: 2.7083vw;
+        height: 4.8148vh;
     }
 
     .footer-app__content{
@@ -657,16 +700,26 @@ img{
     .footer-app__status span{
         width: 100%;
     }
+
+    .form-ajustes-cuenta{
+        grid-template-columns: 1fr;
+    }
+
+    .campo-completo-ajustes,
+    .form-ajustes-cuenta button,
+    .btn-eliminar-cuenta{
+        grid-column: span 1;
+    }
 }
 
-@media (max-width: 420px){
+@media (max-width: 26.25rem){
 
     html{
-        font-size: 14px;
+        font-size: 0.875rem;
     }
 
     .perfil h3{
-        max-width: 190px;
+        max-width: 9.8958vw;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -683,11 +736,11 @@ img{
     .card-ticket,
     .card-activo-resumen,
     .card-registrado{
-        min-height: 112px;
+        min-height: 10.3704vh;
     }
 
     .tabla-ticket-admin,
     .tabla-tecnico table{
-        min-width: 760px;
+        min-width: 39.5833vw;
     }
 }

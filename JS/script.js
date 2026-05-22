@@ -26,10 +26,22 @@
     const nombrePerfilUsuario = document.querySelector("#usuario .perfil h3");
     const nombrePerfilAdmin = document.getElementById("nombrePerfilAdmin");
     const nombrePerfilTecnico = document.getElementById("nombrePerfilTecnico");
+    const dashboardTecnico = document.getElementById("dashboardTecnico");
+    const ticketsTecnico = document.getElementById("ticketsTecnico");
+    const btnDashboardTecnico = document.getElementById("btnDashboardTecnico");
+    const btnTicketsTecnico = document.getElementById("btnTicketsTecnico");
     const tablaTicketsTecnicoBody = document.getElementById("tablaTicketsTecnicoBody");
     const tecTicketsAbiertos = document.getElementById("tecTicketsAbiertos");
     const tecTicketsTerminados = document.getElementById("tecTicketsTerminados");
     const tecTicketsProceso = document.getElementById("tecTicketsProceso");
+    const tecGananciaTotal = document.getElementById("tecGananciaTotal");
+    const tecAporteEmpresa = document.getElementById("tecAporteEmpresa");
+    const tecGananciaNeta = document.getElementById("tecGananciaNeta");
+    const tecTrabajosPendientes = document.getElementById("tecTrabajosPendientes");
+    const tecGraficaIngresos = document.getElementById("tecGraficaIngresos");
+    const tecUltimosClientes = document.getElementById("tecUltimosClientes");
+    const tecListaPendientes = document.getElementById("tecListaPendientes");
+    const tecRepartoIngresos = document.getElementById("tecRepartoIngresos");
 
     // SECCIONES USUARIO
     const crearTicketUsuario = document.querySelector(".crar-tickets");
@@ -76,6 +88,12 @@
     const dashboardTicketsCerrados = document.getElementById("dashboardTicketsCerrados");
     const dashboardActividadReciente = document.getElementById("dashboardActividadReciente");
     const dashboardDispositivosPopulares = document.getElementById("dashboardDispositivosPopulares");
+    const adminIngresosAprobados = document.getElementById("adminIngresosAprobados");
+    const adminIngresoEmpresa = document.getElementById("adminIngresoEmpresa");
+    const adminIngresoTecnicos = document.getElementById("adminIngresoTecnicos");
+    const adminPagosPendientes = document.getElementById("adminPagosPendientes");
+    const adminGraficaIngresos = document.getElementById("adminGraficaIngresos");
+    const adminPagosRecientes = document.getElementById("adminPagosRecientes");
     const tablaTicketsAdminBody = document.getElementById("tablaTicketsAdminBody");
     const adminTicketsTotal = document.getElementById("adminTicketsTotal");
     const adminTicketsAbiertos = document.getElementById("adminTicketsAbiertos");
@@ -103,6 +121,39 @@
     const adminCrearCiudad = document.getElementById("adminCrearCiudad");
     const adminCrearPais = document.getElementById("adminCrearPais");
     const adminCrearNacimiento = document.getElementById("adminCrearNacimiento");
+    const btnAbrirCrearCuentaAdmin = document.getElementById("btnAbrirCrearCuentaAdmin");
+    const modalCrearCuentaAdmin = document.getElementById("modalCrearCuentaAdmin");
+    const btnCerrarCrearCuentaAdmin = document.getElementById("btnCerrarCrearCuentaAdmin");
+    const modalAjustesCuenta = document.getElementById("modalAjustesCuenta");
+    const formAjustesCuenta = document.getElementById("formAjustesCuenta");
+    const ajustesNombre = document.getElementById("ajustesNombre");
+    const ajustesApellidos = document.getElementById("ajustesApellidos");
+    const ajustesCorreo = document.getElementById("ajustesCorreo");
+    const ajustesPassword = document.getElementById("ajustesPassword");
+    const btnCerrarAjustes = document.getElementById("btnCerrarAjustes");
+    const btnEliminarCuentaAjustes = document.getElementById("btnEliminarCuentaAjustes");
+    const modalCorreoExistente = document.getElementById("modalCorreoExistente");
+    const modalCorreoExistenteTexto = document.getElementById("modalCorreoExistenteTexto");
+    const btnCerrarCorreoExistente = document.getElementById("btnCerrarCorreoExistente");
+    const btnLoginCorreoExistente = document.getElementById("btnLoginCorreoExistente");
+    const btnUsarOtroCorreo = document.getElementById("btnUsarOtroCorreo");
+    const accionesCorreoExistente = document.querySelector("#modalCorreoExistente .modal-alerta__acciones");
+    const modalConfirmacion = document.getElementById("modalConfirmacion");
+    const btnCerrarConfirmacion = document.getElementById("btnCerrarConfirmacion");
+    const btnConfirmacionAceptar = document.getElementById("btnConfirmacionAceptar");
+    const btnConfirmacionCancelar = document.getElementById("btnConfirmacionCancelar");
+    const modalConfirmacionTitulo = document.getElementById("modalConfirmacionTitulo");
+    const modalConfirmacionTexto = document.getElementById("modalConfirmacionTexto");
+    const modalConfirmacionIcono = document.getElementById("modalConfirmacionIcono");
+    const modalDireccionRecogida = document.getElementById("modalDireccionRecogida");
+    const btnCerrarDireccionRecogida = document.getElementById("btnCerrarDireccionRecogida");
+    const formDireccionRecogida = document.getElementById("formDireccionRecogida");
+    const inputDireccionRecogida = document.getElementById("inputDireccionRecogida");
+    const modalPagoUsuario = document.getElementById("modalPagoUsuario");
+    const btnCerrarPagoUsuario = document.getElementById("btnCerrarPagoUsuario");
+    const formPagoUsuario = document.getElementById("formPagoUsuario");
+    const selectMetodoPagoUsuario = document.getElementById("selectMetodoPagoUsuario");
+    const modalPagoUsuarioTexto = document.getElementById("modalPagoUsuarioTexto");
 
     // BOTONES MENU ADMIN
     const btnDashboard = document.getElementById("btnDashboard");
@@ -134,6 +185,8 @@
     let usuarioActual = "Esteban Trujillo";
     let correoUsuarioActual = credenciales.usuario.user;
     let usuarioActualId = null;
+    let rolUsuarioActual = "Usuario";
+    let campoCorreoExistente = null;
     let apiDisponible = false;
     const apiBase = window.location.protocol === "file:" ? "http://localhost:3000/api" : "/api";
     const ticketsDbKey = "ticketsSoporte";
@@ -143,6 +196,11 @@
     const sesionActualKey = "sesionActual";
     const sincronizacionKey = "sincronizacionSistema";
     const notificacionesKey = "notificacionesTickets";
+    const pagoSinSolicitar = "Sin solicitar";
+    const pagoPendiente = "Pendiente aprobacion";
+    const pagoAprobado = "Aprobado";
+    const porcentajeEmpresa = 0.7;
+    const porcentajeTecnico = 0.3;
     const detallesTecnicoAbiertos = new Set();
     const borradoresDetalleTecnico = new Map();
 
@@ -248,6 +306,12 @@
     ];
 
     const ticketsBase = [];
+    const sedesCercanas = {
+        bogota: "iTech Service Bogota - Calle 93 # 15-42",
+        medellin: "iTech Service Medellin - Carrera 43A # 6 Sur-26",
+        cali: "iTech Service Cali - Avenida 6N # 23N-18",
+        barranquilla: "iTech Service Barranquilla - Carrera 53 # 80-198"
+    };
 
     function obtenerRegistrados() {
 
@@ -288,6 +352,169 @@
 
     }
 
+    function mostrarModalCorreoExistente(correo = "", campoObjetivo = registroCorreo) {
+
+        if (!modalCorreoExistente) {
+            alert("Este correo ya tiene cuenta. Inicia sesion o usa otro correo.");
+            return;
+        }
+
+        const correoLimpio = correo.trim();
+        const puedeIniciarSesion = login && login.style.display !== "none";
+        campoCorreoExistente = campoObjetivo;
+        modalCorreoExistente.dataset.correo = correoLimpio;
+        modalCorreoExistente.dataset.puedeIniciarSesion = puedeIniciarSesion ? "true" : "false";
+
+        if (btnLoginCorreoExistente) {
+            btnLoginCorreoExistente.hidden = !puedeIniciarSesion;
+        }
+
+        if (accionesCorreoExistente) {
+            accionesCorreoExistente.classList.toggle("una-accion", !puedeIniciarSesion);
+        }
+
+        if (modalCorreoExistenteTexto) {
+            modalCorreoExistenteTexto.textContent = correoLimpio
+                ? `${correoLimpio} ya esta registrado. Puedes iniciar sesion con ese correo o usar uno diferente.`
+                : "Este correo ya esta registrado. Puedes iniciar sesion con ese correo o usar uno diferente.";
+        }
+
+        modalCorreoExistente.hidden = false;
+
+        if (puedeIniciarSesion && btnLoginCorreoExistente) {
+            btnLoginCorreoExistente.focus();
+        } else if (btnUsarOtroCorreo) {
+            btnUsarOtroCorreo.focus();
+        }
+
+    }
+
+    function cerrarModalCorreoExistente() {
+
+        if (modalCorreoExistente) {
+            modalCorreoExistente.hidden = true;
+        }
+
+    }
+
+    function mostrarConfirmacion({ titulo, texto, confirmar = "Confirmar", cancelar = "Cancelar", peligro = false, icono = "fa-solid fa-triangle-exclamation" }) {
+
+        if (!modalConfirmacion) {
+            return Promise.resolve(confirm(texto || titulo));
+        }
+
+        modalConfirmacionTitulo.textContent = titulo;
+        modalConfirmacionTexto.textContent = texto;
+        modalConfirmacionIcono.className = icono;
+        btnConfirmacionAceptar.textContent = confirmar;
+        btnConfirmacionCancelar.textContent = cancelar;
+        btnConfirmacionAceptar.classList.toggle("peligro", peligro);
+        modalConfirmacion.hidden = false;
+        btnConfirmacionCancelar.focus();
+
+        return new Promise((resolve) => {
+            const cerrar = (resultado) => {
+                modalConfirmacion.hidden = true;
+                btnConfirmacionAceptar.onclick = null;
+                btnConfirmacionCancelar.onclick = null;
+                btnCerrarConfirmacion.onclick = null;
+                modalConfirmacion.onclick = null;
+                resolve(resultado);
+            };
+
+            btnConfirmacionAceptar.onclick = () => cerrar(true);
+            btnConfirmacionCancelar.onclick = () => cerrar(false);
+            btnCerrarConfirmacion.onclick = () => cerrar(false);
+            modalConfirmacion.onclick = (e) => {
+                if (e.target === modalConfirmacion) {
+                    cerrar(false);
+                }
+            };
+        });
+
+    }
+
+    function solicitarDireccionRecogida() {
+
+        if (!modalDireccionRecogida || !formDireccionRecogida) {
+            const direccion = prompt("Escribe la direccion de recogida");
+            return Promise.resolve(direccion ? direccion.trim() : "");
+        }
+
+        modalDireccionRecogida.hidden = false;
+        inputDireccionRecogida.value = "";
+        inputDireccionRecogida.focus();
+
+        return new Promise((resolve) => {
+            const cerrar = (direccion = "") => {
+                modalDireccionRecogida.hidden = true;
+                formDireccionRecogida.onsubmit = null;
+                btnCerrarDireccionRecogida.onclick = null;
+                modalDireccionRecogida.onclick = null;
+                resolve(direccion);
+            };
+
+            formDireccionRecogida.onsubmit = (e) => {
+                e.preventDefault();
+                cerrar(inputDireccionRecogida.value.trim());
+            };
+
+            btnCerrarDireccionRecogida.onclick = () => cerrar("");
+            modalDireccionRecogida.onclick = (e) => {
+                if (e.target === modalDireccionRecogida) {
+                    cerrar("");
+                }
+            };
+        });
+
+    }
+
+    function solicitarMetodoPago(ticket) {
+
+        if (!modalPagoUsuario || !formPagoUsuario || !selectMetodoPagoUsuario) {
+            const metodo = prompt("Metodo de pago: tarjeta, transferencia, Nequi/Daviplata o efectivo");
+            return Promise.resolve(metodo ? metodo.trim() : "");
+        }
+
+        modalPagoUsuario.hidden = false;
+        selectMetodoPagoUsuario.value = "";
+
+        if (modalPagoUsuarioTexto) {
+            modalPagoUsuarioTexto.textContent = `Valor a pagar: ${formatearValor(ticket.valorArreglo)}. Selecciona el metodo de pago para pedir aprobacion al administrador.`;
+        }
+
+        selectMetodoPagoUsuario.focus();
+
+        return new Promise((resolve) => {
+            const cerrar = (metodo = "") => {
+                modalPagoUsuario.hidden = true;
+                formPagoUsuario.onsubmit = null;
+                btnCerrarPagoUsuario.onclick = null;
+                modalPagoUsuario.onclick = null;
+                resolve(metodo);
+            };
+
+            formPagoUsuario.onsubmit = (e) => {
+                e.preventDefault();
+                cerrar(selectMetodoPagoUsuario.value);
+            };
+
+            btnCerrarPagoUsuario.onclick = () => cerrar("");
+            modalPagoUsuario.onclick = (e) => {
+                if (e.target === modalPagoUsuario) {
+                    cerrar("");
+                }
+            };
+        });
+
+    }
+
+    function obtenerSedeCercana(ciudad) {
+
+        return sedesCercanas[normalizarTexto(ciudad)] || `iTech Service ${ciudad} - Centro de servicio principal`;
+
+    }
+
     function registrarNotificacionesPorTicketsActualizados(ticketsActualizados) {
 
         const ticketsAnteriores = obtenerTodosLosTickets();
@@ -314,7 +541,10 @@
             localStorage.setItem(usuariosDbKey, JSON.stringify(
                 usuariosApi
                     .map((usuario) => ({
+                        id: usuario.id || null,
                         nombre: usuario.nombre,
+                        nombreBase: usuario.nombreBase || "",
+                        apellidos: usuario.apellidos || "",
                         rol: formatearRol(usuario.rol),
                         correo: usuario.correo,
                         password: usuario.passwordDemo || "",
@@ -369,6 +599,30 @@
 
     }
 
+    function formatearFechaCuenta(fecha) {
+
+        if (!fecha) return "";
+
+        const valor = String(fecha);
+
+        if (!/^\d{4}-\d{2}-\d{2}/.test(valor)) {
+            return valor;
+        }
+
+        return valor.slice(0, 10);
+
+    }
+
+    function obtenerValorRolApi(rolUsuario) {
+
+        const rolFormateado = formatearRol(rolUsuario);
+
+        if (rolFormateado === "Admin") return "admin";
+        if (rolFormateado === "Tecnico") return "tecnico";
+        return "usuario";
+
+    }
+
     function buscarCuentaEspecialLogin(correo, password) {
 
         return cuentasEspeciales.find((cuenta) => (
@@ -387,7 +641,7 @@
         }
 
         try {
-            return JSON.parse(datos);
+            return JSON.parse(datos).map(normalizarTicketPago);
         } catch (error) {
             return [];
         }
@@ -442,7 +696,7 @@
 
     function guardarTickets(ticketsGuardados) {
 
-        localStorage.setItem(ticketsDbKey, JSON.stringify(ticketsGuardados));
+        localStorage.setItem(ticketsDbKey, JSON.stringify(ticketsGuardados.map(normalizarTicketPago)));
         emitirSincronizacion();
 
     }
@@ -471,6 +725,179 @@
     function normalizarTexto(texto) {
 
         return String(texto || "").toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    }
+
+    function normalizarTicketPago(ticket = {}) {
+
+        return {
+            ...ticket,
+            pagoEstado: ticket.pagoEstado || pagoSinSolicitar,
+            metodoPago: ticket.metodoPago || "",
+            fechaPago: ticket.fechaPago || "",
+            fechaPagoAprobado: ticket.fechaPagoAprobado || ""
+        };
+
+    }
+
+    function obtenerEstadoPago(ticket) {
+
+        return normalizarTicketPago(ticket).pagoEstado;
+
+    }
+
+    function ticketPagoAprobado(ticket) {
+
+        return obtenerEstadoPago(ticket) === pagoAprobado;
+
+    }
+
+    function ticketPagoPendiente(ticket) {
+
+        return obtenerEstadoPago(ticket) === pagoPendiente;
+
+    }
+
+    function ticketPuedePagarse(ticket) {
+
+        return ticket.estado === "Listo para entrega" && !ticketPagoAprobado(ticket) && Number(ticket.valorArreglo || 0) > 0;
+
+    }
+
+    function calcularRepartoValor(valor) {
+
+        const total = Number(valor || 0);
+
+        return {
+            total,
+            empresa: Math.round(total * porcentajeEmpresa),
+            tecnico: Math.round(total * porcentajeTecnico)
+        };
+
+    }
+
+    function limpiarNombrePersona(texto) {
+
+        return String(texto || "").replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñÜü ]/g, "").replace(/\s+/g, " ");
+
+    }
+
+    function esNombrePersonaValido(texto) {
+
+        return /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü]+(?: [A-Za-zÁÉÍÓÚáéíóúÑñÜü]+)*$/.test(String(texto || "").trim());
+
+    }
+
+    function activarFiltroNombre(input) {
+
+        if (!input) return;
+
+        input.addEventListener("input", () => {
+            input.value = limpiarNombrePersona(input.value);
+        });
+
+    }
+
+    function obtenerPartesNombreCuenta(cuenta = {}) {
+
+        if (cuenta.nombreBase || cuenta.apellidos) {
+            return {
+                nombre: cuenta.nombreBase || String(cuenta.nombre || "").replace(cuenta.apellidos || "", "").trim(),
+                apellidos: cuenta.apellidos || ""
+            };
+        }
+
+        const partes = String(cuenta.nombre || usuarioActual || "").trim().split(/\s+/).filter(Boolean);
+
+        if (partes.length <= 1) {
+            return {
+                nombre: partes[0] || "",
+                apellidos: ""
+            };
+        }
+
+        return {
+            nombre: partes.slice(0, -1).join(" "),
+            apellidos: partes.slice(-1).join(" ")
+        };
+
+    }
+
+    function obtenerDatosSesionActual() {
+
+        return obtenerSesionGuardada() || {
+            id: usuarioActualId,
+            nombre: usuarioActual,
+            correo: correoUsuarioActual,
+            rol: rolUsuarioActual
+        };
+
+    }
+
+    function actualizarPerfilVisible(datosSesion) {
+
+        if (formatearRol(datosSesion.rol) === "Usuario" && nombrePerfilUsuario) {
+            nombrePerfilUsuario.textContent = datosSesion.nombre;
+        }
+
+        if (formatearRol(datosSesion.rol) === "Admin" && nombrePerfilAdmin) {
+            nombrePerfilAdmin.textContent = datosSesion.nombre;
+        }
+
+        if (formatearRol(datosSesion.rol) === "Tecnico" && nombrePerfilTecnico) {
+            nombrePerfilTecnico.textContent = datosSesion.nombre;
+        }
+
+    }
+
+    function actualizarCuentaEnLocalStorage(datosActualizados, correoAnterior, nombreAnterior) {
+
+        const registrados = obtenerRegistrados().map((registrado) => {
+            const mismoId = datosActualizados.id && registrado.id && String(registrado.id) === String(datosActualizados.id);
+            const mismoCorreo = normalizarTexto(registrado.correo) === normalizarTexto(correoAnterior);
+
+            if (!mismoId && !mismoCorreo) {
+                return registrado;
+            }
+
+            return {
+                ...registrado,
+                id: datosActualizados.id || registrado.id || null,
+                nombre: datosActualizados.nombre,
+                nombreBase: datosActualizados.nombreBase || obtenerPartesNombreCuenta(datosActualizados).nombre,
+                apellidos: datosActualizados.apellidos || obtenerPartesNombreCuenta(datosActualizados).apellidos,
+                correo: datosActualizados.correo,
+                password: datosActualizados.password || registrado.password || registrado.passwordDemo || "",
+                rol: formatearRol(datosActualizados.rol || registrado.rol),
+                ciudad: datosActualizados.ciudad || registrado.ciudad,
+                pais: datosActualizados.pais || registrado.pais,
+                nacimiento: datosActualizados.nacimiento || registrado.nacimiento,
+                estado: datosActualizados.estado || registrado.estado
+            };
+        });
+
+        localStorage.setItem(usuariosDbKey, JSON.stringify(registrados));
+
+        const ticketsActualizados = obtenerTickets().map((ticket) => {
+            const copia = { ...ticket };
+
+            if (
+                (datosActualizados.id && copia.usuarioId && String(copia.usuarioId) === String(datosActualizados.id)) ||
+                normalizarTexto(copia.correoUsuario) === normalizarTexto(correoAnterior) ||
+                normalizarTexto(copia.usuario) === normalizarTexto(nombreAnterior)
+            ) {
+                copia.usuario = datosActualizados.nombre;
+                copia.correoUsuario = datosActualizados.correo;
+            }
+
+            if (normalizarTexto(copia.tecnico) === normalizarTexto(nombreAnterior)) {
+                copia.tecnico = datosActualizados.nombre;
+            }
+
+            return copia;
+        });
+
+        guardarTickets(ticketsActualizados);
 
     }
 
@@ -869,6 +1296,166 @@
 
     }
 
+    function eliminarCuentaLocal(usuario) {
+
+        const correo = normalizarTexto(usuario.correo);
+        const id = usuario.id ? String(usuario.id) : "";
+        const registrados = obtenerRegistrados().filter((registrado) => {
+            const mismoCorreo = normalizarTexto(registrado.correo) === correo;
+            const mismoId = id && registrado.id && String(registrado.id) === id;
+            return !mismoCorreo && !mismoId;
+        });
+
+        localStorage.setItem(usuariosDbKey, JSON.stringify(registrados));
+
+        const ticketsRestantes = obtenerTickets().filter((ticket) => {
+            const mismoCorreo = normalizarTexto(ticket.correoUsuario) === correo;
+            const mismoId = id && ticket.usuarioId && String(ticket.usuarioId) === id;
+            return !mismoCorreo && !mismoId;
+        });
+
+        guardarTickets(ticketsRestantes);
+        emitirSincronizacion();
+
+    }
+
+    async function eliminarCuenta(usuario) {
+
+        if (usuario.id) {
+            try {
+                await apiRequest(`/users/${usuario.id}`, {
+                    method: "DELETE"
+                });
+            } catch (error) {
+                const mensaje = normalizarTexto(error.message);
+
+                if (!mensaje.includes("usuario no encontrado") && !mensaje.includes("error de conexion")) {
+                    throw error;
+                }
+
+                console.warn("La cuenta no se pudo eliminar en MySQL, se eliminara localmente.", error.message);
+            }
+        }
+
+        eliminarCuentaLocal(usuario);
+
+    }
+
+    function actualizarTicketsPorCambioRolTecnico(usuario, rolAnterior, rolNuevo) {
+
+        if (formatearRol(rolAnterior) !== "Tecnico" || formatearRol(rolNuevo) === "Tecnico") {
+            return;
+        }
+
+        let huboCambios = false;
+        const nombreTecnico = normalizarTexto(usuario.nombre);
+        const ticketsActualizados = obtenerTickets().map((ticket) => {
+
+            if (normalizarTexto(ticket.tecnico) !== nombreTecnico) {
+                return ticket;
+            }
+
+            huboCambios = true;
+            return {
+                ...ticket,
+                tecnico: "Sin asignar"
+            };
+
+        });
+
+        if (huboCambios) {
+            guardarTickets(ticketsActualizados);
+        }
+
+    }
+
+    function cuentaEsSesionActual(cuenta) {
+
+        const sesion = obtenerDatosSesionActual();
+        const mismoId = cuenta.id && sesion.id && String(cuenta.id) === String(sesion.id);
+        const mismoCorreo = cuenta.correo && sesion.correo && normalizarTexto(cuenta.correo) === normalizarTexto(sesion.correo);
+
+        return Boolean(mismoId || mismoCorreo);
+
+    }
+
+    function actualizarSesionSiEsActual(cuentaActualizada) {
+
+        if (!cuentaEsSesionActual(cuentaActualizada)) {
+            return;
+        }
+
+        usuarioActual = cuentaActualizada.nombre;
+        correoUsuarioActual = cuentaActualizada.correo;
+        usuarioActualId = cuentaActualizada.id || usuarioActualId;
+        rolUsuarioActual = formatearRol(cuentaActualizada.rol);
+        guardarSesion(cuentaActualizada);
+
+    }
+
+    async function actualizarRolCuenta(usuario, rolApi) {
+
+        const rolAnterior = formatearRol(usuario.rol);
+        const rolNuevo = formatearRol(rolApi);
+
+        if (rolAnterior === rolNuevo) {
+            return usuario;
+        }
+
+        if (!usuario.id) {
+            const cuentaLocal = {
+                ...usuario,
+                rol: rolNuevo,
+                password: usuario.password || usuario.passwordDemo || "",
+                passwordDemo: usuario.passwordDemo || usuario.password || ""
+            };
+
+            guardarRegistrado(cuentaLocal);
+            actualizarTicketsPorCambioRolTecnico(usuario, rolAnterior, rolNuevo);
+            actualizarSesionSiEsActual(cuentaLocal);
+            return cuentaLocal;
+        }
+
+        const partesNombre = obtenerPartesNombreCuenta(usuario);
+        const cuentaActualizada = await apiRequest(`/users/${usuario.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                nombre: partesNombre.nombre,
+                apellidos: partesNombre.apellidos,
+                correo: usuario.correo,
+                password: "",
+                rol: rolApi
+            })
+        });
+
+        const cuentaNormalizada = {
+            ...usuario,
+            ...cuentaActualizada,
+            password: usuario.password || cuentaActualizada.passwordDemo || usuario.passwordDemo || "",
+            rol: formatearRol(cuentaActualizada.rol)
+        };
+
+        actualizarCuentaEnLocalStorage(cuentaNormalizada, usuario.correo, usuario.nombre);
+        actualizarTicketsPorCambioRolTecnico(usuario, rolAnterior, rolNuevo);
+        actualizarSesionSiEsActual(cuentaNormalizada);
+
+        return cuentaNormalizada;
+
+    }
+
+    function cerrarSesionActual() {
+
+        pantallaUsuario.style.display = "none";
+        pantallaAdmin.style.display = "none";
+        pantallaTecnico.style.display = "none";
+        login.style.display = "flex";
+        actualizarFooterSesion(false);
+        mostrarLogin();
+        form.reset();
+        localStorage.removeItem(sesionActualKey);
+
+    }
+
     function crearCelda(texto) {
 
         const celda = document.createElement("td");
@@ -1016,6 +1603,7 @@
 
         renderActividadDashboard(ticketsActuales);
         renderDispositivosDashboard();
+        renderFinanzasAdminDashboard(ticketsActuales);
 
     }
 
@@ -1082,6 +1670,218 @@
 
     }
 
+    function obtenerTicketsPagadosAprobados(tickets = obtenerTodosLosTickets()) {
+
+        return tickets.filter((ticket) => ticketPagoAprobado(ticket) && Number(ticket.valorArreglo || 0) > 0);
+
+    }
+
+    function obtenerTicketsTecnicoActual() {
+
+        const tecnicoActual = normalizarTexto(usuarioActual);
+
+        return obtenerTodosLosTickets().filter((ticket) => (
+            normalizarTexto(ticket.tecnico || "") === tecnicoActual
+        ));
+
+    }
+
+    function sumarValoresTickets(tickets) {
+
+        return tickets.reduce((total, ticket) => total + Number(ticket.valorArreglo || 0), 0);
+
+    }
+
+    function crearFilaListaDashboard(titulo, detalle, valor = "") {
+
+        const item = document.createElement("article");
+        item.className = "dashboard-lista-item";
+        item.innerHTML = `
+            <div>
+                <strong>${titulo}</strong>
+                <p>${detalle}</p>
+            </div>
+            <span>${valor}</span>
+        `;
+        return item;
+
+    }
+
+    function renderGraficaBarras(contenedor, datos, textoVacio) {
+
+        if (!contenedor) {
+            return;
+        }
+
+        contenedor.innerHTML = "";
+
+        if (datos.length === 0) {
+            const vacio = document.createElement("p");
+            vacio.className = "dashboard-vacio";
+            vacio.textContent = textoVacio;
+            contenedor.appendChild(vacio);
+            return;
+        }
+
+        const mayor = Math.max(...datos.map((dato) => dato.valor), 1);
+
+        datos.forEach((dato) => {
+            const porcentaje = Math.max((dato.valor / mayor) * 100, 8);
+            const fila = document.createElement("article");
+            fila.className = "grafica-fila";
+            fila.innerHTML = `
+                <header>
+                    <span>${dato.label}</span>
+                    <strong>${formatearValor(dato.valor)}</strong>
+                </header>
+                <div class="grafica-linea">
+                    <span style="width: ${porcentaje}%;"></span>
+                </div>
+            `;
+            contenedor.appendChild(fila);
+        });
+
+    }
+
+    function renderFinanzasAdminDashboard(ticketsActuales) {
+
+        if (!adminIngresosAprobados) {
+            return;
+        }
+
+        const ticketsPagados = obtenerTicketsPagadosAprobados(ticketsActuales);
+        const total = sumarValoresTickets(ticketsPagados);
+        const reparto = calcularRepartoValor(total);
+        const pagosPendientes = ticketsActuales.filter(ticketPagoPendiente);
+
+        adminIngresosAprobados.textContent = formatearValor(reparto.total);
+        adminIngresoEmpresa.textContent = formatearValor(reparto.empresa);
+        adminIngresoTecnicos.textContent = formatearValor(reparto.tecnico);
+        adminPagosPendientes.textContent = pagosPendientes.length;
+
+        const ingresosPorTecnico = Object.entries(ticketsPagados.reduce((acum, ticket) => {
+            const tecnico = ticket.tecnico || "Sin tecnico";
+            acum[tecnico] = (acum[tecnico] || 0) + Number(ticket.valorArreglo || 0);
+            return acum;
+        }, {}))
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 6)
+            .map(([label, valor]) => ({ label, valor }));
+
+        if (adminGraficaIngresos) {
+            adminGraficaIngresos.innerHTML = "<h2>Ingresos por tecnico</h2>";
+            const contenedor = document.createElement("div");
+            contenedor.className = "grafica-barras";
+            adminGraficaIngresos.appendChild(contenedor);
+            renderGraficaBarras(contenedor, ingresosPorTecnico, "Aun no hay pagos aprobados.");
+        }
+
+        if (adminPagosRecientes) {
+            adminPagosRecientes.innerHTML = "<h2>Pagos y entregas</h2>";
+
+            const recientes = [...pagosPendientes, ...ticketsPagados].slice(-6).reverse();
+
+            if (recientes.length === 0) {
+                const vacio = document.createElement("p");
+                vacio.className = "dashboard-vacio";
+                vacio.textContent = "No hay movimientos de pago todavia.";
+                adminPagosRecientes.appendChild(vacio);
+                return;
+            }
+
+            recientes.forEach((ticket) => {
+                adminPagosRecientes.appendChild(crearFilaListaDashboard(
+                    `${ticket.id} - ${ticket.usuario}`,
+                    `${obtenerEstadoPago(ticket)} / ${ticket.metodoPago || "Sin metodo"}`,
+                    formatearValor(ticket.valorArreglo)
+                ));
+            });
+        }
+
+    }
+
+    function renderDashboardTecnico() {
+
+        if (!dashboardTecnico) {
+            return;
+        }
+
+        const ticketsTecnicoActual = obtenerTicketsTecnicoActual();
+        const ticketsPagados = obtenerTicketsPagadosAprobados(ticketsTecnicoActual);
+        const pendientes = ticketsTecnicoActual.filter((ticket) => !["Cerrado", "Listo para entrega"].includes(ticket.estado));
+        const total = sumarValoresTickets(ticketsPagados);
+        const reparto = calcularRepartoValor(total);
+
+        if (tecGananciaTotal) {
+            tecGananciaTotal.textContent = formatearValor(reparto.total);
+            tecAporteEmpresa.textContent = formatearValor(reparto.empresa);
+            tecGananciaNeta.textContent = formatearValor(reparto.tecnico);
+            tecTrabajosPendientes.textContent = pendientes.length;
+        }
+
+        renderGraficaBarras(
+            tecGraficaIngresos,
+            ticketsPagados.slice(-6).reverse().map((ticket) => ({
+                label: ticket.id,
+                valor: Number(ticket.valorArreglo || 0)
+            })),
+            "Aun no tienes pagos aprobados."
+        );
+
+        if (tecUltimosClientes) {
+            tecUltimosClientes.innerHTML = "";
+            const ultimos = ticketsTecnicoActual.slice(-5).reverse();
+
+            if (ultimos.length === 0) {
+                const vacio = document.createElement("p");
+                vacio.className = "dashboard-vacio";
+                vacio.textContent = "Todavia no tienes clientes asignados.";
+                tecUltimosClientes.appendChild(vacio);
+            } else {
+                ultimos.forEach((ticket) => {
+                    tecUltimosClientes.appendChild(crearFilaListaDashboard(
+                        ticket.usuario,
+                        `${ticket.dispositivo} / ${ticket.estado}`,
+                        ticket.fecha
+                    ));
+                });
+            }
+        }
+
+        if (tecListaPendientes) {
+            tecListaPendientes.innerHTML = "";
+
+            if (pendientes.length === 0) {
+                const vacio = document.createElement("p");
+                vacio.className = "dashboard-vacio";
+                vacio.textContent = "No tienes trabajos pendientes.";
+                tecListaPendientes.appendChild(vacio);
+            } else {
+                pendientes.slice(0, 5).forEach((ticket) => {
+                    tecListaPendientes.appendChild(crearFilaListaDashboard(
+                        ticket.id,
+                        `${ticket.usuario} / ${ticket.dispositivo}`,
+                        ticket.estado
+                    ));
+                });
+            }
+        }
+
+        if (tecRepartoIngresos) {
+            tecRepartoIngresos.innerHTML = `
+                <div>
+                    <p>Empresa (${Math.round(porcentajeEmpresa * 100)}%)</p>
+                    <strong>${formatearValor(reparto.empresa)}</strong>
+                </div>
+                <div>
+                    <p>Tecnico (${Math.round(porcentajeTecnico * 100)}%)</p>
+                    <strong>${formatearValor(reparto.tecnico)}</strong>
+                </div>
+            `;
+        }
+
+    }
+
     function crearBadgeRol(rolUsuario) {
 
         const celda = document.createElement("td");
@@ -1092,6 +1892,81 @@
         badge.textContent = rolUsuario;
         celda.appendChild(badge);
 
+        return celda;
+
+    }
+
+    function aplicarClaseSelectRol(select, rolUsuario) {
+
+        select.className = `select-rol-admin rol-${obtenerValorRolApi(rolUsuario)}`;
+
+    }
+
+    function crearSelectRolAdmin(usuarioRegistrado) {
+
+        const celda = document.createElement("td");
+        const select = document.createElement("select");
+        const roles = [
+            { valor: "usuario", texto: "Usuario" },
+            { valor: "admin", texto: "Admin" },
+            { valor: "tecnico", texto: "Tecnico" }
+        ];
+        const valorInicial = obtenerValorRolApi(usuarioRegistrado.rol);
+
+        roles.forEach((rol) => {
+            const option = document.createElement("option");
+            option.value = rol.valor;
+            option.textContent = rol.texto;
+            select.appendChild(option);
+        });
+
+        select.value = valorInicial;
+        aplicarClaseSelectRol(select, valorInicial);
+
+        select.addEventListener("change", async () => {
+
+            const nuevoValor = select.value;
+            const nuevoRol = formatearRol(nuevoValor);
+
+            aplicarClaseSelectRol(select, nuevoValor);
+
+            const confirmado = await mostrarConfirmacion({
+                titulo: "Cambiar rol",
+                texto: `Quieres cambiar la cuenta de ${usuarioRegistrado.nombre} a ${nuevoRol}?`,
+                confirmar: "Cambiar rol",
+                icono: "fa-solid fa-user-gear"
+            });
+
+            if (!confirmado) {
+                select.value = valorInicial;
+                aplicarClaseSelectRol(select, valorInicial);
+                return;
+            }
+
+            select.disabled = true;
+
+            try {
+                const cuentaActualizada = await actualizarRolCuenta(usuarioRegistrado, nuevoValor);
+
+                alert("Rol actualizado correctamente");
+
+                if (cuentaEsSesionActual(cuentaActualizada) && formatearRol(cuentaActualizada.rol) !== formatearRol(usuarioRegistrado.rol)) {
+                    mostrarPantallaSesion(cuentaActualizada);
+                    return;
+                }
+
+                refrescarPantallasAbiertas();
+            } catch (error) {
+                select.value = valorInicial;
+                aplicarClaseSelectRol(select, valorInicial);
+                alert(error.message || "No se pudo actualizar el rol");
+            } finally {
+                select.disabled = false;
+            }
+
+        });
+
+        celda.appendChild(select);
         return celda;
 
     }
@@ -1142,8 +2017,14 @@
 
         const card = document.createElement("section");
         const terminado = ticketEstaTerminado(ticket);
+        const estadoPago = obtenerEstadoPago(ticket);
+        const reparto = calcularRepartoValor(ticket.valorArreglo);
 
         card.className = "estado-ticket-card";
+        const detalleServicio = ticket.recogidaDomicilio
+            ? `Recogida en casa: ${ticket.direccionRecogida || "Direccion pendiente"}. Tecnico: ${ticket.tecnico}.`
+            : `Entrega en sede: ${ticket.sedeCercana || obtenerSedeCercana(ticket.ciudad)}. Tecnico: ${ticket.tecnico}.`;
+
         card.innerHTML = `
             <div class="estado-ticket-header">
                 <div>
@@ -1171,27 +2052,94 @@
                     <p>Fecha</p>
                     <strong>${ticket.fecha}</strong>
                 </div>
+                <div>
+                    <p>Servicio</p>
+                    <strong>${ticket.recogidaDomicilio ? "Recogida a domicilio" : "Entrega en sede"}</strong>
+                </div>
+                <div>
+                    <p>${ticket.recogidaDomicilio ? "Direccion" : "Sede cercana"}</p>
+                    <strong>${ticket.recogidaDomicilio ? (ticket.direccionRecogida || "Direccion pendiente") : (ticket.sedeCercana || obtenerSedeCercana(ticket.ciudad))}</strong>
+                </div>
             </div>
 
             <div class="estado-mensaje">
                 <i class="fa-regular fa-circle-check"></i>
                 <div>
                     <h3>${terminado ? "Tu dispositivo ya fue reparado" : "Tu ticket esta en seguimiento"}</h3>
-                    <p>${terminado ? `Puedes pasar por el equipo en ${ticket.ciudad}. Recuerda traer tu documento y el numero del ticket.` : `${ticket.tecnico} fue asignado por cercania en ${ticket.ciudad}. Estado actual: ${ticket.estado}.`}</p>
+                    <p>${terminado ? `Proceso finalizado. ${detalleServicio}` : `${detalleServicio} Estado actual: ${ticket.estado}.`}</p>
                 </div>
             </div>
 
             <div class="estado-pago ${terminado ? "mostrar" : ""}">
                 <div>
                     <p>Valor a pagar</p>
-                    <strong>${formatearValor(ticket.valorArreglo)}</strong>
+                    <strong>${formatearValor(reparto.total)}</strong>
                 </div>
                 <div>
                     <p>Comentario del tecnico</p>
                     <strong>${ticket.comentarioTecnico || "Sin comentario tecnico."}</strong>
                 </div>
+                <div>
+                    <p>Estado del pago</p>
+                    <strong>${estadoPago}</strong>
+                </div>
+                <div>
+                    <p>Metodo</p>
+                    <strong>${ticket.metodoPago || "Sin seleccionar"}</strong>
+                </div>
             </div>
         `;
+
+        if (ticketPuedePagarse(ticket) && !ticketPagoPendiente(ticket)) {
+            const accionesPago = document.createElement("div");
+            const botonPago = document.createElement("button");
+
+            accionesPago.className = "acciones-pago-usuario";
+            botonPago.type = "button";
+            botonPago.className = "btn-pagar-ticket";
+            botonPago.innerHTML = '<i class="fa-solid fa-credit-card"></i>Pagar';
+            botonPago.addEventListener("click", async () => {
+                const metodoPago = await solicitarMetodoPago(ticket);
+
+                if (!metodoPago) {
+                    return;
+                }
+
+                actualizarTicket({
+                    ...ticket,
+                    pagoEstado: pagoPendiente,
+                    metodoPago,
+                    fechaPago: new Date().toLocaleString("es-CO")
+                });
+                actualizarEstadoUsuarioActual();
+                renderTicketsAdmin();
+                renderDashboardAdmin();
+                alert("Pago enviado. El administrador debe aprobarlo para autorizar la entrega.");
+            });
+
+            accionesPago.appendChild(botonPago);
+            card.appendChild(accionesPago);
+        }
+
+        if (ticketPagoPendiente(ticket)) {
+            const aviso = document.createElement("div");
+            aviso.className = "aviso-pago-ticket";
+            aviso.innerHTML = `
+                <strong>Pago en revision</strong>
+                <p>El administrador debe aprobar el pago antes de entregar el dispositivo.</p>
+            `;
+            card.appendChild(aviso);
+        }
+
+        if (ticketPagoAprobado(ticket)) {
+            const aviso = document.createElement("div");
+            aviso.className = "aviso-pago-ticket aprobado";
+            aviso.innerHTML = `
+                <strong>Entrega autorizada</strong>
+                <p>Tu pago fue aprobado. Ya puedes reclamar el dispositivo.</p>
+            `;
+            card.appendChild(aviso);
+        }
 
         return card;
 
@@ -1266,10 +2214,25 @@
             actualizarEstadoUsuarioActual();
             renderTicketsAdmin();
             renderTicketsTecnico();
+            renderDashboardTecnico();
 
         });
 
         celda.appendChild(select);
+        return celda;
+
+    }
+
+    function crearBadgePago(ticket) {
+
+        const celda = document.createElement("td");
+        const badge = document.createElement("span");
+        const estadoPago = obtenerEstadoPago(ticket);
+
+        badge.className = `pago-badge ${normalizarTexto(estadoPago).replace(/\s+/g, "-")}`;
+        badge.textContent = estadoPago;
+        celda.appendChild(badge);
+
         return celda;
 
     }
@@ -1313,6 +2276,7 @@
             fila.appendChild(prioridad);
 
             fila.appendChild(crearCelda(ticket.tecnico));
+            fila.appendChild(crearBadgePago(ticket));
 
             const acciones = document.createElement("td");
             acciones.className = "acciones-ticket";
@@ -1322,9 +2286,17 @@
             acciones.appendChild(crearAccionAdmin("editar", "Editar ticket", "fa-solid fa-pen", () => {
                 mostrarDetalleAdmin(detalle, ticket, "editar");
             }));
-            acciones.appendChild(crearAccionAdmin("eliminar", "Eliminar ticket", "fa-solid fa-trash", () => {
+            acciones.appendChild(crearAccionAdmin("eliminar", "Eliminar ticket", "fa-solid fa-trash", async () => {
 
-                if (!confirm(`Quieres eliminar el ticket ${ticket.id}?`)) {
+                const confirmado = await mostrarConfirmacion({
+                    titulo: "Eliminar ticket",
+                    texto: `Quieres eliminar el ticket ${ticket.id}?`,
+                    confirmar: "Eliminar",
+                    peligro: true,
+                    icono: "fa-solid fa-trash"
+                });
+
+                if (!confirmado) {
                     return;
                 }
 
@@ -1366,7 +2338,7 @@
 
         fila.className = "fila-detalle-admin";
         fila.id = `admin-detalle-${ticket.id}`;
-        celda.colSpan = 8;
+        celda.colSpan = 9;
         fila.appendChild(celda);
 
         return fila;
@@ -1414,7 +2386,11 @@
             ["Estado", ticket.estado],
             ["Prioridad", ticket.prioridad],
             ["Tecnico", ticket.tecnico],
+            ["Servicio", ticket.recogidaDomicilio ? "Recogida a domicilio" : "Entrega en sede"],
+            [ticket.recogidaDomicilio ? "Direccion de recogida" : "Sede cercana", ticket.recogidaDomicilio ? (ticket.direccionRecogida || "Direccion pendiente") : (ticket.sedeCercana || obtenerSedeCercana(ticket.ciudad))],
             ["Valor", formatearValor(ticket.valorArreglo)],
+            ["Estado pago", obtenerEstadoPago(ticket)],
+            ["Metodo pago", ticket.metodoPago || "Sin seleccionar"],
             ["Comentario tecnico", ticket.comentarioTecnico || "Sin comentario tecnico."]
         ];
 
@@ -1433,6 +2409,44 @@
             contenedor.appendChild(item);
 
         });
+
+        if (ticketPagoPendiente(ticket)) {
+            const acciones = document.createElement("div");
+            const boton = document.createElement("button");
+
+            acciones.className = "acciones-aprobacion-pago";
+            boton.type = "button";
+            boton.className = "btn-aprobar-pago";
+            boton.innerHTML = '<i class="fa-solid fa-check"></i>Aprobar pago y entrega';
+            boton.addEventListener("click", async () => {
+                const confirmado = await mostrarConfirmacion({
+                    titulo: "Aprobar pago",
+                    texto: `Aprobar el pago de ${ticket.usuario} por ${formatearValor(ticket.valorArreglo)} y autorizar entrega?`,
+                    confirmar: "Aprobar",
+                    icono: "fa-solid fa-circle-check"
+                });
+
+                if (!confirmado) {
+                    return;
+                }
+
+                actualizarTicket({
+                    ...ticket,
+                    estado: "Cerrado",
+                    pagoEstado: pagoAprobado,
+                    fechaPagoAprobado: new Date().toLocaleString("es-CO")
+                });
+                actualizarEstadoUsuarioActual();
+                renderTicketsAdmin();
+                renderTicketsTecnico();
+                renderDashboardTecnico();
+                renderDashboardAdmin();
+                alert("Pago aprobado. Entrega autorizada.");
+            });
+
+            acciones.appendChild(boton);
+            contenedor.appendChild(acciones);
+        }
 
         return contenedor;
 
@@ -1474,6 +2488,21 @@
                 <label>Valor a pagar</label>
                 <input name="valorArreglo" type="number" min="0" step="1000">
             </div>
+            <div>
+                <label>Servicio</label>
+                <select name="recogidaDomicilio">
+                    <option value="false">Entrega en sede</option>
+                    <option value="true">Recogida a domicilio</option>
+                </select>
+            </div>
+            <div class="campo-completo-admin">
+                <label>Direccion de recogida</label>
+                <input name="direccionRecogida" type="text" maxlength="180">
+            </div>
+            <div class="campo-completo-admin">
+                <label>Sede cercana</label>
+                <input name="sedeCercana" type="text" maxlength="180">
+            </div>
             <div class="campo-completo-admin">
                 <label>Descripcion</label>
                 <textarea name="descripcion" maxlength="220" required></textarea>
@@ -1494,6 +2523,9 @@
         campos.estado.value = ticket.estado;
         campos.prioridad.value = ticket.prioridad;
         campos.valorArreglo.value = ticket.valorArreglo || "0";
+        campos.recogidaDomicilio.value = ticket.recogidaDomicilio ? "true" : "false";
+        campos.direccionRecogida.value = ticket.direccionRecogida || "";
+        campos.sedeCercana.value = ticket.sedeCercana || obtenerSedeCercana(ticket.ciudad);
         campos.descripcion.value = ticket.descripcion;
         campos.comentarioTecnico.value = ticket.comentarioTecnico || "";
 
@@ -1510,6 +2542,9 @@
                 estado: campos.estado.value,
                 prioridad: campos.prioridad.value,
                 valorArreglo: campos.valorArreglo.value || "0",
+                recogidaDomicilio: campos.recogidaDomicilio.value === "true",
+                direccionRecogida: campos.direccionRecogida.value,
+                sedeCercana: campos.sedeCercana.value,
                 descripcion: campos.descripcion.value,
                 comentarioTecnico: campos.comentarioTecnico.value || "Sin comentario tecnico."
             });
@@ -1545,6 +2580,21 @@
         badge.className = `estado ${claseEstadoTicket(estadoTicket)}`;
         badge.textContent = estadoTicket;
         celda.appendChild(badge);
+
+        return celda;
+
+    }
+
+    function crearCeldaIngresoTecnico(ticket) {
+
+        const celda = document.createElement("td");
+        const reparto = calcularRepartoValor(ticket.valorArreglo);
+        const estadoPago = obtenerEstadoPago(ticket);
+
+        celda.innerHTML = `
+            <strong>${formatearValor(reparto.total)}</strong>
+            <p>${ticketPagoAprobado(ticket) ? `Tu parte: ${formatearValor(reparto.tecnico)}` : estadoPago}</p>
+        `;
 
         return celda;
 
@@ -1642,6 +2692,10 @@
         const formulario = document.createElement("form");
         formulario.className = "form-detalle-tecnico";
         formulario.innerHTML = `
+            <div class="detalle-comentario">
+                <label>Datos del cliente</label>
+                <p>${ticket.usuario} - ${ticket.recogidaDomicilio ? `Recoger en: ${ticket.direccionRecogida || "Direccion pendiente"}` : `Entrega en sede: ${ticket.sedeCercana || obtenerSedeCercana(ticket.ciudad)}`}</p>
+            </div>
             <div>
                 <label>Estado del arreglo</label>
                 <select class="input-detalle-estado">
@@ -1721,7 +2775,11 @@
             const fila = document.createElement("tr");
             const problema = document.createElement("td");
 
-            problema.innerHTML = `<p class="problema-ticket-tecnico">${ticket.problema}</p><p>${ticket.fecha}</p>`;
+            problema.innerHTML = `
+                <p class="problema-ticket-tecnico">${ticket.problema}</p>
+                <p>${ticket.fecha}</p>
+                <p>${ticket.recogidaDomicilio ? `Recogida: ${ticket.direccionRecogida || "Direccion pendiente"}` : `Sede: ${ticket.sedeCercana || obtenerSedeCercana(ticket.ciudad)}`}</p>
+            `;
 
             fila.appendChild(crearCelda(ticket.id));
             fila.appendChild(crearCelda(ticket.usuario));
@@ -1738,13 +2796,15 @@
             fila.appendChild(prioridad);
 
             fila.appendChild(crearCelda(ticket.tecnico));
-            fila.appendChild(crearCelda(formatearValor(ticket.valorArreglo)));
+            fila.appendChild(crearCeldaIngresoTecnico(ticket));
             fila.appendChild(crearAccionTecnico(ticket));
 
             tablaTicketsTecnicoBody.appendChild(fila);
             tablaTicketsTecnicoBody.appendChild(crearDetalleTecnico(ticket));
 
         });
+
+        renderDashboardTecnico();
 
     }
 
@@ -1783,13 +2843,46 @@
             const fila = document.createElement("tr");
 
             fila.appendChild(crearCelda(usuarioRegistrado.nombre));
-            fila.appendChild(crearBadgeRol(usuarioRegistrado.rol));
+            fila.appendChild(crearSelectRolAdmin(usuarioRegistrado));
             fila.appendChild(crearCelda(usuarioRegistrado.correo));
             fila.appendChild(crearCelda(usuarioRegistrado.password || usuarioRegistrado.passwordDemo || ""));
             fila.appendChild(crearCelda(usuarioRegistrado.ciudad));
             fila.appendChild(crearCelda(usuarioRegistrado.pais));
-            fila.appendChild(crearCelda(usuarioRegistrado.nacimiento));
+            fila.appendChild(crearCelda(formatearFechaCuenta(usuarioRegistrado.nacimiento)));
             fila.appendChild(crearCelda(usuarioRegistrado.estado));
+
+            const acciones = document.createElement("td");
+            acciones.className = "acciones-ticket";
+            acciones.appendChild(crearAccionAdmin("eliminar", "Eliminar cuenta", "fa-solid fa-trash", async () => {
+                const confirmado = await mostrarConfirmacion({
+                    titulo: "Eliminar cuenta",
+                    texto: `Quieres eliminar la cuenta de ${usuarioRegistrado.nombre}? Se borraran tambien sus tickets.`,
+                    confirmar: "Eliminar",
+                    peligro: true,
+                    icono: "fa-solid fa-trash"
+                });
+
+                if (!confirmado) {
+                    return;
+                }
+
+                try {
+                    await eliminarCuenta(usuarioRegistrado);
+
+                    if (normalizarTexto(usuarioRegistrado.correo) === normalizarTexto(correoUsuarioActual)) {
+                        cerrarSesionActual();
+                    }
+
+                    renderRegistradosAdmin();
+                    renderTicketsAdmin();
+                    renderTicketsTecnico();
+                    actualizarEstadoUsuarioActual();
+                    alert("Cuenta eliminada correctamente");
+                } catch (error) {
+                    alert(error.message || "No se pudo eliminar la cuenta");
+                }
+            }));
+            fila.appendChild(acciones);
 
             tablaRegistradosBody.appendChild(fila);
 
@@ -1823,6 +2916,8 @@
         localStorage.setItem(sesionActualKey, JSON.stringify({
             id: datosSesion.id || null,
             nombre: datosSesion.nombre,
+            nombreBase: datosSesion.nombreBase || obtenerPartesNombreCuenta(datosSesion).nombre,
+            apellidos: datosSesion.apellidos || obtenerPartesNombreCuenta(datosSesion).apellidos,
             correo: datosSesion.correo,
             rol: formatearRol(datosSesion.rol)
         }));
@@ -1843,6 +2938,58 @@
 
     }
 
+    function reconciliarSesionConCuentaActual() {
+
+        const sesion = obtenerSesionGuardada();
+
+        if (!sesion) {
+            return false;
+        }
+
+        const cuentaActualizada = obtenerRegistrados().find((cuenta) => {
+            const mismoId = cuenta.id && sesion.id && String(cuenta.id) === String(sesion.id);
+            const mismoCorreo = cuenta.correo && sesion.correo && normalizarTexto(cuenta.correo) === normalizarTexto(sesion.correo);
+            return mismoId || mismoCorreo;
+        });
+
+        if (!cuentaActualizada) {
+            return false;
+        }
+
+        const datosSesionActualizados = {
+            ...sesion,
+            id: cuentaActualizada.id || sesion.id || null,
+            nombre: cuentaActualizada.nombre || sesion.nombre,
+            nombreBase: cuentaActualizada.nombreBase || sesion.nombreBase || obtenerPartesNombreCuenta(cuentaActualizada).nombre,
+            apellidos: cuentaActualizada.apellidos || sesion.apellidos || obtenerPartesNombreCuenta(cuentaActualizada).apellidos,
+            correo: cuentaActualizada.correo || sesion.correo,
+            rol: formatearRol(cuentaActualizada.rol || sesion.rol)
+        };
+        const cambioRol = formatearRol(sesion.rol) !== datosSesionActualizados.rol;
+        const cambioDatos = datosSesionActualizados.nombre !== sesion.nombre
+            || datosSesionActualizados.correo !== sesion.correo
+            || String(datosSesionActualizados.id || "") !== String(sesion.id || "");
+
+        if (!cambioRol && !cambioDatos) {
+            return false;
+        }
+
+        usuarioActual = datosSesionActualizados.nombre;
+        correoUsuarioActual = datosSesionActualizados.correo;
+        usuarioActualId = datosSesionActualizados.id || usuarioActualId;
+        rolUsuarioActual = datosSesionActualizados.rol;
+        guardarSesion(datosSesionActualizados);
+        actualizarPerfilVisible(datosSesionActualizados);
+
+        if (cambioRol) {
+            mostrarPantallaSesion(datosSesionActualizados, false);
+            return true;
+        }
+
+        return false;
+
+    }
+
     function actualizarFooterSesion(visible) {
 
         if (footerApp) {
@@ -1858,6 +3005,7 @@
         usuarioActual = datosSesion.nombre;
         correoUsuarioActual = datosSesion.correo;
         usuarioActualId = datosSesion.id || usuarioActualId;
+        rolUsuarioActual = formatearRol(datosSesion.rol);
 
         if (debeGuardarSesion) {
             guardarSesion(datosSesion);
@@ -1904,8 +3052,53 @@
             }
 
             pantallaTecnico.style.display = "flex";
+            mostrarDashboardTecnico();
             renderTicketsTecnico();
         }
+
+    }
+
+    function activarMenuTecnico(botonActivo) {
+
+        [btnDashboardTecnico, btnTicketsTecnico].forEach((boton) => {
+            if (boton && boton.parentElement) {
+                boton.parentElement.classList.remove("activo");
+            }
+        });
+
+        if (botonActivo && botonActivo.parentElement) {
+            botonActivo.parentElement.classList.add("activo");
+        }
+
+    }
+
+    function mostrarDashboardTecnico() {
+
+        if (dashboardTecnico) {
+            dashboardTecnico.style.display = "flex";
+        }
+
+        if (ticketsTecnico) {
+            ticketsTecnico.style.display = "none";
+        }
+
+        renderDashboardTecnico();
+        activarMenuTecnico(btnDashboardTecnico);
+
+    }
+
+    function mostrarTicketsTecnico() {
+
+        if (dashboardTecnico) {
+            dashboardTecnico.style.display = "none";
+        }
+
+        if (ticketsTecnico) {
+            ticketsTecnico.style.display = "flex";
+        }
+
+        renderTicketsTecnico();
+        activarMenuTecnico(btnTicketsTecnico);
 
     }
 
@@ -1922,6 +3115,7 @@
         renderTicketsTecnico();
         renderActivosAdmin();
         renderDashboardAdmin();
+        renderDashboardTecnico();
         actualizarEstadoUsuarioActual();
 
     }
@@ -1929,13 +3123,215 @@
     async function sincronizarDatos() {
 
         await cargarDatosDesdeApi();
-        refrescarPantallasAbiertas();
+
+        if (!reconciliarSesionConCuentaActual()) {
+            refrescarPantallasAbiertas();
+        }
 
     }
 
     btnMostrarRegistro.addEventListener("click", mostrarRegistro);
     btnVolverLogin.addEventListener("click", mostrarLogin);
     btnIrLogin.addEventListener("click", mostrarLogin);
+
+    [registroNombre, registroApellidos, adminCrearNombre, adminCrearApellidos, ajustesNombre, ajustesApellidos].forEach(activarFiltroNombre);
+
+    document.querySelectorAll(".btn-menu-toggle").forEach((botonMenu) => {
+
+        botonMenu.addEventListener("click", () => {
+
+            const menu = document.getElementById(botonMenu.dataset.menuTarget);
+
+            if (!menu) return;
+
+            menu.classList.toggle("menu-abierto");
+            const abierto = menu.classList.contains("menu-abierto");
+            botonMenu.setAttribute("aria-label", abierto ? "Cerrar menu" : "Abrir menu");
+            botonMenu.innerHTML = abierto ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+
+        });
+
+    });
+
+    function cerrarMenusDesplegables() {
+
+        document.querySelectorAll(".nav-usuario.menu-abierto").forEach((menu) => {
+            menu.classList.remove("menu-abierto");
+        });
+
+        document.querySelectorAll(".btn-menu-toggle").forEach((botonMenu) => {
+            botonMenu.setAttribute("aria-label", "Abrir menu");
+            botonMenu.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        });
+
+    }
+
+    function abrirAjustesCuenta() {
+
+        const sesion = obtenerDatosSesionActual();
+
+        if (!sesion.id && !usuarioActualId) {
+            alert("Inicia sesion con una cuenta guardada en MySQL para cambiar tus datos.");
+            return;
+        }
+
+        const partesNombre = obtenerPartesNombreCuenta(sesion);
+
+        ajustesNombre.value = partesNombre.nombre;
+        ajustesApellidos.value = partesNombre.apellidos;
+        ajustesCorreo.value = sesion.correo || correoUsuarioActual;
+        ajustesPassword.value = "";
+
+        if (btnEliminarCuentaAjustes) {
+            const esAdmin = formatearRol(sesion.rol) === "Admin";
+            btnEliminarCuentaAjustes.hidden = esAdmin;
+            btnEliminarCuentaAjustes.style.display = esAdmin ? "none" : "";
+        }
+
+        modalAjustesCuenta.hidden = false;
+        cerrarMenusDesplegables();
+
+    }
+
+    function cerrarAjustesCuenta() {
+
+        modalAjustesCuenta.hidden = true;
+        formAjustesCuenta.reset();
+
+    }
+
+    document.querySelectorAll(".btnAbrirAjustes").forEach((botonAjustes) => {
+
+        botonAjustes.addEventListener("click", (e) => {
+            e.preventDefault();
+            abrirAjustesCuenta();
+        });
+
+    });
+
+    document.querySelectorAll(".nav-usuario a").forEach((enlaceMenu) => {
+
+        enlaceMenu.addEventListener("click", () => {
+            cerrarMenusDesplegables();
+        });
+
+    });
+
+    if (btnCerrarAjustes) {
+        btnCerrarAjustes.addEventListener("click", cerrarAjustesCuenta);
+    }
+
+    if (modalAjustesCuenta) {
+        modalAjustesCuenta.addEventListener("click", (e) => {
+            if (e.target === modalAjustesCuenta) {
+                cerrarAjustesCuenta();
+            }
+        });
+    }
+
+    if (formAjustesCuenta) {
+
+        formAjustesCuenta.addEventListener("submit", async (e) => {
+
+            e.preventDefault();
+
+            const sesion = obtenerDatosSesionActual();
+            const idCuenta = sesion.id || usuarioActualId;
+            const nombreAnterior = usuarioActual;
+            const correoAnterior = correoUsuarioActual;
+            const nombre = ajustesNombre.value.trim();
+            const apellidos = ajustesApellidos.value.trim();
+            const correo = ajustesCorreo.value.trim();
+            const password = ajustesPassword.value.trim();
+
+            if (!idCuenta) {
+                alert("No se puede actualizar esta cuenta porque no tiene id en MySQL.");
+                return;
+            }
+
+            if (!esNombrePersonaValido(nombre) || !esNombrePersonaValido(apellidos)) {
+                alert("Nombre y apellidos solo pueden tener letras y espacios.");
+                return;
+            }
+
+            try {
+                const cuentaActualizada = await apiRequest(`/users/${idCuenta}`, {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        nombre,
+                        apellidos,
+                        correo,
+                        password
+                    })
+                });
+
+                if (password) {
+                    cuentaActualizada.password = password;
+                }
+
+                cuentaActualizada.rol = formatearRol(cuentaActualizada.rol || sesion.rol);
+                usuarioActual = cuentaActualizada.nombre;
+                correoUsuarioActual = cuentaActualizada.correo;
+                usuarioActualId = cuentaActualizada.id || idCuenta;
+                rolUsuarioActual = cuentaActualizada.rol;
+
+                guardarSesion(cuentaActualizada);
+                actualizarPerfilVisible(cuentaActualizada);
+                actualizarCuentaEnLocalStorage(cuentaActualizada, correoAnterior, nombreAnterior);
+                refrescarPantallasAbiertas();
+                cerrarAjustesCuenta();
+                alert("Cuenta actualizada correctamente");
+            } catch (error) {
+                if (error.message.includes("registrado")) {
+                    mostrarModalCorreoExistente(correo, ajustesCorreo);
+                    return;
+                }
+
+                alert(error.message || "No se pudo actualizar la cuenta");
+            }
+
+        });
+
+    }
+
+    if (btnEliminarCuentaAjustes) {
+
+        btnEliminarCuentaAjustes.addEventListener("click", async () => {
+
+            const sesion = obtenerDatosSesionActual();
+
+            if (formatearRol(sesion.rol) === "Admin") {
+                alert("Los administradores no pueden eliminar su propia cuenta desde ajustes.");
+                return;
+            }
+
+            const confirmado = await mostrarConfirmacion({
+                titulo: "Eliminar cuenta",
+                texto: `Se eliminara la cuenta de ${sesion.nombre}. Tambien se borraran sus tickets asociados. Esta accion no se puede deshacer.`,
+                confirmar: "Eliminar cuenta",
+                peligro: true,
+                icono: "fa-solid fa-trash"
+            });
+
+            if (!confirmado) {
+                return;
+            }
+
+            try {
+                await eliminarCuenta(sesion);
+                cerrarAjustesCuenta();
+                cerrarSesionActual();
+                renderRegistradosAdmin();
+                renderTicketsAdmin();
+                renderTicketsTecnico();
+                alert("Cuenta eliminada correctamente");
+            } catch (error) {
+                alert(error.message || "No se pudo eliminar la cuenta");
+            }
+
+        });
+
+    }
 
     document.querySelectorAll("[data-toggle-password]").forEach((botonPassword) => {
 
@@ -2009,22 +3405,111 @@
         botonLogout.addEventListener("click", (e) => {
 
             e.preventDefault();
-            pantallaUsuario.style.display = "none";
-            pantallaAdmin.style.display = "none";
-            pantallaTecnico.style.display = "none";
-            login.style.display = "flex";
-            actualizarFooterSesion(false);
-            mostrarLogin();
-            form.reset();
-            localStorage.removeItem(sesionActualKey);
+            cerrarSesionActual();
 
         });
 
     });
 
+    function abrirCrearCuentaAdmin() {
+
+        if (!modalCrearCuentaAdmin) {
+            return;
+        }
+
+        if (formCrearCuentaAdmin) {
+            formCrearCuentaAdmin.reset();
+        }
+
+        if (adminCrearPais) {
+            adminCrearPais.value = "Colombia";
+        }
+
+        modalCrearCuentaAdmin.hidden = false;
+
+        if (adminCrearRol) {
+            adminCrearRol.focus();
+        }
+
+    }
+
+    function cerrarCrearCuentaAdmin() {
+
+        if (modalCrearCuentaAdmin) {
+            modalCrearCuentaAdmin.hidden = true;
+        }
+
+    }
+
+    if (btnAbrirCrearCuentaAdmin) {
+        btnAbrirCrearCuentaAdmin.addEventListener("click", abrirCrearCuentaAdmin);
+    }
+
+    if (btnCerrarCrearCuentaAdmin) {
+        btnCerrarCrearCuentaAdmin.addEventListener("click", cerrarCrearCuentaAdmin);
+    }
+
+    if (modalCrearCuentaAdmin) {
+        modalCrearCuentaAdmin.addEventListener("click", (e) => {
+            if (e.target === modalCrearCuentaAdmin) {
+                cerrarCrearCuentaAdmin();
+            }
+        });
+    }
+
+    if (modalCorreoExistente) {
+
+        modalCorreoExistente.addEventListener("click", (e) => {
+
+            if (e.target === modalCorreoExistente) {
+                cerrarModalCorreoExistente();
+            }
+
+        });
+
+    }
+
+    if (btnCerrarCorreoExistente) {
+        btnCerrarCorreoExistente.addEventListener("click", cerrarModalCorreoExistente);
+    }
+
+    if (btnUsarOtroCorreo) {
+        btnUsarOtroCorreo.addEventListener("click", () => {
+            cerrarModalCorreoExistente();
+
+            if (campoCorreoExistente) {
+                campoCorreoExistente.focus();
+                campoCorreoExistente.select();
+            }
+        });
+    }
+
+    if (btnLoginCorreoExistente) {
+        btnLoginCorreoExistente.addEventListener("click", () => {
+            const correo = modalCorreoExistente.dataset.correo || "";
+            cerrarModalCorreoExistente();
+            mostrarLogin();
+
+            if (correo) {
+                usuarioInput.value = correo;
+                passwordInput.focus();
+            } else {
+                usuarioInput.focus();
+            }
+        });
+    }
+
     formRegistro.addEventListener("submit", async (e) => {
 
         e.preventDefault();
+
+        const nombreRegistro = registroNombre.value.trim();
+        const apellidosRegistro = registroApellidos.value.trim();
+
+        if (!esNombrePersonaValido(nombreRegistro) || !esNombrePersonaValido(apellidosRegistro)) {
+            alert("Nombre y apellidos solo pueden tener letras y espacios.");
+            return;
+        }
 
         if (registroPassword.value !== registroConfirmPassword.value) {
 
@@ -2038,13 +3523,13 @@
 
         if (correoExiste) {
 
-            alert("Ese correo ya esta registrado");
+            mostrarModalCorreoExistente(correoRegistro);
             return;
 
         }
 
         let nuevoUsuario = {
-            nombre: `${registroNombre.value} ${registroApellidos.value}`,
+            nombre: `${nombreRegistro} ${apellidosRegistro}`,
             rol: "Usuario",
             correo: correoRegistro,
             password: registroPassword.value,
@@ -2058,8 +3543,8 @@
             nuevoUsuario = await apiRequest("/register", {
                 method: "POST",
                 body: JSON.stringify({
-                    nombre: registroNombre.value,
-                    apellidos: registroApellidos.value,
+                    nombre: nombreRegistro,
+                    apellidos: apellidosRegistro,
                     correo: correoRegistro,
                     password: registroPassword.value,
                     ciudad: registroCiudad.value,
@@ -2071,7 +3556,7 @@
             usuarioActualId = nuevoUsuario.id;
         } catch (error) {
             if (error.message.includes("registrado")) {
-                alert(error.message);
+                mostrarModalCorreoExistente(correoRegistro);
                 return;
             }
             alert("No se pudo guardar en MySQL. Revisa que el servidor tenga configurada la contrasena de la BD.");
@@ -2104,8 +3589,16 @@
 
             e.preventDefault();
 
+            const nombreAdmin = adminCrearNombre.value.trim();
+            const apellidosAdmin = adminCrearApellidos.value.trim();
+
+            if (!esNombrePersonaValido(nombreAdmin) || !esNombrePersonaValido(apellidosAdmin)) {
+                alert("Nombre y apellidos solo pueden tener letras y espacios.");
+                return;
+            }
+
             let nuevaCuenta = {
-                nombre: `${adminCrearNombre.value} ${adminCrearApellidos.value}`.trim(),
+                nombre: `${nombreAdmin} ${apellidosAdmin}`.trim(),
                 rol: formatearRol(adminCrearRol.value),
                 correo: adminCrearCorreo.value.trim(),
                 password: adminCrearPassword.value,
@@ -2120,7 +3613,7 @@
             ));
 
             if (correoExiste) {
-                alert("Ese correo ya esta registrado");
+            mostrarModalCorreoExistente(nuevaCuenta.correo, adminCrearCorreo);
                 return;
             }
 
@@ -2128,8 +3621,8 @@
                 nuevaCuenta = await apiRequest("/users", {
                     method: "POST",
                     body: JSON.stringify({
-                        nombre: adminCrearNombre.value.trim(),
-                        apellidos: adminCrearApellidos.value.trim(),
+                        nombre: nombreAdmin,
+                        apellidos: apellidosAdmin,
                         correo: nuevaCuenta.correo,
                         password: adminCrearPassword.value,
                         rol: adminCrearRol.value,
@@ -2142,7 +3635,7 @@
                 nuevaCuenta.password = adminCrearPassword.value;
             } catch (error) {
                 if (error.message.includes("registrado")) {
-                    alert(error.message);
+                    mostrarModalCorreoExistente(nuevaCuenta.correo, adminCrearCorreo);
                     return;
                 }
                 alert("No se pudo guardar en MySQL. Revisa que el servidor tenga configurada la contrasena de la BD.");
@@ -2153,6 +3646,7 @@
             renderRegistradosAdmin();
             formCrearCuentaAdmin.reset();
             adminCrearPais.value = "Colombia";
+            cerrarCrearCuentaAdmin();
             alert("Cuenta creada correctamente");
 
         });
@@ -2198,17 +3692,62 @@
 
     });
 
+    if (btnDashboardTecnico) {
+        btnDashboardTecnico.addEventListener("click", (e) => {
+            e.preventDefault();
+            mostrarDashboardTecnico();
+        });
+    }
+
+    if (btnTicketsTecnico) {
+        btnTicketsTecnico.addEventListener("click", (e) => {
+            e.preventDefault();
+            mostrarTicketsTecnico();
+        });
+    }
+
     formCrearTicketUsuario.addEventListener("submit", async (e) => {
 
         e.preventDefault();
 
         const tecnicoAsignado = asignarTecnicoAutomatico(ticketCiudadUsuario.value);
+        const ciudadTicket = ticketCiudadUsuario.value;
+        const sedeCercana = obtenerSedeCercana(ciudadTicket);
+        const quiereRecogida = await mostrarConfirmacion({
+            titulo: "Servicio de recogida",
+            texto: "Deseas que te recojan el dispositivo en tu casa?",
+            confirmar: "Si, recogerlo",
+            cancelar: "No, lo llevo a sede",
+            icono: "fa-solid fa-truck-fast"
+        });
+        let direccionRecogida = "";
+
+        if (quiereRecogida) {
+            direccionRecogida = await solicitarDireccionRecogida();
+
+            if (!direccionRecogida) {
+                return;
+            }
+        } else {
+            const continuarSinRecogida = await mostrarConfirmacion({
+                titulo: "Sede y tecnico asignados",
+                texto: `Tu zona mas cercana es ${sedeCercana}. El tecnico asignado sera ${tecnicoAsignado.nombre}.`,
+                confirmar: "Entendido",
+                cancelar: "Cancelar ticket",
+                icono: "fa-solid fa-location-dot"
+            });
+
+            if (!continuarSinRecogida) {
+                return;
+            }
+        }
+
         let ticket = {
             id: generarTicketId(),
             usuarioId: usuarioActualId,
             usuario: usuarioActual,
             correoUsuario: correoUsuarioActual,
-            ciudad: ticketCiudadUsuario.value,
+            ciudad: ciudadTicket,
             dispositivo: ticketCategoriaUsuario.value,
             problema: ticketTituloUsuario.value,
             descripcion: ticketDescripcionUsuario.value,
@@ -2217,7 +3756,10 @@
             tecnico: tecnicoAsignado.nombre,
             fecha: new Date().toLocaleDateString("es-CO"),
             comentarioTecnico: "El tecnico aun no ha agregado comentarios.",
-            valorArreglo: "0"
+            valorArreglo: "0",
+            recogidaDomicilio: quiereRecogida,
+            direccionRecogida,
+            sedeCercana
         };
 
         if (usuarioActualId) {
@@ -2226,11 +3768,14 @@
                     method: "POST",
                     body: JSON.stringify({
                         usuarioId: usuarioActualId,
-                        ciudad: ticketCiudadUsuario.value,
+                        ciudad: ciudadTicket,
                         dispositivo: ticketCategoriaUsuario.value,
                         problema: ticketTituloUsuario.value,
                         descripcion: ticketDescripcionUsuario.value,
-                        prioridad: ticketPrioridadUsuario.value
+                        prioridad: ticketPrioridadUsuario.value,
+                        recogidaDomicilio: quiereRecogida,
+                        direccionRecogida,
+                        sedeCercana
                     })
                 });
             } catch (error) {
@@ -2388,7 +3933,9 @@
     window.addEventListener("storage", (event) => {
 
         if ([ticketsDbKey, ticketsEliminadosKey, usuariosDbKey, notificacionesKey, sincronizacionKey].includes(event.key)) {
-            refrescarPantallasAbiertas();
+            if (!reconciliarSesionConCuentaActual()) {
+                refrescarPantallasAbiertas();
+            }
         }
 
         if (event.key === sesionActualKey && !event.newValue) {

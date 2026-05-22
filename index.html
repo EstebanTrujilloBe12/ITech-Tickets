@@ -23,8 +23,8 @@
         
         <header>
             <img src="IMG/Logo/Logo.png" alt="">
-            <h1 style="font-size: 2vw; color: white;">iTech Service</h1>
-            <p style="font-size: 1.2vw; color: rgb(145, 145, 145);">Gestión de soporte técnico Apple</p>
+            <h1 style="font-size: 2rem; color: white;">iTech Service</h1>
+            <p style="font-size: 1.2rem; color: rgb(145, 145, 145);">Gestión de soporte técnico Apple</p>
         </header>
         
         <form id="formLogin" class="form-login" action="">
@@ -57,12 +57,12 @@
             <div class="register-grid">
                 <div class="login">
                     <h2 class="usuario-input">Nombre</h2>
-                    <input id="registroNombre" class="input-login" type="text" placeholder="Ingresa tu nombre" maxlength="50" minlength="2" required>
+                    <input id="registroNombre" class="input-login" type="text" placeholder="Ingresa tu nombre" maxlength="50" minlength="2" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]+" title="Solo se permiten letras y espacios" required>
                 </div>
 
                 <div class="login">
                     <h2 class="usuario-input">Apellidos</h2>
-                    <input id="registroApellidos" class="input-login" type="text" placeholder="Ingresa tus apellidos" maxlength="80" minlength="2" required>
+                    <input id="registroApellidos" class="input-login" type="text" placeholder="Ingresa tus apellidos" maxlength="80" minlength="2" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]+" title="Solo se permiten letras y espacios" required>
                 </div>
 
                 <div class="login">
@@ -147,17 +147,21 @@
                                 </div>
                             </div>
                         </div>
-                        <hr style="border: 1px solid #363636;
+                        <button class="btn-menu-toggle" type="button" aria-label="Abrir menu" data-menu-target="navMenuUsuario">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                        <hr style="border: 0.0521vw solid #363636;
                             width: 18vw;
                             display: flex;
                             align-self: center;" class="separador">
 
-                        <nav class="nav-usuario">
+                        <nav id="navMenuUsuario" class="nav-usuario">
                             <ul>   
                                 <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a id="btnCrearTicketUsuario" href="#">Crear Ticket</a></li>
                                 <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-list-check"></i><a id="btnEstadoTicketUsuario" href="#">Estado del Ticket</a></li>
+                                <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-gear"></i><a class="btnAbrirAjustes" href="#">Ajustes</a></li>
                                 
-                                <a class="logout" href=""><i style="padding: 10px;" class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
+                                <a class="logout" href=""><i style="padding: 0.9259vh;" class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
                             </ul>
                         </nav>
                     </aside> 
@@ -326,16 +330,21 @@
                             </div>
                         </div>
                     </div>
-                    <hr style="border: 1px solid #363636;
+                    <button class="btn-menu-toggle" type="button" aria-label="Abrir menu" data-menu-target="navMenuTecnico">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <hr style="border: 0.0521vw solid #363636;
                         width: 18vw;
                         display: flex;
                         align-self: center;" class="separador">
-                    <nav class="nav-usuario">
+                    <nav id="navMenuTecnico" class="nav-usuario">
                         <ul>   
-                            <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a href="#">Tickets</a></li>
+                            <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-chart-line"></i><a id="btnDashboardTecnico" href="#">Dashboard</a></li>
+                            <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a id="btnTicketsTecnico" href="#">Tickets</a></li>
+                            <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-gear"></i><a class="btnAbrirAjustes" href="#">Ajustes</a></li>
 
                             
-                            <a class="logout" href=""><i style="padding: 10px;" class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
+                            <a class="logout" href=""><i style="padding: 0.9259vh;" class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
                             
                             
                         </ul>
@@ -343,8 +352,57 @@
                 </aside>
                 
             </div>
-                
-            <div class="tickets_tecnico">
+
+            <div id="dashboardTecnico" class="dashboard-tecnico">
+                <div class="titulo-tec">
+                    <h1 style="color: white;">Dashboard Técnico</h1>
+                    <p style="color: rgb(125, 123, 123);">Resumen de trabajos, clientes e ingresos generados</p>
+                </div>
+
+                <div class="tecnico-resumen-grid">
+                    <article class="tecnico-resumen-card">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                        <p>Generado aprobado</p>
+                        <h2 id="tecGananciaTotal">$0</h2>
+                    </article>
+                    <article class="tecnico-resumen-card">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <p>Para empresa</p>
+                        <h2 id="tecAporteEmpresa">$0</h2>
+                    </article>
+                    <article class="tecnico-resumen-card">
+                        <i class="fa-solid fa-wallet"></i>
+                        <p>Para técnico</p>
+                        <h2 id="tecGananciaNeta">$0</h2>
+                    </article>
+                    <article class="tecnico-resumen-card">
+                        <i class="fa-solid fa-list-check"></i>
+                        <p>Trabajos pendientes</p>
+                        <h2 id="tecTrabajosPendientes">0</h2>
+                    </article>
+                </div>
+
+                <div class="tecnico-dashboard-grid">
+                    <section class="tecnico-panel">
+                        <h2>Ingresos por ticket</h2>
+                        <div id="tecGraficaIngresos" class="grafica-barras"></div>
+                    </section>
+                    <section class="tecnico-panel">
+                        <h2>Últimos clientes</h2>
+                        <div id="tecUltimosClientes" class="lista-dashboard"></div>
+                    </section>
+                    <section class="tecnico-panel">
+                        <h2>Trabajos pendientes</h2>
+                        <div id="tecListaPendientes" class="lista-dashboard"></div>
+                    </section>
+                    <section class="tecnico-panel">
+                        <h2>Reparto de ingresos</h2>
+                        <div id="tecRepartoIngresos" class="reparto-ingresos"></div>
+                    </section>
+                </div>
+            </div>
+
+            <div id="ticketsTecnico" class="tickets_tecnico">
                 <div class="titulo-tec">
                     <h1 style="color: white;">Gestion de Tickets</h1>
                     <p style="color: rgb(125, 123, 123);">Administra y da seguimiento a los tickets de soporte</p>
@@ -429,7 +487,7 @@
             </div>
         </section>  
 
-        <section id="pantalla__admi"                class="pantalla-administrador">
+        <section id="pantalla__admi" class="pantalla-administrador">
             <aside class="menu">
                 <div class="perfil">
                     <img style="width: 9vw;
@@ -439,22 +497,25 @@
                         <p style="color: rgb(153, 152, 152);">Administrador</p>
                     </div>
                 </div>
-                <hr style="border: 1px solid #363636;
+                <button class="btn-menu-toggle" type="button" aria-label="Abrir menu" data-menu-target="navMenuAdmin">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <hr style="border: 0.0521vw solid #363636;
                 width: 18vw;
                 display: none;
                 align-self: center;" class="separador">
 
-                <nav class="nav-usuario">
+                <nav id="navMenuAdmin" class="nav-usuario">
                     <ul>  
                         <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a id="btnDashboard" href="#">Dashboard</a></li>  
                         <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a id="btnActivos" href="#">Activos</a></li> 
                         <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-ticket"></i><a id="btnTickets" href="#">Tickets</a></li> 
                         <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-users"></i><a id="btnRegistrados" href="#">Registrados</a></li> 
+                        <li class="usuario-tickes"><i style="color: rgb(145, 145, 145);" class="fa-solid fa-gear"></i><a class="btnAbrirAjustes" href="#">Ajustes</a></li> 
+                        <a class="logout" href=""><i style="padding: 0.9259vh;" class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
                         
                     </ul>
                 </nav>
-                    
-                <a class="logout" href=""><i style="padding: 10px;" class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar sesión</a>
             </aside>
             
 
@@ -520,6 +581,25 @@
                     
                 </div>
 
+                <div class="admin-finanzas-grid">
+                    <article class="admin-finanza-card">
+                        <p>Ingresos aprobados</p>
+                        <h2 id="adminIngresosAprobados">$0</h2>
+                    </article>
+                    <article class="admin-finanza-card">
+                        <p>Para empresa</p>
+                        <h2 id="adminIngresoEmpresa">$0</h2>
+                    </article>
+                    <article class="admin-finanza-card">
+                        <p>Para técnicos</p>
+                        <h2 id="adminIngresoTecnicos">$0</h2>
+                    </article>
+                    <article class="admin-finanza-card">
+                        <p>Pagos pendientes</p>
+                        <h2 id="adminPagosPendientes">0</h2>
+                    </article>
+                </div>
+
                 <div class="contenedor">
                     <section id="dashboardActividadReciente" class="card">
                         <h2>Actividad Reciente</h2>
@@ -527,6 +607,16 @@
 
                     <section id="dashboardDispositivosPopulares" class="card">
                         <h2>Dispositivos por Tecnicos</h2>
+                    </section>
+                </div>
+
+                <div class="contenedor">
+                    <section id="adminGraficaIngresos" class="card">
+                        <h2>Ingresos por técnico</h2>
+                    </section>
+
+                    <section id="adminPagosRecientes" class="card">
+                        <h2>Pagos y entregas</h2>
                     </section>
                 </div>
 
@@ -664,6 +754,7 @@
                                     <th>Estado</th>
                                     <th>Prioridad</th>
                                     <th>Técnico</th>
+                                    <th>Pago</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -759,51 +850,12 @@
                         </div>
                     </div>
 
-                    <h2 class="subtitulo-tabla-registrados">Crear cuenta</h2>
-                    <form id="formCrearCuentaAdmin" class="form-admin-ticket form-crear-cuenta-admin" action="">
-                        <div>
-                            <label>Tipo de cuenta</label>
-                            <select id="adminCrearRol" required>
-                                <option value="usuario">Usuario</option>
-                                <option value="admin">Admin</option>
-                                <option value="tecnico">Tecnico</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Nombre</label>
-                            <input id="adminCrearNombre" type="text" maxlength="80" required>
-                        </div>
-                        <div>
-                            <label>Apellidos</label>
-                            <input id="adminCrearApellidos" type="text" maxlength="100" required>
-                        </div>
-                        <div>
-                            <label>Correo</label>
-                            <input id="adminCrearCorreo" type="email" maxlength="120" required>
-                        </div>
-                        <div>
-                            <label>Contrasena</label>
-                            <div class="password-field">
-                                <input id="adminCrearPassword" type="password" minlength="8" maxlength="25" required>
-                                <button class="btn-ver-password" type="button" aria-label="Mostrar contraseña" data-toggle-password="adminCrearPassword">
-                                    <i class="fa-regular fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <label>Ciudad</label>
-                            <input id="adminCrearCiudad" type="text" maxlength="80" required>
-                        </div>
-                        <div>
-                            <label>Pais</label>
-                            <input id="adminCrearPais" type="text" maxlength="80" value="Colombia" required>
-                        </div>
-                        <div>
-                            <label>Fecha nacimiento</label>
-                            <input id="adminCrearNacimiento" type="date">
-                        </div>
-                        <button type="submit"><i class="fa-solid fa-user-plus"></i>Crear cuenta</button>
-                    </form>
+                    <div class="encabezado-registrados-acciones">
+                        <h2 class="subtitulo-tabla-registrados">Todas las cuentas registradas</h2>
+                        <button id="btnAbrirCrearCuentaAdmin" class="btn-crear-cuenta-admin" type="button">
+                            <i class="fa-solid fa-user-plus"></i>Crear cuenta
+                        </button>
+                    </div>
 
                     <div class="correos-especiales">
                         <div>
@@ -816,7 +868,6 @@
                         </div>
                     </div>
 
-                    <h2 class="subtitulo-tabla-registrados">Todas las cuentas registradas</h2>
                     <div class="tabla-registrados">
                         <table class="tabla-ticket-admin">
                             <thead>
@@ -829,6 +880,7 @@
                                     <th>Pais</th>
                                     <th>Fecha nacimiento</th>
                                     <th>Estado</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="tablaRegistradosBody">
@@ -859,6 +911,189 @@
             </div>
         </section>  
     </main>
+
+    <div id="modalCrearCuentaAdmin" class="modal-alerta" hidden>
+        <div class="modal-alerta__card modal-alerta__card--form modal-crear-cuenta">
+            <button id="btnCerrarCrearCuentaAdmin" class="modal-alerta__cerrar" type="button" aria-label="Cerrar crear cuenta">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-ajustes__header">
+                <i class="fa-solid fa-user-plus"></i>
+                <div>
+                    <h2>Nueva cuenta</h2>
+                    <p>Completa los datos del usuario</p>
+                </div>
+            </div>
+            <form id="formCrearCuentaAdmin" class="form-admin-ticket form-crear-cuenta-admin" action="">
+                <div>
+                    <label>Tipo de cuenta</label>
+                    <select id="adminCrearRol" required>
+                        <option value="usuario">Usuario</option>
+                        <option value="admin">Admin</option>
+                        <option value="tecnico">Tecnico</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Nombre</label>
+                    <input id="adminCrearNombre" type="text" maxlength="80" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]+" title="Solo se permiten letras y espacios" required>
+                </div>
+                <div>
+                    <label>Apellidos</label>
+                    <input id="adminCrearApellidos" type="text" maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]+" title="Solo se permiten letras y espacios" required>
+                </div>
+                <div>
+                    <label>Correo</label>
+                    <input id="adminCrearCorreo" type="email" maxlength="120" required>
+                </div>
+                <div>
+                    <label>Contrasena</label>
+                    <div class="password-field">
+                        <input id="adminCrearPassword" type="password" minlength="8" maxlength="25" required>
+                        <button class="btn-ver-password" type="button" aria-label="Mostrar contraseña" data-toggle-password="adminCrearPassword">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <label>Ciudad</label>
+                    <input id="adminCrearCiudad" type="text" maxlength="80" required>
+                </div>
+                <div>
+                    <label>Pais</label>
+                    <input id="adminCrearPais" type="text" maxlength="80" value="Colombia" required>
+                </div>
+                <div>
+                    <label>Fecha nacimiento</label>
+                    <input id="adminCrearNacimiento" type="date">
+                </div>
+                <button type="submit"><i class="fa-solid fa-user-plus"></i>Crear cuenta</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalAjustesCuenta" class="modal-ajustes" hidden>
+        <div class="modal-ajustes__card">
+            <button id="btnCerrarAjustes" class="modal-ajustes__cerrar" type="button" aria-label="Cerrar ajustes">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-ajustes__header">
+                <i class="fa-solid fa-gear"></i>
+                <div>
+                    <h2>Ajustes de cuenta</h2>
+                    <p>Actualiza tus datos de acceso</p>
+                </div>
+            </div>
+            <form id="formAjustesCuenta" class="form-ajustes-cuenta">
+                <div>
+                    <label>Nombre</label>
+                    <input id="ajustesNombre" type="text" maxlength="80" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]+" title="Solo se permiten letras y espacios" required>
+                </div>
+                <div>
+                    <label>Apellidos</label>
+                    <input id="ajustesApellidos" type="text" maxlength="100" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]+" title="Solo se permiten letras y espacios" required>
+                </div>
+                <div class="campo-completo-ajustes">
+                    <label>Correo</label>
+                    <input id="ajustesCorreo" type="email" maxlength="120" required>
+                </div>
+                <div class="campo-completo-ajustes">
+                    <label>Nueva contrasena</label>
+                    <div class="password-field">
+                        <input id="ajustesPassword" type="password" minlength="8" maxlength="25" placeholder="Dejalo vacio para conservar la actual">
+                        <button class="btn-ver-password" type="button" aria-label="Mostrar contraseña" data-toggle-password="ajustesPassword">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit"><i class="fa-regular fa-floppy-disk"></i>Guardar cambios</button>
+                <button id="btnEliminarCuentaAjustes" class="btn-eliminar-cuenta" type="button">
+                    <i class="fa-solid fa-trash"></i>Eliminar cuenta
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalCorreoExistente" class="modal-alerta" hidden>
+        <div class="modal-alerta__card">
+            <button id="btnCerrarCorreoExistente" class="modal-alerta__cerrar" type="button" aria-label="Cerrar aviso">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-alerta__icono">
+                <i class="fa-solid fa-envelope-circle-check"></i>
+            </div>
+            <h2>Este correo ya tiene cuenta</h2>
+            <p id="modalCorreoExistenteTexto">Puedes iniciar sesion con ese correo o recuperar tus datos con el administrador.</p>
+            <div class="modal-alerta__acciones">
+                <button id="btnLoginCorreoExistente" class="modal-alerta__principal" type="button">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i>Iniciar sesion
+                </button>
+                <button id="btnUsarOtroCorreo" class="modal-alerta__secundario" type="button">Usar otro correo</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalConfirmacion" class="modal-alerta" hidden>
+        <div class="modal-alerta__card">
+            <button id="btnCerrarConfirmacion" class="modal-alerta__cerrar" type="button" aria-label="Cerrar confirmacion">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-alerta__icono modal-alerta__icono--peligro">
+                <i id="modalConfirmacionIcono" class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h2 id="modalConfirmacionTitulo">Confirmar accion</h2>
+            <p id="modalConfirmacionTexto">Esta accion requiere confirmacion.</p>
+            <div class="modal-alerta__acciones">
+                <button id="btnConfirmacionAceptar" class="modal-alerta__principal" type="button">Confirmar</button>
+                <button id="btnConfirmacionCancelar" class="modal-alerta__secundario" type="button">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDireccionRecogida" class="modal-alerta" hidden>
+        <div class="modal-alerta__card modal-alerta__card--form">
+            <button id="btnCerrarDireccionRecogida" class="modal-alerta__cerrar" type="button" aria-label="Cerrar direccion">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-alerta__icono">
+                <i class="fa-solid fa-house-laptop"></i>
+            </div>
+            <h2>Direccion de recogida</h2>
+            <p>Escribe donde el tecnico debe recoger el dispositivo.</p>
+            <form id="formDireccionRecogida" class="modal-formulario">
+                <label for="inputDireccionRecogida">Direccion</label>
+                <input id="inputDireccionRecogida" type="text" maxlength="180" placeholder="Ej: Calle 72 # 10-34, apto 402" required>
+                <button class="modal-alerta__principal" type="submit">
+                    <i class="fa-regular fa-circle-check"></i>Confirmar direccion
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalPagoUsuario" class="modal-alerta" hidden>
+        <div class="modal-alerta__card modal-alerta__card--form">
+            <button id="btnCerrarPagoUsuario" class="modal-alerta__cerrar" type="button" aria-label="Cerrar pago">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-alerta__icono">
+                <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <h2>Realizar pago</h2>
+            <p id="modalPagoUsuarioTexto">Selecciona el método de pago para solicitar autorización de entrega.</p>
+            <form id="formPagoUsuario" class="modal-formulario">
+                <label for="selectMetodoPagoUsuario">Método de pago</label>
+                <select id="selectMetodoPagoUsuario" required>
+                    <option value="">Selecciona un método</option>
+                    <option value="Tarjeta débito o crédito">Tarjeta débito o crédito</option>
+                    <option value="Transferencia bancaria">Transferencia bancaria</option>
+                    <option value="Nequi o Daviplata">Nequi o Daviplata</option>
+                    <option value="Pago en efectivo">Pago en efectivo</option>
+                </select>
+                <button class="modal-alerta__principal" type="submit">
+                    <i class="fa-regular fa-circle-check"></i>Enviar pago
+                </button>
+            </form>
+        </div>
+    </div>
 
     <footer id="footerApp" class="footer-app" hidden>
         <div class="footer-app__inner">

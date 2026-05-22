@@ -22,6 +22,137 @@
     box-sizing: border-box;
 }
 
+.dashboard-tecnico{
+    margin-left: 20vw;
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    min-height: 100vh;
+    padding: 1vw 2vw 3vw;
+    box-sizing: border-box;
+}
+
+.tecnico-resumen-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1vw;
+    padding: 0 2vw 2vw;
+}
+
+.tecnico-resumen-card,
+.tecnico-panel{
+    background-color: #1b1b1b;
+    border: 0.0521vw solid #2f2f2f;
+    border-radius: 1vw;
+    color: white;
+}
+
+.tecnico-resumen-card{
+    min-height: 18vh;
+    padding: 1.2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.6vw;
+}
+
+.tecnico-resumen-card i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5vw;
+    height: 7vh;
+    border-radius: 0.8vw;
+    background-color: #314cc5;
+    color: white;
+    font-size: 1.4rem;
+}
+
+.tecnico-resumen-card p,
+.tecnico-panel p,
+.dashboard-vacio{
+    color: rgb(153, 152, 152);
+}
+
+.tecnico-resumen-card h2{
+    font-size: 1.5rem;
+}
+
+.tecnico-dashboard-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1vw;
+    padding: 0 2vw 2vw;
+}
+
+.tecnico-panel{
+    min-height: 34vh;
+    padding: 1.2vw;
+}
+
+.tecnico-panel h2{
+    margin-bottom: 1vw;
+}
+
+.grafica-barras,
+.lista-dashboard,
+.reparto-ingresos{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.grafica-fila header,
+.dashboard-lista-item,
+.reparto-ingresos div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1vw;
+}
+
+.grafica-fila header{
+    margin-bottom: 0.4vw;
+}
+
+.grafica-linea{
+    width: 100%;
+    height: 1vh;
+    border-radius: 2vw;
+    background-color: #2c2c2c;
+    overflow: hidden;
+}
+
+.grafica-linea span{
+    display: block;
+    height: 100%;
+    border-radius: 2vw;
+    background-color: #314cc5;
+}
+
+.dashboard-lista-item{
+    padding: 1vw;
+    border-radius: 0.8vw;
+    background-color: #242424;
+}
+
+.dashboard-lista-item strong,
+.reparto-ingresos strong{
+    color: white;
+}
+
+.dashboard-lista-item span{
+    color: #7d9cff;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.reparto-ingresos div{
+    padding: 1vw;
+    border-radius: 0.8vw;
+    background-color: #242424;
+}
+
 .content-tec{
     display: flex;
     gap: 1vw;
@@ -37,7 +168,7 @@
     padding: 1.2vw;
     border-radius: 1vw;
     width: 24vw;
-    border: 1px solid rgba(255, 77, 77, 0.45);
+    border: 0.0521vw solid rgba(255, 77, 77, 0.45);
 }
 
 .bg-green{
@@ -46,7 +177,7 @@
     padding: 1.2vw;
     border-radius: 1vw;
     width: 24vw;
-    border: 1px solid rgba(0, 255, 153, 0.45);
+    border: 0.0521vw solid rgba(0, 255, 153, 0.45);
 }
 
 .bg-blue{
@@ -55,7 +186,7 @@
     padding: 1.2vw;
     border-radius: 1vw;
     width: 24vw;
-    border: 1px solid rgba(51, 153, 255, 0.45);
+    border: 0.0521vw solid rgba(51, 153, 255, 0.45);
 }
 
 .tabla-tecnico{
@@ -69,7 +200,7 @@
 .tabla-tecnico table{
     border-collapse: collapse;
     width: 100%;
-    min-width: 1150px;
+    min-width: 59.8958vw;
     height: auto;
     background-color: #1b1b1b;
     border-radius: 1.5vw;
@@ -81,20 +212,20 @@
     width: 100%;
     overflow-x: auto;
     background-color: #1b1b1b;
-    border: 1px solid #2f2f2f;
+    border: 0.0521vw solid #2f2f2f;
     border-radius: 1.5vw;
 }
 
 .tecnico-fila{
     color: rgb(112, 110, 110);
     font-weight: bold;
-    border-bottom: 1px solid #363636;
+    border-bottom: 0.0521vw solid #363636;
     height: 8vh;
 }
 
 .tabla-tecnico tbody tr{
     color: rgb(255, 255, 255);
-    border-bottom: 1px solid #363636;
+    border-bottom: 0.0521vw solid #363636;
     min-height: 9vh;
 }
 
@@ -147,7 +278,7 @@
     gap: 1vw;
     padding: 1vw;
     background-color: #101010;
-    border: 1px solid #2f2f2f;
+    border: 0.0521vw solid #2f2f2f;
     border-radius: 1vw;
 }
 
@@ -164,7 +295,7 @@
 .form-detalle-tecnico textarea{
     width: 100%;
     border-radius: 0.6vw;
-    border: 1px solid #474747;
+    border: 0.0521vw solid #474747;
     background-color: #2c2c2c;
     color: white;
     padding: 0.8vw;
