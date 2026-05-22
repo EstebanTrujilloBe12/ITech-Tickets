@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS tickets (
   dispositivo VARCHAR(120) NOT NULL,
   problema VARCHAR(160) NOT NULL,
   descripcion TEXT NOT NULL,
-  estado ENUM('Abierto', 'Aceptado', 'En proceso', 'Reparado', 'Listo para entrega', 'Cerrado') NOT NULL DEFAULT 'En proceso',
+  estado ENUM('Abierto', 'Aceptado', 'En proceso', 'Reparado', 'Listo para entrega', 'Cerrado') NOT NULL DEFAULT 'Abierto',
   prioridad ENUM('Baja', 'Media', 'Alta') NOT NULL DEFAULT 'Media',
   comentario_tecnico TEXT NULL,
   valor_arreglo DECIMAL(12,2) NOT NULL DEFAULT 0,

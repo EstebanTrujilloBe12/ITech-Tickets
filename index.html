@@ -230,6 +230,19 @@
                         <p>Consulta el seguimiento de tus solicitudes de soporte</p>
                     </div>
 
+                    <div class="filtros-usuario-ticket">
+                        <label for="filtroEstadoTicketUsuario">Filtrar por estado</label>
+                        <select id="filtroEstadoTicketUsuario">
+                            <option value="Todos">Todos</option>
+                            <option value="Abierto">Abiertos</option>
+                            <option value="Aceptado">Aceptados</option>
+                            <option value="En proceso">En proceso</option>
+                            <option value="Reparado">Reparados</option>
+                            <option value="Listo para entrega">Listos para entrega</option>
+                            <option value="Cerrado">Cerrados</option>
+                        </select>
+                    </div>
+
                     <div id="listaTicketsUsuario" class="lista-tickets-usuario"></div>
 
                     <section id="estadoTicketCardPrincipal" class="estado-ticket-card">
@@ -495,6 +508,16 @@
                     <div>
                         <h3 id="nombrePerfilAdmin" style="color: white;">Administrador ITech</h3>
                         <p style="color: rgb(153, 152, 152);">Administrador</p>
+                    </div>
+                    <div class="notificaciones-usuario">
+                        <button id="btnNotificacionesAdmin" class="btn-notificaciones" type="button" aria-label="Mostrar notificaciones">
+                            <i class="fa-regular fa-bell"></i>
+                            <span id="contadorNotificacionesAdmin" hidden>0</span>
+                        </button>
+                        <div id="panelNotificacionesAdmin" class="panel-notificaciones" hidden>
+                            <h3>Notificaciones</h3>
+                            <div id="listaNotificacionesAdmin"></div>
+                        </div>
                     </div>
                 </div>
                 <button class="btn-menu-toggle" type="button" aria-label="Abrir menu" data-menu-target="navMenuAdmin">

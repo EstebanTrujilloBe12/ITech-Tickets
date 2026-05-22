@@ -212,6 +212,7 @@ img{
 
     .form-usuario,
     .estado-ticket-card,
+    .filtros-usuario-ticket,
     .lista-tickets-usuario{
         width: 100%;
         margin-left: 0;
@@ -373,6 +374,7 @@ img{
 
     .acciones-ticket a,
     .btn-accion-admin,
+    .btn-accion-tecnico,
     .btn-editar-ticket-tecnico{
         width: 2.1875vw;
         height: 3.8889vh;
@@ -625,12 +627,17 @@ img{
     }
 
     .acciones-form-ticket,
+    .filtros-usuario-ticket,
     .filtros-activos,
     .filtros-ticket{
         flex-direction: column;
     }
 
     .btn-cancelar-ticket{
+        width: 100%;
+    }
+
+    .filtros-usuario-ticket select{
         width: 100%;
     }
 

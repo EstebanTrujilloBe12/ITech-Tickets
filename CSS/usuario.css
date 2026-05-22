@@ -409,6 +409,40 @@
     margin-left: 20vw;
 }
 
+.filtros-usuario-ticket{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1vw;
+    width: 50vw;
+    margin-left: 20vw;
+    background-color: #1b1b1b;
+    border: 0.0521vw solid #363636;
+    border-radius: 0.8vw;
+    padding: 1vw;
+    color: white;
+}
+
+.filtros-usuario-ticket label{
+    color: rgb(153, 152, 152);
+    font-weight: 600;
+}
+
+.filtros-usuario-ticket select{
+    width: 16vw;
+    min-height: 5vh;
+    background-color: #2c2c2c;
+    border: 0.0521vw solid #454545;
+    border-radius: 0.6vw;
+    color: white;
+    padding: 0 0.8vw;
+    outline: none;
+}
+
+.filtros-usuario-ticket select:focus{
+    border-color: #3d63ff;
+}
+
 .lista-tickets-usuario .estado-ticket-card{
     width: 100%;
     min-height: auto;

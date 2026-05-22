@@ -248,6 +248,13 @@
     margin-bottom: 0.3vw;
 }
 
+.acciones-tecnico-ticket{
+    display: flex;
+    justify-content: center;
+    gap: 0.5vw;
+}
+
+.btn-accion-tecnico,
 .btn-editar-ticket-tecnico{
     width: 2.5vw;
     height: 4.5vh;
@@ -258,7 +265,20 @@
     cursor: pointer;
 }
 
+.btn-accion-tecnico.aceptar{
+    background-color: #147a38;
+}
+
+.btn-accion-tecnico.rechazar{
+    background-color: #8f2424;
+}
+
 .btn-editar-ticket-tecnico:hover{
+    filter: brightness(1.15);
+    transition: 0.2s;
+}
+
+.btn-accion-tecnico:hover{
     filter: brightness(1.15);
     transition: 0.2s;
 }

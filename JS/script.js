@@ -55,6 +55,7 @@
     const ticketCiudadUsuario = document.getElementById("ticketCiudadUsuario");
     const ticketPrioridadUsuario = document.getElementById("ticketPrioridadUsuario");
     const listaTicketsUsuario = document.getElementById("listaTicketsUsuario");
+    const filtroEstadoTicketUsuario = document.getElementById("filtroEstadoTicketUsuario");
     const estadoTicketId = document.getElementById("estadoTicketId");
     const estadoTicketTitulo = document.getElementById("estadoTicketTitulo");
     const estadoTicketDescripcion = document.getElementById("estadoTicketDescripcion");
@@ -76,6 +77,10 @@
     const contadorNotificacionesTecnico = document.getElementById("contadorNotificacionesTecnico");
     const panelNotificacionesTecnico = document.getElementById("panelNotificacionesTecnico");
     const listaNotificacionesTecnico = document.getElementById("listaNotificacionesTecnico");
+    const btnNotificacionesAdmin = document.getElementById("btnNotificacionesAdmin");
+    const contadorNotificacionesAdmin = document.getElementById("contadorNotificacionesAdmin");
+    const panelNotificacionesAdmin = document.getElementById("panelNotificacionesAdmin");
+    const listaNotificacionesAdmin = document.getElementById("listaNotificacionesAdmin");
 
     // SECCIONES ADMIN
     const dashboard = document.getElementById("dashboard__ad");
@@ -201,6 +206,8 @@
     const pagoAprobado = "Aprobado";
     const porcentajeEmpresa = 0.7;
     const porcentajeTecnico = 0.3;
+    let detalleAdminAbierto = null;
+    const borradoresDetalleAdmin = new Map();
     const detallesTecnicoAbiertos = new Set();
     const borradoresDetalleTecnico = new Map();
 
@@ -537,7 +544,7 @@
 
             apiDisponible = true;
             registrarNotificacionesPorTicketsActualizados(ticketsApi);
-            guardarTickets(ticketsApi);
+            guardarTicketsDesdeApi(ticketsApi);
             localStorage.setItem(usuariosDbKey, JSON.stringify(
                 usuariosApi
                     .map((usuario) => ({
@@ -698,6 +705,40 @@
 
         localStorage.setItem(ticketsDbKey, JSON.stringify(ticketsGuardados.map(normalizarTicketPago)));
         emitirSincronizacion();
+
+    }
+
+    function guardarTicketsDesdeApi(ticketsApi) {
+
+        const ticketsPorId = new Map();
+        const idsApi = new Set(ticketsApi.map((ticket) => ticket.id));
+        const idsEliminados = obtenerTicketsEliminados().filter((ticketId) => !idsApi.has(ticketId));
+
+        obtenerTickets().forEach((ticket) => {
+            ticketsPorId.set(ticket.id, ticket);
+        });
+
+        ticketsApi.forEach((ticket) => {
+            ticketsPorId.set(ticket.id, ticket);
+        });
+
+        guardarTickets(Array.from(ticketsPorId.values()));
+        guardarTicketsEliminados(idsEliminados);
+
+    }
+
+    function guardarTicketLocal(ticketActualizado) {
+
+        const ticketsGuardados = obtenerTickets();
+        const indice = ticketsGuardados.findIndex((ticket) => ticket.id === ticketActualizado.id);
+
+        if (indice >= 0) {
+            ticketsGuardados[indice] = ticketActualizado;
+        } else {
+            ticketsGuardados.push(ticketActualizado);
+        }
+
+        guardarTickets(ticketsGuardados);
 
     }
 
@@ -927,6 +968,31 @@
 
     }
 
+    function notificacionPerteneceAAdmin(notificacion) {
+
+        return notificacion.tipo === "admin";
+
+    }
+
+    function registrarNotificacionAdmin(ticket, titulo, mensaje) {
+
+        const notificaciones = obtenerNotificaciones();
+
+        notificaciones.unshift({
+            id: `admin-${ticket.id}-${Date.now()}`,
+            tipo: "admin",
+            ticketId: ticket.id,
+            titulo,
+            mensaje,
+            fecha: new Date().toLocaleString("es-CO"),
+            leida: false
+        });
+
+        guardarNotificaciones(notificaciones.slice(0, 120));
+        renderNotificacionesAdmin();
+
+    }
+
     function crearTextoNotificacionEstado(ticket) {
 
         if (ticket.estado === "En proceso") {
@@ -1144,6 +1210,89 @@
 
     }
 
+    function marcarNotificacionesAdminLeidas() {
+
+        const notificaciones = obtenerNotificaciones();
+        let huboCambios = false;
+
+        const actualizadas = notificaciones.map((notificacion) => {
+            if (!notificacion.leida && notificacionPerteneceAAdmin(notificacion)) {
+                huboCambios = true;
+                return {
+                    ...notificacion,
+                    leida: true
+                };
+            }
+
+            return notificacion;
+        });
+
+        if (huboCambios) {
+            guardarNotificaciones(actualizadas);
+        }
+
+    }
+
+    function abrirTicketsAdminDesdeNotificacion(ticketId) {
+
+        if (!tickets || !pantallaAdmin) {
+            return;
+        }
+
+        ocultarSeccionesAdmin();
+        renderTicketsAdmin();
+        tickets.style.display = "flex";
+
+        const detalle = document.getElementById(`admin-detalle-${ticketId}`);
+        const ticket = obtenerTodosLosTickets().find((item) => item.id === ticketId);
+
+        if (detalle && ticket) {
+            mostrarDetalleAdmin(detalle, ticket, "ver");
+            detalle.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+    }
+
+    function renderNotificacionesAdmin() {
+
+        if (!listaNotificacionesAdmin || !contadorNotificacionesAdmin) {
+            return;
+        }
+
+        const notificacionesAdmin = obtenerNotificaciones().filter(notificacionPerteneceAAdmin);
+        const sinLeer = notificacionesAdmin.filter((notificacion) => !notificacion.leida).length;
+
+        contadorNotificacionesAdmin.textContent = sinLeer;
+        contadorNotificacionesAdmin.hidden = sinLeer === 0;
+        listaNotificacionesAdmin.innerHTML = "";
+
+        if (notificacionesAdmin.length === 0) {
+            const vacio = document.createElement("p");
+            vacio.className = "notificaciones-vacias";
+            vacio.textContent = "No hay novedades para revisar.";
+            listaNotificacionesAdmin.appendChild(vacio);
+            return;
+        }
+
+        notificacionesAdmin.slice(0, 10).forEach((notificacion) => {
+            const item = document.createElement("article");
+            item.className = `notificacion-item ${notificacion.leida ? "" : "no-leida"}`;
+            item.innerHTML = `
+                <strong>${notificacion.titulo}</strong>
+                <p>${notificacion.mensaje}</p>
+                <span>${notificacion.fecha}</span>
+            `;
+            item.addEventListener("click", () => {
+                abrirTicketsAdminDesdeNotificacion(notificacion.ticketId);
+                if (panelNotificacionesAdmin) {
+                    panelNotificacionesAdmin.hidden = true;
+                }
+            });
+            listaNotificacionesAdmin.appendChild(item);
+        });
+
+    }
+
     function obtenerTecnicosDisponibles() {
 
         const tecnicosPorNombre = new Map();
@@ -1194,9 +1343,12 @@
 
     function guardarTicket(ticket) {
 
-        const ticketsGuardados = obtenerTickets();
-        ticketsGuardados.push(ticket);
-        guardarTickets(ticketsGuardados);
+        guardarTicketLocal(ticket);
+        registrarNotificacionAdmin(
+            ticket,
+            "Nuevo ticket creado",
+            `${ticket.usuario || "Un usuario"} reporto ${ticket.dispositivo} en ${ticket.ciudad}.`
+        );
         registrarNotificacionAsignacionTecnico(ticket, null);
 
         if (ticketPerteneceAUsuarioActual(ticket)) {
@@ -1229,17 +1381,7 @@
             ? ticketsGuardados[indice]
             : obtenerTodosLosTickets().find((ticket) => ticket.id === ticketActualizado.id);
 
-        if (indice >= 0) {
-
-            ticketsGuardados[indice] = ticketActualizado;
-
-        } else {
-
-            ticketsGuardados.push(ticketActualizado);
-
-        }
-
-        guardarTickets(ticketsGuardados);
+        guardarTicketLocal(ticketActualizado);
         registrarNotificacionCambioEstado(ticketActualizado, ticketAnterior);
         registrarNotificacionAsignacionTecnico(ticketActualizado, ticketAnterior);
 
@@ -2111,6 +2253,11 @@
                     metodoPago,
                     fechaPago: new Date().toLocaleString("es-CO")
                 });
+                registrarNotificacionAdmin(
+                    ticket,
+                    "Pago pendiente de aprobacion",
+                    `${ticket.usuario} envio pago de ${formatearValor(ticket.valorArreglo)} por ${ticket.dispositivo}.`
+                );
                 actualizarEstadoUsuarioActual();
                 renderTicketsAdmin();
                 renderDashboardAdmin();
@@ -2151,7 +2298,11 @@
             return;
         }
 
+        const estadoSeleccionado = filtroEstadoTicketUsuario ? filtroEstadoTicketUsuario.value : "Todos";
         const ticketsUsuario = obtenerTicketsUsuarioActual();
+        const ticketsFiltrados = estadoSeleccionado === "Todos"
+            ? ticketsUsuario
+            : ticketsUsuario.filter((ticket) => ticket.estado === estadoSeleccionado);
         listaTicketsUsuario.innerHTML = "";
 
         if (ticketsUsuario.length === 0) {
@@ -2167,7 +2318,20 @@
 
         }
 
-        ticketsUsuario.slice().reverse().forEach((ticket) => {
+        if (ticketsFiltrados.length === 0) {
+
+            const vacio = document.createElement("div");
+            vacio.className = "estado-vacio";
+            vacio.innerHTML = `
+                <h3>No hay tickets en este estado</h3>
+                <p>Cambia el filtro para ver otras solicitudes.</p>
+            `;
+            listaTicketsUsuario.appendChild(vacio);
+            return;
+
+        }
+
+        ticketsFiltrados.slice().reverse().forEach((ticket) => {
             listaTicketsUsuario.appendChild(crearCardEstadoUsuario(ticket));
         });
 
@@ -2178,6 +2342,7 @@
         renderEstadoUsuario();
         renderNotificacionesUsuario();
         renderNotificacionesTecnico();
+        renderNotificacionesAdmin();
 
     }
 
@@ -2237,6 +2402,66 @@
 
     }
 
+    function obtenerBorradorDetalleAdmin(formulario) {
+
+        const campos = formulario.elements;
+
+        return {
+            problema: campos.problema.value,
+            dispositivo: campos.dispositivo.value,
+            ciudad: campos.ciudad.value,
+            tecnico: campos.tecnico.value,
+            estado: campos.estado.value,
+            prioridad: campos.prioridad.value,
+            valorArreglo: campos.valorArreglo.value || "0",
+            recogidaDomicilio: campos.recogidaDomicilio.value,
+            direccionRecogida: campos.direccionRecogida.value,
+            sedeCercana: campos.sedeCercana.value,
+            descripcion: campos.descripcion.value,
+            comentarioTecnico: campos.comentarioTecnico.value
+        };
+
+    }
+
+    function capturarDetalleAdminAbierto() {
+
+        const filaDetalle = tablaTicketsAdminBody?.querySelector(".fila-detalle-admin.mostrar");
+
+        if (!filaDetalle) {
+            detalleAdminAbierto = null;
+            return;
+        }
+
+        const ticketId = filaDetalle.id.replace("admin-detalle-", "");
+        const modo = filaDetalle.dataset.modo || "ver";
+        const formulario = filaDetalle.querySelector(".form-admin-ticket");
+
+        detalleAdminAbierto = { ticketId, modo };
+
+        if (formulario) {
+            borradoresDetalleAdmin.set(ticketId, obtenerBorradorDetalleAdmin(formulario));
+        }
+
+    }
+
+    function restaurarDetalleAdminAbierto(ticketsAdmin) {
+
+        if (!detalleAdminAbierto) {
+            return;
+        }
+
+        const ticket = ticketsAdmin.find((item) => item.id === detalleAdminAbierto.ticketId);
+        const filaDetalle = document.getElementById(`admin-detalle-${detalleAdminAbierto.ticketId}`);
+
+        if (!ticket || !filaDetalle) {
+            detalleAdminAbierto = null;
+            return;
+        }
+
+        mostrarDetalleAdmin(filaDetalle, ticket, detalleAdminAbierto.modo);
+
+    }
+
     function renderTicketsAdmin() {
 
         if (!tablaTicketsAdminBody) {
@@ -2245,6 +2470,7 @@
 
         }
 
+        capturarDetalleAdminAbierto();
         tablaTicketsAdminBody.hidden = false;
         const ticketsAdmin = obtenerTodosLosTickets();
 
@@ -2313,6 +2539,7 @@
 
         });
 
+        restaurarDetalleAdminAbierto(ticketsAdmin);
         renderDashboardAdmin();
 
     }
@@ -2357,11 +2584,14 @@
         });
 
         if (estaAbierto && mismoModo) {
+            detalleAdminAbierto = null;
+            borradoresDetalleAdmin.delete(ticket.id);
             return;
         }
 
         celda.innerHTML = "";
         filaDetalle.dataset.modo = modo;
+        detalleAdminAbierto = { ticketId: ticket.id, modo };
 
         if (modo === "ver") {
             celda.appendChild(crearVistaTicketAdmin(ticket));
@@ -2457,6 +2687,7 @@
         const formulario = document.createElement("form");
         const estados = ["Abierto", "Aceptado", "En proceso", "Reparado", "Listo para entrega", "Cerrado"];
         const prioridades = ["Baja", "Media", "Alta"];
+        const borrador = borradoresDetalleAdmin.get(ticket.id);
 
         formulario.className = "form-admin-ticket";
         formulario.innerHTML = `
@@ -2516,18 +2747,26 @@
 
         const campos = formulario.elements;
 
-        campos.problema.value = ticket.problema;
-        campos.dispositivo.value = ticket.dispositivo;
-        campos.ciudad.value = ticket.ciudad;
-        campos.tecnico.value = ticket.tecnico;
-        campos.estado.value = ticket.estado;
-        campos.prioridad.value = ticket.prioridad;
-        campos.valorArreglo.value = ticket.valorArreglo || "0";
-        campos.recogidaDomicilio.value = ticket.recogidaDomicilio ? "true" : "false";
-        campos.direccionRecogida.value = ticket.direccionRecogida || "";
-        campos.sedeCercana.value = ticket.sedeCercana || obtenerSedeCercana(ticket.ciudad);
-        campos.descripcion.value = ticket.descripcion;
-        campos.comentarioTecnico.value = ticket.comentarioTecnico || "";
+        campos.problema.value = borrador?.problema ?? ticket.problema;
+        campos.dispositivo.value = borrador?.dispositivo ?? ticket.dispositivo;
+        campos.ciudad.value = borrador?.ciudad ?? ticket.ciudad;
+        campos.tecnico.value = borrador?.tecnico ?? ticket.tecnico;
+        campos.estado.value = borrador?.estado ?? ticket.estado;
+        campos.prioridad.value = borrador?.prioridad ?? ticket.prioridad;
+        campos.valorArreglo.value = borrador?.valorArreglo ?? ticket.valorArreglo ?? "0";
+        campos.recogidaDomicilio.value = borrador?.recogidaDomicilio ?? (ticket.recogidaDomicilio ? "true" : "false");
+        campos.direccionRecogida.value = borrador?.direccionRecogida ?? ticket.direccionRecogida ?? "";
+        campos.sedeCercana.value = borrador?.sedeCercana ?? ticket.sedeCercana ?? obtenerSedeCercana(ticket.ciudad);
+        campos.descripcion.value = borrador?.descripcion ?? ticket.descripcion;
+        campos.comentarioTecnico.value = borrador?.comentarioTecnico ?? ticket.comentarioTecnico ?? "";
+
+        formulario.addEventListener("input", () => {
+            borradoresDetalleAdmin.set(ticket.id, obtenerBorradorDetalleAdmin(formulario));
+        });
+
+        formulario.addEventListener("change", () => {
+            borradoresDetalleAdmin.set(ticket.id, obtenerBorradorDetalleAdmin(formulario));
+        });
 
         formulario.addEventListener("submit", (e) => {
 
@@ -2550,6 +2789,8 @@
             });
 
             actualizarEstadoUsuarioActual();
+            detalleAdminAbierto = null;
+            borradoresDetalleAdmin.delete(ticket.id);
             renderTicketsAdmin();
             renderTicketsTecnico();
             alert("Ticket actualizado correctamente");
@@ -2640,9 +2881,32 @@
     function crearAccionTecnico(ticket) {
 
         const celda = document.createElement("td");
+        celda.className = "acciones-tecnico-ticket";
+
+        if (ticket.estado === "Abierto") {
+            const botonAceptar = document.createElement("button");
+            const botonRechazar = document.createElement("button");
+
+            botonAceptar.className = "btn-accion-tecnico aceptar";
+            botonAceptar.type = "button";
+            botonAceptar.title = "Aceptar trabajo";
+            botonAceptar.innerHTML = '<i class="fa-solid fa-check"></i>';
+            botonAceptar.addEventListener("click", () => aceptarTrabajoTecnico(ticket));
+
+            botonRechazar.className = "btn-accion-tecnico rechazar";
+            botonRechazar.type = "button";
+            botonRechazar.title = "Rechazar trabajo";
+            botonRechazar.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            botonRechazar.addEventListener("click", () => rechazarTrabajoTecnico(ticket));
+
+            celda.appendChild(botonAceptar);
+            celda.appendChild(botonRechazar);
+            return celda;
+        }
+
         const boton = document.createElement("button");
 
-        boton.className = "btn-editar-ticket-tecnico";
+        boton.className = "btn-accion-tecnico editar";
         boton.type = "button";
         boton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
         boton.title = "Actualizar ticket";
@@ -2670,11 +2934,66 @@
 
     }
 
+    function refrescarTicketsDespuesAccionTecnico() {
+
+        actualizarEstadoUsuarioActual();
+        renderTicketsAdmin();
+        renderTicketsTecnico();
+        renderDashboardAdmin();
+        renderDashboardTecnico();
+
+    }
+
+    function aceptarTrabajoTecnico(ticket) {
+
+        actualizarTicket({
+            ...ticket,
+            estado: "Aceptado",
+            comentarioTecnico: "Trabajo aceptado por el tecnico. El diagnostico iniciara pronto."
+        });
+        refrescarTicketsDespuesAccionTecnico();
+        alert("Trabajo aceptado correctamente.");
+
+    }
+
+    async function rechazarTrabajoTecnico(ticket) {
+
+        const confirmado = await mostrarConfirmacion({
+            titulo: "Rechazar trabajo",
+            texto: `Quieres rechazar el ticket ${ticket.id}? Quedara abierto para que el administrador lo reasigne.`,
+            confirmar: "Rechazar",
+            cancelar: "Volver",
+            peligro: true,
+            icono: "fa-solid fa-xmark"
+        });
+
+        if (!confirmado) {
+            return;
+        }
+
+        const ticketActualizado = {
+            ...ticket,
+            estado: "Abierto",
+            tecnico: "Sin asignar",
+            comentarioTecnico: `${usuarioActual} rechazo este trabajo. Pendiente de reasignacion.`
+        };
+
+        actualizarTicket(ticketActualizado);
+        registrarNotificacionAdmin(
+            ticketActualizado,
+            "Ticket rechazado por tecnico",
+            `${usuarioActual} rechazo ${ticket.id}. Debes reasignarlo desde Tickets.`
+        );
+        refrescarTicketsDespuesAccionTecnico();
+        alert("Trabajo rechazado. El administrador podra reasignarlo.");
+
+    }
+
     function crearDetalleTecnico(ticket) {
 
         const fila = document.createElement("tr");
         const celda = document.createElement("td");
-        const estados = ["En proceso", "Reparado", "Listo para entrega", "Cerrado"];
+        const estados = ["Aceptado", "En proceso", "Reparado", "Listo para entrega", "Cerrado"];
         const borrador = borradoresDetalleTecnico.get(ticket.id);
         const estadoSeleccionado = borrador?.estado || ticket.estado;
         const valorArreglo = borrador?.valorArreglo ?? ticket.valorArreglo ?? 0;
@@ -3038,6 +3357,7 @@
             renderTicketsAdmin();
             renderActivosAdmin();
             renderDashboardAdmin();
+            renderNotificacionesAdmin();
 
             if (tickets) {
                 tickets.style.display = "none";
@@ -3116,6 +3436,7 @@
         renderActivosAdmin();
         renderDashboardAdmin();
         renderDashboardTecnico();
+        renderNotificacionesAdmin();
         actualizarEstadoUsuarioActual();
 
     }
@@ -3394,6 +3715,30 @@
 
             if (!panelNotificacionesTecnico.hidden && !panelNotificacionesTecnico.contains(e.target) && !btnNotificacionesTecnico.contains(e.target)) {
                 panelNotificacionesTecnico.hidden = true;
+            }
+
+        });
+
+    }
+
+    if (btnNotificacionesAdmin && panelNotificacionesAdmin) {
+
+        btnNotificacionesAdmin.addEventListener("click", (e) => {
+
+            e.stopPropagation();
+            panelNotificacionesAdmin.hidden = !panelNotificacionesAdmin.hidden;
+
+            if (!panelNotificacionesAdmin.hidden) {
+                marcarNotificacionesAdminLeidas();
+                renderNotificacionesAdmin();
+            }
+
+        });
+
+        document.addEventListener("click", (e) => {
+
+            if (!panelNotificacionesAdmin.hidden && !panelNotificacionesAdmin.contains(e.target) && !btnNotificacionesAdmin.contains(e.target)) {
+                panelNotificacionesAdmin.hidden = true;
             }
 
         });
@@ -3751,11 +4096,11 @@
             dispositivo: ticketCategoriaUsuario.value,
             problema: ticketTituloUsuario.value,
             descripcion: ticketDescripcionUsuario.value,
-            estado: "En proceso",
+            estado: "Abierto",
             prioridad: ticketPrioridadUsuario.value,
             tecnico: tecnicoAsignado.nombre,
             fecha: new Date().toLocaleDateString("es-CO"),
-            comentarioTecnico: "El tecnico aun no ha agregado comentarios.",
+            comentarioTecnico: "El tecnico aun no ha aceptado el trabajo.",
             valorArreglo: "0",
             recogidaDomicilio: quiereRecogida,
             direccionRecogida,
@@ -3888,6 +4233,12 @@
     if (filtroEstadoActivoAdmin) {
 
         filtroEstadoActivoAdmin.addEventListener("change", renderActivosAdmin);
+
+    }
+
+    if (filtroEstadoTicketUsuario) {
+
+        filtroEstadoTicketUsuario.addEventListener("change", renderEstadoUsuario);
 
     }
 

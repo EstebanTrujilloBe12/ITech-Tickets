@@ -73,6 +73,10 @@ async function ensureDatabaseShape() {
       await pool.query(`ALTER TABLE tickets ADD COLUMN ${column} ${definition}`);
     }
   }
+
+  await pool.query(
+    "ALTER TABLE tickets MODIFY estado ENUM('Abierto', 'Aceptado', 'En proceso', 'Reparado', 'Listo para entrega', 'Cerrado') NOT NULL DEFAULT 'Abierto'"
+  );
 }
 
 function sendDatabaseError(res, message) {
@@ -503,12 +507,12 @@ app.post("/api/tickets", async (req, res) => {
   try {
     const { usuarioId, ciudad, dispositivo, problema, descripcion, prioridad, recogidaDomicilio, direccionRecogida, sedeCercana } = req.body;
     const tecnico = await getLeastBusyTechnician(ciudad);
-    const [countRows] = await pool.query("SELECT COUNT(*) AS total FROM tickets");
-    const codigo = `TKT-${String(countRows[0].total + 1).padStart(3, "0")}`;
+    const [countRows] = await pool.query("SELECT COALESCE(MAX(CAST(SUBSTRING(codigo, 5) AS UNSIGNED)), 0) AS ultimo FROM tickets");
+    const codigo = `TKT-${String(countRows[0].ultimo + 1).padStart(3, "0")}`;
 
     await pool.query(
       `INSERT INTO tickets (codigo, usuario_id, tecnico_id, ciudad, dispositivo, problema, descripcion, estado, prioridad, comentario_tecnico, recogida_domicilio, direccion_recogida, sede_cercana)
-       VALUES (?, ?, ?, ?, ?, ?, ?, 'En proceso', ?, 'El tecnico aun no ha agregado comentarios.', ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?, 'Abierto', ?, 'El tecnico aun no ha aceptado el trabajo.', ?, ?, ?)`,
       [codigo, usuarioId, tecnico ? tecnico.id : null, ciudad, dispositivo, problema, descripcion, prioridad, recogidaDomicilio ? 1 : 0, direccionRecogida || null, sedeCercana || null]
     );
 
@@ -522,9 +526,10 @@ app.post("/api/tickets", async (req, res) => {
 app.patch("/api/tickets/:codigo", async (req, res) => {
   try {
     const { estado, prioridad, tecnico, valorArreglo, comentarioTecnico, problema, dispositivo, ciudad, descripcion, recogidaDomicilio, direccionRecogida, sedeCercana, pagoEstado, metodoPago, fechaPago, fechaPagoAprobado } = req.body;
+    const debeActualizarTecnico = Object.prototype.hasOwnProperty.call(req.body, "tecnico");
     let tecnicoId = null;
 
-    if (tecnico) {
+    if (debeActualizarTecnico && tecnico && tecnico !== "Sin asignar") {
       const [tecnicoRows] = await pool.query("SELECT id FROM tecnicos WHERE nombre = ? LIMIT 1", [tecnico]);
       tecnicoId = tecnicoRows[0] ? tecnicoRows[0].id : null;
     }
@@ -533,7 +538,7 @@ app.patch("/api/tickets/:codigo", async (req, res) => {
       `UPDATE tickets
        SET estado = COALESCE(?, estado),
            prioridad = COALESCE(?, prioridad),
-           tecnico_id = COALESCE(?, tecnico_id),
+           tecnico_id = IF(?, ?, tecnico_id),
            valor_arreglo = COALESCE(?, valor_arreglo),
            comentario_tecnico = COALESCE(?, comentario_tecnico),
            problema = COALESCE(?, problema),
@@ -548,7 +553,7 @@ app.patch("/api/tickets/:codigo", async (req, res) => {
            fecha_pago = COALESCE(?, fecha_pago),
            fecha_pago_aprobado = COALESCE(?, fecha_pago_aprobado)
        WHERE codigo = ?`,
-      [estado || null, prioridad || null, tecnicoId, valorArreglo ?? null, comentarioTecnico || null, problema || null, dispositivo || null, ciudad || null, descripcion || null, recogidaDomicilio === undefined ? null : (recogidaDomicilio ? 1 : 0), direccionRecogida ?? null, sedeCercana ?? null, pagoEstado || null, metodoPago || null, fechaPago || null, fechaPagoAprobado || null, req.params.codigo]
+      [estado || null, prioridad || null, debeActualizarTecnico, tecnicoId, valorArreglo ?? null, comentarioTecnico || null, problema || null, dispositivo || null, ciudad || null, descripcion || null, recogidaDomicilio === undefined ? null : (recogidaDomicilio ? 1 : 0), direccionRecogida ?? null, sedeCercana ?? null, pagoEstado || null, metodoPago || null, fechaPago || null, fechaPagoAprobado || null, req.params.codigo]
     );
 
     const [ticket] = await getTickets("WHERE t.codigo = ?", [req.params.codigo]);
