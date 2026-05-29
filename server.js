@@ -49,6 +49,25 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 async function ensureDatabaseShape() {
+  const userColumns = [
+    ["genero", "VARCHAR(30) NOT NULL DEFAULT 'No definido' AFTER password_demo"]
+  ];
+
+  for (const [column, definition] of userColumns) {
+    const [rows] = await pool.query(
+      `SELECT COUNT(*) AS total
+       FROM INFORMATION_SCHEMA.COLUMNS
+       WHERE TABLE_SCHEMA = DATABASE()
+         AND TABLE_NAME = 'usuarios'
+         AND COLUMN_NAME = ?`,
+      [column]
+    );
+
+    if (rows[0].total === 0) {
+      await pool.query(`ALTER TABLE usuarios ADD COLUMN ${column} ${definition}`);
+    }
+  }
+
   const ticketColumns = [
     ["recogida_domicilio", "TINYINT(1) NOT NULL DEFAULT 0 AFTER valor_arreglo"],
     ["direccion_recogida", "VARCHAR(220) NULL AFTER recogida_domicilio"],
@@ -98,6 +117,12 @@ function isEmailValid(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
 }
 
+function cleanGender(value) {
+  const genero = String(value || "").trim();
+  const generosPermitidos = ["Hombre", "Mujer", "No definido", "Otro", "Prefiero no decirlo"];
+  return generosPermitidos.includes(genero) ? genero : "No definido";
+}
+
 app.get("/api/health", async (_req, res) => {
   try {
     await pool.query("SELECT 1");
@@ -126,6 +151,7 @@ function userRowToClient(row) {
     apellidos: row.apellidos || "",
     correo: row.correo,
     passwordDemo: row.password_demo || "",
+    genero: row.genero || "No definido",
     rol: row.rol,
     ciudad: row.ciudad,
     pais: row.pais,
@@ -205,6 +231,7 @@ app.post("/api/register", async (req, res) => {
     const { correo, password, ciudad, pais, nacimiento } = req.body;
     const nombre = cleanPersonName(req.body.nombre);
     const apellidos = cleanPersonName(req.body.apellidos);
+    const genero = cleanGender(req.body.genero);
 
     if (!nombre || !correo || !password || !ciudad || !pais) {
       return res.status(400).json({ error: "Faltan datos obligatorios" });
@@ -215,9 +242,9 @@ app.post("/api/register", async (req, res) => {
     }
 
     const [result] = await pool.query(
-      `INSERT INTO usuarios (nombre, apellidos, correo, password_hash, password_demo, rol, ciudad, pais, fecha_nacimiento)
-       VALUES (?, ?, ?, ?, ?, 'usuario', ?, ?, ?)`,
-      [nombre, apellidos, correo, hashPassword(password), password, ciudad, pais, nacimiento || null]
+      `INSERT INTO usuarios (nombre, apellidos, correo, password_hash, password_demo, genero, rol, ciudad, pais, fecha_nacimiento)
+       VALUES (?, ?, ?, ?, ?, ?, 'usuario', ?, ?, ?)`,
+      [nombre, apellidos, correo, hashPassword(password), password, genero, ciudad, pais, nacimiento || null]
     );
 
     res.status(201).json({
@@ -227,6 +254,7 @@ app.post("/api/register", async (req, res) => {
       apellidos,
       correo,
       passwordDemo: password,
+      genero,
       rol: "usuario",
       ciudad,
       pais,
@@ -274,6 +302,7 @@ app.post("/api/users", async (req, res) => {
     const { correo, password, rol, ciudad, pais, nacimiento } = req.body;
     const nombre = cleanPersonName(req.body.nombre);
     const apellidos = cleanPersonName(req.body.apellidos);
+    const genero = cleanGender(req.body.genero);
     const rolesPermitidos = ["usuario", "admin", "tecnico"];
 
     if (!nombre || !correo || !password || !rol || !ciudad || !pais) {
@@ -291,9 +320,9 @@ app.post("/api/users", async (req, res) => {
     await connection.beginTransaction();
 
     const [result] = await connection.query(
-      `INSERT INTO usuarios (nombre, apellidos, correo, password_hash, password_demo, rol, ciudad, pais, fecha_nacimiento)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [nombre, apellidos, correo, hashPassword(password), password, rol, ciudad, pais, nacimiento || null]
+      `INSERT INTO usuarios (nombre, apellidos, correo, password_hash, password_demo, genero, rol, ciudad, pais, fecha_nacimiento)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [nombre, apellidos, correo, hashPassword(password), password, genero, rol, ciudad, pais, nacimiento || null]
     );
 
     if (rol === "tecnico") {
@@ -314,6 +343,7 @@ app.post("/api/users", async (req, res) => {
       apellidos,
       correo,
       passwordDemo: password,
+      genero,
       rol,
       ciudad,
       pais,

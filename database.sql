@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
   correo VARCHAR(120) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
   password_demo VARCHAR(50) NULL,
+  genero VARCHAR(30) NOT NULL DEFAULT 'No definido',
   rol ENUM('usuario', 'admin', 'tecnico') NOT NULL DEFAULT 'usuario',
   ciudad VARCHAR(80) NOT NULL,
   pais VARCHAR(80) NOT NULL,
@@ -34,6 +35,22 @@ SET @add_password_demo = IF(
 PREPARE add_password_demo_stmt FROM @add_password_demo;
 EXECUTE add_password_demo_stmt;
 DEALLOCATE PREPARE add_password_demo_stmt;
+
+SET @genero_exists = (
+  SELECT COUNT(*)
+  FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'usuarios'
+    AND COLUMN_NAME = 'genero'
+);
+SET @add_genero = IF(
+  @genero_exists = 0,
+  'ALTER TABLE usuarios ADD COLUMN genero VARCHAR(30) NOT NULL DEFAULT ''No definido'' AFTER password_demo',
+  'SELECT 1'
+);
+PREPARE add_genero_stmt FROM @add_genero;
+EXECUTE add_genero_stmt;
+DEALLOCATE PREPARE add_genero_stmt;
 
 CREATE TABLE IF NOT EXISTS tecnicos (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -210,20 +227,21 @@ WHERE rol IN ('admin', 'tecnico')
      'sofia.torres@itech.com'
    );
 
-INSERT INTO usuarios (nombre, apellidos, correo, password_hash, password_demo, rol, ciudad, pais, fecha_nacimiento, estado)
+INSERT INTO usuarios (nombre, apellidos, correo, password_hash, password_demo, genero, rol, ciudad, pais, fecha_nacimiento, estado)
 VALUES
-  ('Esteban', 'Trujillo', 'esteban.trujillo@gmail.com', 'scrypt:usuario_base:bd28aa3c5839a4d55770cac8344d27b5b15abb7c865315fcc4eb2d9be6ff8b4bca0db74c58b6e7eef990a2ab53a4c75bd0f18800bfd8174802b2add50069c691', '12345678', 'usuario', 'Bogota', 'Colombia', '2000-01-01', 'Activo'),
-  ('Administrador', 'ITech', 'admin.itech@empresa.com', 'scrypt:admin_itech_2026:cd1c0b8f4835b53cf9612e2e6eb49c47041a43ba87f7fce1b5ee65d1d0750d6af725d53ead8fb9d29c35a5020eafd2c40188f98cefbf0ed295569ffeaca0d76d', 'Admin12345', 'admin', 'Bogota', 'Colombia', NULL, 'Activo'),
-  ('Carlos', 'Rojas', 'carlos.rojas@itech.com', 'scrypt:carlos_itech_2026:239e29875d4f1f4668e23528b62d2933eb623aa3e04bd734452c4bef6c36936ab68790161b87e43d89f8ae0ed8673b33d46308c99f8b9488c42eb88389d4d599', 'Carlos12345', 'tecnico', 'Bogota', 'Colombia', NULL, 'Activo'),
-  ('Laura', 'Mendez', 'laura.mendez@itech.com', 'scrypt:tecnico_itech_2026:a2ffd2eef7c28c9adce39efa0863ea45d43103fed33e60a1570d9d3d5fbb2237696ead9399fef7b0295da3e3351e7dd05eff7323904af20cb84c33523870da24', 'Tecnico12345', 'tecnico', 'Bogota', 'Colombia', NULL, 'Activo'),
-  ('Andrea', 'Lopez', 'andrea.lopez@itech.com', 'scrypt:andrea_itech_2026:ec3e125fcfcfe23eec4194e5510bab61b454e61699e5da5d8bf77e13ec703706e9c8ad6bf4c45bbed47e5c705af0d393d18fa490c9acf59f12aaa7203dd008bb', 'Andrea12345', 'tecnico', 'Medellin', 'Colombia', NULL, 'Activo'),
-  ('Luis', 'Martinez', 'luis.martinez@itech.com', 'scrypt:luis_itech_2026:e5aa38cd5778e81fe0c3113ce63626b48a6e99e03bf903dc8b24cb0c320ef71764d4434933c46e6949da90b5acbb57de36fccf3f7258c611268b770dd8737a03', 'Luis12345', 'tecnico', 'Cali', 'Colombia', NULL, 'Activo'),
-  ('Sofia', 'Torres', 'sofia.torres@itech.com', 'scrypt:sofia_itech_2026:e5dfab06d02d251bca900b50289043a60f367ee2fe588096498b8d788daeb05edd2d8af73b35b5cb25bfe0b9070872573650eb69c3f02a09cb911ea303f2622c', 'Sofia12345', 'tecnico', 'Barranquilla', 'Colombia', NULL, 'Activo')
+  ('Esteban', 'Trujillo', 'esteban.trujillo@gmail.com', 'scrypt:usuario_base:bd28aa3c5839a4d55770cac8344d27b5b15abb7c865315fcc4eb2d9be6ff8b4bca0db74c58b6e7eef990a2ab53a4c75bd0f18800bfd8174802b2add50069c691', '12345678', 'Hombre', 'usuario', 'Bogota', 'Colombia', '2000-01-01', 'Activo'),
+  ('Administrador', 'ITech', 'admin.itech@empresa.com', 'scrypt:admin_itech_2026:cd1c0b8f4835b53cf9612e2e6eb49c47041a43ba87f7fce1b5ee65d1d0750d6af725d53ead8fb9d29c35a5020eafd2c40188f98cefbf0ed295569ffeaca0d76d', 'Admin12345', 'No definido', 'admin', 'Bogota', 'Colombia', NULL, 'Activo'),
+  ('Carlos', 'Rojas', 'carlos.rojas@itech.com', 'scrypt:carlos_itech_2026:239e29875d4f1f4668e23528b62d2933eb623aa3e04bd734452c4bef6c36936ab68790161b87e43d89f8ae0ed8673b33d46308c99f8b9488c42eb88389d4d599', 'Carlos12345', 'Hombre', 'tecnico', 'Bogota', 'Colombia', NULL, 'Activo'),
+  ('Laura', 'Mendez', 'laura.mendez@itech.com', 'scrypt:tecnico_itech_2026:a2ffd2eef7c28c9adce39efa0863ea45d43103fed33e60a1570d9d3d5fbb2237696ead9399fef7b0295da3e3351e7dd05eff7323904af20cb84c33523870da24', 'Tecnico12345', 'Mujer', 'tecnico', 'Bogota', 'Colombia', NULL, 'Activo'),
+  ('Andrea', 'Lopez', 'andrea.lopez@itech.com', 'scrypt:andrea_itech_2026:ec3e125fcfcfe23eec4194e5510bab61b454e61699e5da5d8bf77e13ec703706e9c8ad6bf4c45bbed47e5c705af0d393d18fa490c9acf59f12aaa7203dd008bb', 'Andrea12345', 'Mujer', 'tecnico', 'Medellin', 'Colombia', NULL, 'Activo'),
+  ('Luis', 'Martinez', 'luis.martinez@itech.com', 'scrypt:luis_itech_2026:e5aa38cd5778e81fe0c3113ce63626b48a6e99e03bf903dc8b24cb0c320ef71764d4434933c46e6949da90b5acbb57de36fccf3f7258c611268b770dd8737a03', 'Luis12345', 'Hombre', 'tecnico', 'Cali', 'Colombia', NULL, 'Activo'),
+  ('Sofia', 'Torres', 'sofia.torres@itech.com', 'scrypt:sofia_itech_2026:e5dfab06d02d251bca900b50289043a60f367ee2fe588096498b8d788daeb05edd2d8af73b35b5cb25bfe0b9070872573650eb69c3f02a09cb911ea303f2622c', 'Sofia12345', 'Mujer', 'tecnico', 'Barranquilla', 'Colombia', NULL, 'Activo')
 ON DUPLICATE KEY UPDATE
   nombre = VALUES(nombre),
   apellidos = VALUES(apellidos),
   password_hash = VALUES(password_hash),
   password_demo = VALUES(password_demo),
+  genero = VALUES(genero),
   rol = VALUES(rol),
   ciudad = VALUES(ciudad),
   pais = VALUES(pais),

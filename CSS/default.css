@@ -50,6 +50,59 @@ header img{
      
 }
 
+.form-login.animacion-horizontal{
+    animation: entradaHorizontal 0.42s ease both;
+}
+
+.form-login.animacion-vertical{
+    animation: entradaVertical 0.42s ease both;
+}
+
+.vista-entrada{
+    animation: entradaVista 0.38s ease both;
+}
+
+@keyframes entradaHorizontal{
+    from{
+        opacity: 0;
+        transform: translateX(4vw);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes entradaVertical{
+    from{
+        opacity: 0;
+        transform: translateY(4vh);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes entradaVista{
+    from{
+        opacity: 0;
+        transform: translateY(2vh);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .form-login.animacion-horizontal,
+    .form-login.animacion-vertical,
+    .vista-entrada{
+        animation: none;
+    }
+}
+
 .form-register{
     display: none;
     width: 42vw;

@@ -97,6 +97,18 @@
                     <input id="registroNacimiento" class="input-login" type="date" required>
                 </div>
 
+                <div class="login full-field">
+                    <h2 class="usuario-input">Genero</h2>
+                    <select id="registroGenero" class="input-login" required>
+                        <option disabled selected value="">Selecciona tu genero</option>
+                        <option>Hombre</option>
+                        <option>Mujer</option>
+                        <option>No definido</option>
+                        <option>Otro</option>
+                        <option>Prefiero no decirlo</option>
+                    </select>
+                </div>
+
                 <div class="login">
                     <h2 class="usuario-input">Contrasena</h2>
                     <div class="password-field">
@@ -130,7 +142,7 @@
                 <div class="menu-principal">
                     <aside class="menu">
                         <div class="perfil">
-                            <img style="width: 5vw;
+                            <img id="imagenPerfilUsuario" style="width: 5vw;
                             height: 10vh;" src="IMG/imagen-perfil.png" alt="">
                             <div>
                                 <h3 style="color: white;">Esteban Trujillo</h3>
@@ -326,7 +338,7 @@
             <div class="menu-principal">
                 <aside class="menu">
                     <div class="perfil">
-                        <img style="width: 5vw;
+                        <img id="imagenPerfilTecnico" style="width: 5vw;
                         height: 10vh;" src="IMG/imagen-perfil.png" alt="">
                         <div>
                             <h3 id="nombrePerfilTecnico" style="color: white;">Laura Mendez</h3>
@@ -503,7 +515,7 @@
         <section id="pantalla__admi" class="pantalla-administrador">
             <aside class="menu">
                 <div class="perfil">
-                    <img style="width: 9vw;
+                    <img id="imagenPerfilAdmin" style="width: 9vw;
                     height: 5vw; border-radius: 50%; object-fit: cover;" src="IMG/imagen-perfil.png" alt="">
                     <div>
                         <h3 id="nombrePerfilAdmin" style="color: white;">Administrador ITech</h3>
@@ -899,6 +911,7 @@
                                     <th>Rol</th>
                                     <th>Correo</th>
                                     <th>Contraseña</th>
+                                    <th>Genero</th>
                                     <th>Ciudad</th>
                                     <th>Pais</th>
                                     <th>Fecha nacimiento</th>
@@ -920,6 +933,7 @@
                                     <th>Rol</th>
                                     <th>Correo</th>
                                     <th>Contraseña</th>
+                                    <th>Genero</th>
                                     <th>Ciudad</th>
                                     <th>Pais</th>
                                     <th>Fecha nacimiento</th>
@@ -988,6 +1002,16 @@
                 <div>
                     <label>Fecha nacimiento</label>
                     <input id="adminCrearNacimiento" type="date">
+                </div>
+                <div>
+                    <label>Genero</label>
+                    <select id="adminCrearGenero" required>
+                        <option value="No definido">No definido</option>
+                        <option value="Hombre">Hombre</option>
+                        <option value="Mujer">Mujer</option>
+                        <option value="Otro">Otro</option>
+                        <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                    </select>
                 </div>
                 <button type="submit"><i class="fa-solid fa-user-plus"></i>Crear cuenta</button>
             </form>

@@ -14,6 +14,7 @@
     const registroPais = document.getElementById("registroPais");
     const registroCorreo = document.getElementById("registroCorreo");
     const registroNacimiento = document.getElementById("registroNacimiento");
+    const registroGenero = document.getElementById("registroGenero");
     const registroPassword = document.getElementById("registroPassword");
     const registroConfirmPassword = document.getElementById("registroConfirmPassword");
 
@@ -26,6 +27,9 @@
     const nombrePerfilUsuario = document.querySelector("#usuario .perfil h3");
     const nombrePerfilAdmin = document.getElementById("nombrePerfilAdmin");
     const nombrePerfilTecnico = document.getElementById("nombrePerfilTecnico");
+    const imagenPerfilUsuario = document.getElementById("imagenPerfilUsuario");
+    const imagenPerfilAdmin = document.getElementById("imagenPerfilAdmin");
+    const imagenPerfilTecnico = document.getElementById("imagenPerfilTecnico");
     const dashboardTecnico = document.getElementById("dashboardTecnico");
     const ticketsTecnico = document.getElementById("ticketsTecnico");
     const btnDashboardTecnico = document.getElementById("btnDashboardTecnico");
@@ -126,6 +130,7 @@
     const adminCrearCiudad = document.getElementById("adminCrearCiudad");
     const adminCrearPais = document.getElementById("adminCrearPais");
     const adminCrearNacimiento = document.getElementById("adminCrearNacimiento");
+    const adminCrearGenero = document.getElementById("adminCrearGenero");
     const btnAbrirCrearCuentaAdmin = document.getElementById("btnAbrirCrearCuentaAdmin");
     const modalCrearCuentaAdmin = document.getElementById("modalCrearCuentaAdmin");
     const btnCerrarCrearCuentaAdmin = document.getElementById("btnCerrarCrearCuentaAdmin");
@@ -206,6 +211,13 @@
     const pagoAprobado = "Aprobado";
     const porcentajeEmpresa = 0.7;
     const porcentajeTecnico = 0.3;
+    const avatarHombre = "IMG/imagen-perfil.png";
+    const avatarMujer = "IMG/Mujer.png";
+    const nombresFemeninos = new Set([
+        "ana", "andrea", "angela", "camila", "carolina", "catalina", "claudia", "daniela",
+        "diana", "elena", "gabriela", "isabella", "laura", "luisa", "maria", "mariana",
+        "paola", "sara", "sofia", "valentina", "vanessa", "victoria"
+    ]);
     let detalleAdminAbierto = null;
     const borradoresDetalleAdmin = new Map();
     const detallesTecnicoAbiertos = new Set();
@@ -555,6 +567,7 @@
                         rol: formatearRol(usuario.rol),
                         correo: usuario.correo,
                         password: usuario.passwordDemo || "",
+                        genero: usuario.genero || "No definido",
                         ciudad: usuario.ciudad,
                         pais: usuario.pais,
                         nacimiento: usuario.nacimiento || "",
@@ -576,6 +589,7 @@
                 rol: "Usuario",
                 correo: credenciales.usuario.user,
                 password: credenciales.usuario.pass,
+                genero: "Hombre",
                 ciudad: "Bogota",
                 pais: "Colombia",
                 nacimiento: "Cuenta base",
@@ -875,18 +889,39 @@
 
     }
 
+    function obtenerImagenPerfil(nombre) {
+
+        const primerNombre = normalizarTexto(String(nombre || "").split(/\s+/)[0]);
+        return nombresFemeninos.has(primerNombre) ? avatarMujer : avatarHombre;
+
+    }
+
+    function aplicarImagenPerfil(imagen, datosSesion) {
+
+        if (!imagen || !datosSesion) {
+            return;
+        }
+
+        imagen.src = obtenerImagenPerfil(datosSesion.nombre);
+        imagen.alt = `Foto de perfil de ${datosSesion.nombre || "usuario"}`;
+
+    }
+
     function actualizarPerfilVisible(datosSesion) {
 
         if (formatearRol(datosSesion.rol) === "Usuario" && nombrePerfilUsuario) {
             nombrePerfilUsuario.textContent = datosSesion.nombre;
+            aplicarImagenPerfil(imagenPerfilUsuario, datosSesion);
         }
 
         if (formatearRol(datosSesion.rol) === "Admin" && nombrePerfilAdmin) {
             nombrePerfilAdmin.textContent = datosSesion.nombre;
+            aplicarImagenPerfil(imagenPerfilAdmin, datosSesion);
         }
 
         if (formatearRol(datosSesion.rol) === "Tecnico" && nombrePerfilTecnico) {
             nombrePerfilTecnico.textContent = datosSesion.nombre;
+            aplicarImagenPerfil(imagenPerfilTecnico, datosSesion);
         }
 
     }
@@ -909,6 +944,7 @@
                 apellidos: datosActualizados.apellidos || obtenerPartesNombreCuenta(datosActualizados).apellidos,
                 correo: datosActualizados.correo,
                 password: datosActualizados.password || registrado.password || registrado.passwordDemo || "",
+                genero: datosActualizados.genero || registrado.genero || "No definido",
                 rol: formatearRol(datosActualizados.rol || registrado.rol),
                 ciudad: datosActualizados.ciudad || registrado.ciudad,
                 pais: datosActualizados.pais || registrado.pais,
@@ -3165,6 +3201,7 @@
             fila.appendChild(crearSelectRolAdmin(usuarioRegistrado));
             fila.appendChild(crearCelda(usuarioRegistrado.correo));
             fila.appendChild(crearCelda(usuarioRegistrado.password || usuarioRegistrado.passwordDemo || ""));
+            fila.appendChild(crearCelda(usuarioRegistrado.genero || "No definido"));
             fila.appendChild(crearCelda(usuarioRegistrado.ciudad));
             fila.appendChild(crearCelda(usuarioRegistrado.pais));
             fila.appendChild(crearCelda(formatearFechaCuenta(usuarioRegistrado.nacimiento)));
@@ -3238,6 +3275,7 @@
             nombreBase: datosSesion.nombreBase || obtenerPartesNombreCuenta(datosSesion).nombre,
             apellidos: datosSesion.apellidos || obtenerPartesNombreCuenta(datosSesion).apellidos,
             correo: datosSesion.correo,
+            genero: datosSesion.genero || "No definido",
             rol: formatearRol(datosSesion.rol)
         }));
 
@@ -3282,6 +3320,7 @@
             nombreBase: cuentaActualizada.nombreBase || sesion.nombreBase || obtenerPartesNombreCuenta(cuentaActualizada).nombre,
             apellidos: cuentaActualizada.apellidos || sesion.apellidos || obtenerPartesNombreCuenta(cuentaActualizada).apellidos,
             correo: cuentaActualizada.correo || sesion.correo,
+            genero: cuentaActualizada.genero || sesion.genero || "No definido",
             rol: formatearRol(cuentaActualizada.rol || sesion.rol)
         };
         const cambioRol = formatearRol(sesion.rol) !== datosSesionActualizados.rol;
@@ -3338,6 +3377,7 @@
 
         if (valor === "usuario") {
             nombrePerfilUsuario.textContent = usuarioActual;
+            aplicarImagenPerfil(imagenPerfilUsuario, datosSesion);
             pantallaUsuario.style.display = "block";
             actualizarEstadoUsuarioActual();
             mostrarCrearTicketUsuario();
@@ -3348,6 +3388,7 @@
             if (nombrePerfilAdmin) {
                 nombrePerfilAdmin.textContent = datosSesion.nombre;
             }
+            aplicarImagenPerfil(imagenPerfilAdmin, datosSesion);
 
             pantallaAdmin.style.display = "flex";
             dashboard.style.display = "block";
@@ -3370,6 +3411,7 @@
             if (nombrePerfilTecnico) {
                 nombrePerfilTecnico.textContent = datosSesion.nombre;
             }
+            aplicarImagenPerfil(imagenPerfilTecnico, datosSesion);
 
             pantallaTecnico.style.display = "flex";
             mostrarDashboardTecnico();
@@ -3878,6 +3920,7 @@
             rol: "Usuario",
             correo: correoRegistro,
             password: registroPassword.value,
+            genero: registroGenero.value,
             ciudad: registroCiudad.value,
             pais: registroPais.value,
             nacimiento: registroNacimiento.value,
@@ -3892,6 +3935,7 @@
                     apellidos: apellidosRegistro,
                     correo: correoRegistro,
                     password: registroPassword.value,
+                    genero: registroGenero.value,
                     ciudad: registroCiudad.value,
                     pais: registroPais.value,
                     nacimiento: registroNacimiento.value
@@ -3915,6 +3959,7 @@
         correoUsuarioActual = nuevoUsuario.correo;
         guardarSesion(nuevoUsuario);
         nombrePerfilUsuario.textContent = usuarioActual;
+        aplicarImagenPerfil(imagenPerfilUsuario, nuevoUsuario);
         login.style.display = "none";
         pantallaUsuario.style.display = "block";
         pantallaAdmin.style.display = "none";
@@ -3947,6 +3992,7 @@
                 rol: formatearRol(adminCrearRol.value),
                 correo: adminCrearCorreo.value.trim(),
                 password: adminCrearPassword.value,
+                genero: adminCrearGenero.value,
                 ciudad: adminCrearCiudad.value.trim(),
                 pais: adminCrearPais.value.trim(),
                 nacimiento: adminCrearNacimiento.value || "",
@@ -3970,6 +4016,7 @@
                         apellidos: apellidosAdmin,
                         correo: nuevaCuenta.correo,
                         password: adminCrearPassword.value,
+                        genero: adminCrearGenero.value,
                         rol: adminCrearRol.value,
                         ciudad: nuevaCuenta.ciudad,
                         pais: nuevaCuenta.pais,
@@ -3991,6 +4038,7 @@
             renderRegistradosAdmin();
             formCrearCuentaAdmin.reset();
             adminCrearPais.value = "Colombia";
+            adminCrearGenero.value = "No definido";
             cerrarCrearCuentaAdmin();
             alert("Cuenta creada correctamente");
 

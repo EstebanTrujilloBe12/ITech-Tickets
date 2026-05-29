@@ -26,6 +26,11 @@
     position: relative;
 }
 
+.perfil img{
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .notificaciones-usuario{
     position: relative;
     margin-left: auto;
